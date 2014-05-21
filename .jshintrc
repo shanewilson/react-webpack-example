@@ -1,0 +1,35 @@
+{
+  "bitwise": true,
+  "camelcase": false,
+  "curly": true,
+  "eqeqeq": true,
+  "forin": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "noempty": true,
+  "nonew": true,
+  "quotmark": "single",
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "trailing": true,
+  "maxparams": 12,
+  "maxdepth": 5,
+  "maxcomplexity": 13,
+  "maxlen": 120,
+
+  "esnext": true,
+  "gcl": true,
+  "globalstrict": true,
+  "smarttabs": true,
+
+  "node": true,
+  "browser": true,
+
+  "white": false,
+
+  "globals": {}
+}
