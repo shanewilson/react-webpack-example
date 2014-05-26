@@ -4,81 +4,121 @@ var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var watchify = require('watchify');
+var browserify = require('browserify');
 var reactify = require('reactify');
-var jshint = require('gulp-jshint');
+var react = require('gulp-react');
+var jshint = require('gulp-jshint-cached');
 var browserSync = require('browser-sync');
 var gutil = require('gulp-util');
 var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var prettify = require('gulp-html-prettify');
+var filesize = require('gulp-filesize');
+var rename = require("gulp-rename");
+var jscs = require('gulp-jscs');
+var notify = require('gulp-notify');
+var plumber = require('gulp-plumber');
+var Notification = require('node-notifier');
+var minifyHTML = require('gulp-minify-html');
+var sourcemaps = require('gulp-sourcemaps');
 
+var config = require('.config.json');
+var packageJson = require('package.json');
+var dependencies = Object.keys(packageJson && packageJson.dependencies || {});
+
+
+var notifier = new Notification();
 var production = !!gutil.env.production;
+var watch = false;
 
 gutil.log('Environment', gutil.colors.blue(production ? 'Production' : 'Development'));
 
-var jsBundle = {
-      src: [
-        'src/js/**/*.js'
-      ],
-      dest: './js'
-    },
-    cssBundle = {
-      src: [
-        'src/scss/style.scss'
-      ],
-      dest: './css'
-    };
-
-
 gulp.task('clean', function() {
-  return gulp.src('public', {read: false})
-      .pipe(clean());
+  return gulp.src(paths.dest.path, {read: false})
+    .pipe(clean());
 });
 
-gulp.task('lint', function() {
-  return gulp.src(jsBundle.src)
-      .pipe(jshint('.jshintrc'))
-      .pipe(jshint.reporter('jshint-stylish'));
+gulp.task('jslint', function() {
+  return gulp.src(paths.src.js.glob)
+    .pipe(react())
+    .pipe(jscs())
+    .on('error', function(e) {
+      notifier.notify({
+        title: 'JSCS Error',
+        message: 'JSCS Error'
+      });
+      gutil.log(e.message);
+      process.exit(0);
+    })
+    .pipe(jshint.cached('.jshintrc'))
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'))
+    .on('error', function(e) {
+      notifier.notify({
+        title: 'JSHint Error',
+        message: e
+      });
+      process.exit(0);
+    })
 });
 
-gulp.task('js', [], function() {
-  var w = watchify('./src/jsx/app.js');
+gulp.task('js', function() {
+  var bundle = watch ? watchify(paths.src.js.entry) : browserify(paths.src.js.entry);
 
   function rebundle() {
-    return w.bundle(
-        {
-          debug: !production
-        })
-        .pipe(source('bundle.js'))
-        .pipe(buffer())
-        .pipe(gulpif(production, uglify({
-          mangle: {
-            except: ['require', 'export', '$super']
-          }
-        })))
-        .pipe(gulp.dest('./public/js/'))
-        .pipe(browserSync.reload({stream:true, once: true}));
+    gulp.start('jslint');
+    var stream = bundle.bundle(
+      {
+        debug: true
+      })
+      .pipe(source('bundle.js'))
+      .pipe(filesize())
+      .pipe(gulp.dest(paths.dest.js));
+
+    if (production) {
+      stream.pipe(buffer())
+        .pipe(sourcemaps.init())
+        .pipe(uglify(
+          {
+            mangle: {
+              except: ['require', 'export', '$super']
+            }
+          }))
+        .pipe(rename('bundle.min.js'))
+        .pipe(filesize())
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(paths.dest.js))
+    }
+
+    stream.pipe(browserSync.reload({stream: true, once: true}));
+
+    return stream;
   }
 
-  w.transform(reactify);
-  w.on('update', rebundle);
+//  bundle.external('react');
+//  bundle.external('director');
+  bundle.transform(reactify);
+  bundle.on('update', rebundle);
 
   return rebundle();
 });
 
 gulp.task('html', function() {
-  return gulp.src('src/index.html')
-      .pipe(gulp.dest('./public'));
+  return gulp.src(paths.src.html)
+    .pipe(gulpif(production,
+      minifyHTML({conditionals:true,cdata:true,empty:true}),
+      prettify({indent_char: ' ', indent_size: 2})))
+    .pipe(gulp.dest(paths.dest.path));
 });
 
 gulp.task('browser-sync', function() {
   return browserSync.init(null, {
     server: {
-      baseDir: "public"
+      baseDir: paths.dest.path
     },
     open: false,
-    notify: true
+    notify: false
   });
 });
 
@@ -87,6 +127,14 @@ gulp.task('bs-reload', function() {
   browserSync.reload();
 });
 
-gulp.task('default', ['html', 'js', 'browser-sync'], function() {
-  gulp.watch('src/index.html', ['html', 'bs-reload']);
+gulp.task('default', function() {
+  watch = true;
+
+  gulp.watch(paths.src.html, ['html', 'bs-reload']);
+
+  return gulp.start('build', 'browser-sync');
+});
+
+gulp.task('build', ['clean'], function() {
+  return gulp.start('html', 'js');
 });

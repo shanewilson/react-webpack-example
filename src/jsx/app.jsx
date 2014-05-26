@@ -6,9 +6,9 @@ var router = director.Router().init();
 
 var Hello = require('./components/hello.jsx');
 
-var app = React.renderComponent(
-    Hello({
-      page: router.getRoute(0)
-    }),
-    document.getElementById('content')
+React.renderComponent(
+  new Hello({
+    page: router.getRoute(0)
+  }),
+  document.getElementById('content')
 );

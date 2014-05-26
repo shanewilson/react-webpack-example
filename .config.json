@@ -1,0 +1,20 @@
+{
+  "paths": {
+    "src": {
+      "js": {
+        "glob": "./src/jsx/**/*.jsx",
+        "entry": "./src/jsx/app.jsx"
+      },
+      "css": {
+        "glob": "./src/styl/**/*.styl",
+        "entry": "./src/styl/style.styl"
+      },
+      "html": "./src/index.html"
+    },
+    "dest": {
+      "path": "./public",
+      "js": "./public/js",
+      "css": "./public/css"
+    }
+  }
+}
