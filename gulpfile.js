@@ -14,7 +14,7 @@ var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var prettify = require('gulp-html-prettify');
-var filesize = require('gulp-filesize');
+var size = require('gulp-filesize');
 var rename = require("gulp-rename");
 var jscs = require('gulp-jscs');
 var notify = require('gulp-notify');
@@ -23,10 +23,9 @@ var Notification = require('node-notifier');
 var minifyHTML = require('gulp-minify-html');
 var sourcemaps = require('gulp-sourcemaps');
 
-var config = require('.config.json');
-var packageJson = require('package.json');
+var config = require('./gulp-config.json');
+var packageJson = require('./package.json');
 var dependencies = Object.keys(packageJson && packageJson.dependencies || {});
-
 
 var notifier = new Notification();
 var production = !!gutil.env.production;
@@ -35,12 +34,12 @@ var watch = false;
 gutil.log('Environment', gutil.colors.blue(production ? 'Production' : 'Development'));
 
 gulp.task('clean', function() {
-  return gulp.src(paths.dest.path, {read: false})
+  return gulp.src(config.paths.dest.path, {read: false})
     .pipe(clean());
 });
 
 gulp.task('jslint', function() {
-  return gulp.src(paths.src.js.glob)
+  return gulp.src(config.paths.src.js.glob)
     .pipe(react())
     .pipe(jscs())
     .on('error', function(e) {
@@ -63,8 +62,32 @@ gulp.task('jslint', function() {
     })
 });
 
-gulp.task('js', function() {
-  var bundle = watch ? watchify(paths.src.js.entry) : browserify(paths.src.js.entry);
+gulp.task('js-libs', function() {
+  var stream = browserify()
+    .require(dependencies)
+    .bundle()
+    .pipe(source('libs.js'))
+    .pipe(buffer())
+    .pipe(size())
+    .pipe(gulp.dest(config.paths.dest.js));
+
+  if (production) {
+    stream.pipe(buffer())
+      .pipe(uglify(
+        {
+          mangle: {
+            except: ['require', 'export', '$super']
+          }
+        }))
+      .pipe(rename('libs.min.js'))
+      .pipe(size())
+      .pipe(gulp.dest(config.paths.dest.js))
+  }
+  return stream;
+});
+
+gulp.task('js', ['js-libs'], function() {
+  var bundle = watch ? watchify(config.paths.src.js.entry) : browserify(config.paths.src.js.entry);
 
   function rebundle() {
     gulp.start('jslint');
@@ -73,8 +96,9 @@ gulp.task('js', function() {
         debug: true
       })
       .pipe(source('bundle.js'))
-      .pipe(filesize())
-      .pipe(gulp.dest(paths.dest.js));
+      .pipe(buffer())
+      .pipe(size())
+      .pipe(gulp.dest(config.paths.dest.js));
 
     if (production) {
       stream.pipe(buffer())
@@ -86,9 +110,9 @@ gulp.task('js', function() {
             }
           }))
         .pipe(rename('bundle.min.js'))
-        .pipe(filesize())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(paths.dest.js))
+        .pipe(size())
+        .pipe(gulp.dest(config.paths.dest.js))
     }
 
     stream.pipe(browserSync.reload({stream: true, once: true}));
@@ -96,26 +120,26 @@ gulp.task('js', function() {
     return stream;
   }
 
-//  bundle.external('react');
-//  bundle.external('director');
+  bundle.external(dependencies);
   bundle.transform(reactify);
+
   bundle.on('update', rebundle);
 
   return rebundle();
 });
 
 gulp.task('html', function() {
-  return gulp.src(paths.src.html)
+  return gulp.src(config.paths.src.html)
     .pipe(gulpif(production,
-      minifyHTML({conditionals:true,cdata:true,empty:true}),
+      minifyHTML({conditionals: true, cdata: true, empty: true}),
       prettify({indent_char: ' ', indent_size: 2})))
-    .pipe(gulp.dest(paths.dest.path));
+    .pipe(gulp.dest(config.paths.dest.path));
 });
 
 gulp.task('browser-sync', function() {
   return browserSync.init(null, {
     server: {
-      baseDir: paths.dest.path
+      baseDir: config.paths.dest.path
     },
     open: false,
     notify: false
@@ -130,7 +154,7 @@ gulp.task('bs-reload', function() {
 gulp.task('default', function() {
   watch = true;
 
-  gulp.watch(paths.src.html, ['html', 'bs-reload']);
+  gulp.watch(config.paths.src.html, ['html', 'bs-reload']);
 
   return gulp.start('build', 'browser-sync');
 });
