@@ -38,9 +38,9 @@
     "gulp-imagemin": "0.5.0",
     "imagemin-pngcrush": "0.1.0",
     "gulp-strip-debug": "0.3.0",
-    "gulp-changed": "0.3.0",
     "gulp-load-plugins": "0.5.1",
-    "gulp-jshint": "1.6.1"
+    "gulp-jshint": "1.6.1",
+    "gulp-newer": "^0.3.0"
   },
   "engines": {
     "node": ">=0.10.0"
