@@ -9,12 +9,14 @@
         "glob": "./src/styl/**/*.styl",
         "entry": "./src/styl/style.styl"
       },
-      "html": "./src/index.html"
+      "html": "./src/index.html",
+      "images": "./src/images/**/*"
     },
     "dest": {
       "path": "./public",
       "js": "./public/js",
-      "css": "./public/css"
+      "css": "./public/css",
+      "images": "./public/images"
     }
   }
 }
