@@ -7,7 +7,7 @@
       },
       "css": {
         "glob": "./src/styl/**/*.styl",
-        "entry": "./src/styl/style.styl"
+        "entry": "./src/styl/styles.styl"
       },
       "html": "./src/index.html",
       "images": "./src/images/**/*"

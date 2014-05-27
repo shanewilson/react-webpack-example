@@ -6,7 +6,7 @@ var Hello = require('./components/hello.jsx');
 
 React.renderComponent(
   new Hello({
-    page: ''//router.getRoute(0)
+    page: ''
   }),
   document.getElementById('content')
 );

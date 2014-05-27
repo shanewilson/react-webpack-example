@@ -14,6 +14,7 @@ var reactify = require('reactify');
 var browserSync = require('browser-sync');
 var Notification = require('node-notifier');
 var pngcrush = require('imagemin-pngcrush');
+var nib = require('nib');
 
 var config = require('./gulp-config.json');
 var dependencies = Object.keys(require('./package.json').dependencies);
@@ -48,8 +49,7 @@ gulp.task('js-libs', function() {
     .bundle()
     .pipe(source('libs.js'))
     .pipe(buffer())
-    .pipe($.filesize())
-    .pipe(gulp.dest(config.paths.dest.js));
+    .pipe($.filesize());
 
   if (production) {
     stream.pipe(buffer())
@@ -60,10 +60,9 @@ gulp.task('js-libs', function() {
           }
         }))
       .pipe($.rename('libs.min.js'))
-      .pipe($.filesize())
-      .pipe(gulp.dest(config.paths.dest.js))
+      .pipe($.filesize());
   }
-  return stream;
+  return stream.pipe(gulp.dest(config.paths.dest.js));
 });
 
 gulp.task('js', ['js-libs'], function() {
@@ -109,14 +108,45 @@ gulp.task('js', ['js-libs'], function() {
   return rebundle();
 });
 
-gulp.task('images', function () {
+gulp.task('styles', function() {
+  var stream = gulp.src(config.paths.src.css.entry)
+    .pipe($.debug({verbose: true}))
+    .pipe($.stylus({
+      errors: true,
+      use: [nib()]
+    }))
+    .on('error', function() {
+      this.emit('end');
+      if (!watch) process.exit(0);
+    })
+    .pipe($.debug({verbose: true}))
+    .pipe($.filesize());
+
+  if (production) {
+    stream
+      .pipe($.csso())
+      .pipe($.rename('styles.min.css'))
+      .pipe($.debug({verbose: true}))
+      .pipe($.filesize());
+  }
+
+  stream
+    .pipe(gulp.dest(config.paths.dest.css))
+    .pipe(browserSync.reload({stream: true, once: true}));
+
+  return stream;
+});
+
+gulp.task('images', function() {
   return gulp.src(config.paths.src.images)
     .pipe($.newer(config.paths.dest.images))
     .pipe($.imagemin({
       optimizationLevel: 3,
       progressive: true,
       interlaced: true,
-      svgoPlugins: [{removeViewBox: false}],
+      svgoPlugins: [
+        {removeViewBox: false}
+      ],
       use: [pngcrush()]
     }))
     .pipe(gulp.dest(config.paths.dest.images));
@@ -149,10 +179,17 @@ gulp.task('default', function() {
   watch = true;
 
   gulp.watch(config.paths.src.html, ['html', 'bs-reload']);
+  gulp.watch(config.paths.src.css.glob, ['styles']);
 
   return gulp.start('build', 'browser-sync');
 });
 
 gulp.task('build', ['clean'], function() {
-  return gulp.start('html', 'images','js');
+  return gulp.start('html', 'images', 'styles', 'js');
 });
+
+// TODO
+// Stylus
+// External JS
+// Rev
+// prod > min
