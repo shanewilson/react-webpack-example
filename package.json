@@ -40,13 +40,12 @@
     "gulp-strip-debug": "0.3.0",
     "gulp-load-plugins": "0.5.1",
     "gulp-jshint": "1.6.1",
-    "gulp-newer": "^0.3.0",
-    "gulp-styl": "^0.2.1",
-    "rework-inline": "^0.1.4",
-    "gulp-csso": "^0.2.8",
-    "gulp-stylus": "^1.0.1",
-    "nib": "^1.0.2",
-    "gulp-debug": "^0.3.0"
+    "gulp-newer": "0.3.0",
+    "rework-inline": "0.1.4",
+    "gulp-csso": "0.2.8",
+    "gulp-stylus": "1.0.1",
+    "nib": "1.0.2",
+    "gulp-size": "0.3.1"
   },
   "engines": {
     "node": ">=0.10.0"

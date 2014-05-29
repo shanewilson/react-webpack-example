@@ -48,11 +48,10 @@ gulp.task('js-libs', function() {
     .require(dependencies)
     .bundle()
     .pipe(source('libs.js'))
-    .pipe(buffer())
-    .pipe($.filesize());
+    .pipe(buffer());
 
   if (production) {
-    stream.pipe(buffer())
+    stream
       .pipe($.uglify(
         {
           mangle: {
@@ -60,9 +59,11 @@ gulp.task('js-libs', function() {
           }
         }))
       .pipe($.rename('libs.min.js'))
-      .pipe($.filesize());
   }
-  return stream.pipe(gulp.dest(config.paths.dest.js));
+  return stream
+    .pipe(gulp.dest(config.paths.dest.js))
+    .pipe($.size({showFiles:true}))
+    .pipe($.size({showFiles:true, gzip:true}));
 });
 
 gulp.task('js', ['js-libs'], function() {
@@ -76,8 +77,9 @@ gulp.task('js', ['js-libs'], function() {
       })
       .pipe(source('bundle.js'))
       .pipe(buffer())
-      .pipe($.filesize())
-      .pipe(gulp.dest(config.paths.dest.js));
+      .pipe(gulp.dest(config.paths.dest.js))
+      .pipe($.size({showFiles:true}))
+      .pipe($.size({showFiles:true, gzip:true}))
 
     if (production) {
       stream.pipe(buffer())
@@ -91,8 +93,10 @@ gulp.task('js', ['js-libs'], function() {
           }))
         .pipe($.rename('bundle.min.js'))
         .pipe($.sourcemaps.write('./'))
-        .pipe($.filesize())
+
         .pipe(gulp.dest(config.paths.dest.js))
+        .pipe($.size({showFiles:true}))
+        .pipe($.size({showFiles:true, gzip:true}))
     }
 
     stream.pipe(browserSync.reload({stream: true, once: true}));
@@ -110,7 +114,6 @@ gulp.task('js', ['js-libs'], function() {
 
 gulp.task('styles', function() {
   var stream = gulp.src(config.paths.src.css.entry)
-    .pipe($.debug({verbose: true}))
     .pipe($.stylus({
       errors: true,
       use: [nib()]
@@ -119,19 +122,19 @@ gulp.task('styles', function() {
       this.emit('end');
       if (!watch) process.exit(0);
     })
-    .pipe($.debug({verbose: true}))
-    .pipe($.filesize());
+    .pipe($.size({showFiles:true}))
+    .pipe($.size({showFiles:true, gzip:true}));
 
   if (production) {
     stream
       .pipe($.csso())
       .pipe($.rename('styles.min.css'))
-      .pipe($.debug({verbose: true}))
-      .pipe($.filesize());
   }
 
   stream
     .pipe(gulp.dest(config.paths.dest.css))
+    .pipe($.size({showFiles:true}))
+    .pipe($.size({showFiles:true, gzip:true}))
     .pipe(browserSync.reload({stream: true, once: true}));
 
   return stream;
