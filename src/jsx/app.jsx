@@ -1,5 +1,7 @@
 'use strict';
 
+require('../styl/styles');
+
 var React = require('react');
 
 var Hello = require('./components/hello.jsx');

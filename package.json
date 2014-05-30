@@ -45,7 +45,16 @@
     "gulp-csso": "0.2.8",
     "gulp-stylus": "1.0.1",
     "nib": "1.0.2",
-    "gulp-size": "0.3.1"
+    "gulp-size": "0.3.1",
+    "webpack": "1.2.0-beta6",
+    "webpack-dev-server": "1.2.9",
+    "file-loader": "0.5.1",
+    "url-loader": "0.5.5",
+    "jshint-loader": "0.6.0",
+    "jsx-loader": "0.10.2",
+    "stylus-loader": "0.3.0",
+    "style-loader": "0.6.3",
+    "css-loader": "0.6.12"
   },
   "engines": {
     "node": ">=0.10.0"

@@ -16,6 +16,10 @@ var Notification = require('node-notifier');
 var pngcrush = require('imagemin-pngcrush');
 var nib = require('nib');
 
+var webpack = require('webpack');
+var WebpackDevServer = require('webpack-dev-server');
+var webpackConfig = require('./webpack.config.js');
+
 var config = require('./gulp-config.json');
 var dependencies = Object.keys(require('./package.json').dependencies);
 
@@ -79,7 +83,7 @@ gulp.task('js', ['js-libs'], function() {
       .pipe(buffer())
       .pipe(gulp.dest(config.paths.dest.js))
       .pipe($.size({showFiles:true}))
-      .pipe($.size({showFiles:true, gzip:true}))
+      .pipe($.size({showFiles:true, gzip:true}));
 
     if (production) {
       stream.pipe(buffer())
@@ -178,21 +182,56 @@ gulp.task('bs-reload', function() {
   browserSync.reload();
 });
 
-gulp.task('default', function() {
+gulp.task('default', ['clean'], function() {
   watch = true;
 
   gulp.watch(config.paths.src.html, ['html', 'bs-reload']);
   gulp.watch(config.paths.src.css.glob, ['styles']);
 
-  return gulp.start('build', 'browser-sync');
+  return gulp.start('html', 'images', 'webpack:dev');
 });
 
 gulp.task('build', ['clean'], function() {
-  return gulp.start('html', 'images', 'styles', 'js');
+  return gulp.start('html', 'images', 'webpack:build');
+});
+
+gulp.task('webpack:dev', function() {
+  var conf = Object.create(webpackConfig);
+
+  return new WebpackDevServer(webpack(conf), {
+    devtool: 'source-map',
+    debug: true,
+    contentBase: conf.contentBase,
+    stats: {
+      colors: true
+    }
+  }).listen(9000, 'localhost', function(err) {
+      if (err) {
+        throw new $.util.PluginError('webpack-dev-server', err);
+      }
+      return $.util.log('[webpack:dev]', 'http://localhost:9000/webpack-dev-server/');
+    });
+});
+
+gulp.task('webpack:build', function(callback) {
+  var conf = Object.create(webpackConfig);
+  conf.plugins = conf.plugins.concat(new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify('production')
+    }
+  }, new webpack.optimize.DedupePlugin(), new webpack.optimize.UglifyJsPlugin()));
+  return webpack(conf, function(err, stats) {
+    if (err) {
+      throw new $.util.PluginError('webpack:build', err);
+    }
+    $.util.log('[webpack:build]', stats.toString({
+      colors: true
+    }));
+    return callback();
+  });
 });
 
 // TODO
-// Stylus
 // External JS
 // Rev
 // prod > min
