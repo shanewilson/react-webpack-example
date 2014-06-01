@@ -5,7 +5,7 @@ var React = require('react');
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      name: 'World?'
+      name: 'Webpack'
     };
   },
   render: function() {

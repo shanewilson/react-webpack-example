@@ -18,9 +18,9 @@ var nib = require('nib');
 
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var webpackConfig = require('./webpack.config.js');
+var webpackConfig = Object.create(require('./webpack.config.js'));
 
-var config = require('./gulp-config.json');
+var config = require('./config.json');
 var dependencies = Object.keys(require('./package.json').dependencies);
 
 var notifier = new Notification();
@@ -182,11 +182,12 @@ gulp.task('bs-reload', function() {
   browserSync.reload();
 });
 
-gulp.task('default', ['clean'], function() {
+gulp.task('default', $.taskListing);
+
+gulp.task('serve', ['clean'], function() {
   watch = true;
 
   gulp.watch(config.paths.src.html, ['html', 'bs-reload']);
-  gulp.watch(config.paths.src.css.glob, ['styles']);
 
   return gulp.start('html', 'images', 'webpack:dev');
 });
@@ -196,31 +197,28 @@ gulp.task('build', ['clean'], function() {
 });
 
 gulp.task('webpack:dev', function() {
-  var conf = Object.create(webpackConfig);
-
-  return new WebpackDevServer(webpack(conf), {
-    devtool: 'source-map',
-    debug: true,
-    contentBase: conf.contentBase,
+  webpackConfig.devtool = 'source-map';
+  webpackConfig.debug = true;
+  return new WebpackDevServer(webpack(webpackConfig), {
+    contentBase: webpackConfig.contentBase,
     stats: {
       colors: true
     }
   }).listen(9000, 'localhost', function(err) {
       if (err) {
-        throw new $.util.PluginError('webpack-dev-server', err);
+        throw new $.util.PluginError('webpack:dev', err);
       }
       return $.util.log('[webpack:dev]', 'http://localhost:9000/webpack-dev-server/');
     });
 });
 
 gulp.task('webpack:build', function(callback) {
-  var conf = Object.create(webpackConfig);
-  conf.plugins = conf.plugins.concat(new webpack.DefinePlugin({
+  webpackConfig.plugins = webpackConfig.plugins.concat(new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify('production')
     }
   }, new webpack.optimize.DedupePlugin(), new webpack.optimize.UglifyJsPlugin()));
-  return webpack(conf, function(err, stats) {
+  return webpack(webpackConfig, function(err, stats) {
     if (err) {
       throw new $.util.PluginError('webpack:build', err);
     }
