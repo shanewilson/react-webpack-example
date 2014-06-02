@@ -1,10 +1,9 @@
 'use strict';
 
-var React = require('react');
+var Hello = require ('hello');
+var a;
 
-var Hello = require('hello');
-
-React.renderComponent(
+React.renderComponent (
   new Hello({
     page: ''
   }),

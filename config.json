@@ -2,8 +2,8 @@
   "paths": {
     "src": {
       "js": {
-        "glob": "./src/jsx/**/*.jsx",
-        "entry": "./src/jsx/app.jsx"
+        "glob": "./src/js/**/*",
+        "entry": "./src/js/app.js"
       },
       "css": {
         "glob": "./src/styl/**/*.styl",

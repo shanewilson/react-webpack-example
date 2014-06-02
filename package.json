@@ -58,7 +58,8 @@
     "jsxhint-loader": "^0.1.0",
     "coverjs-loader": "^0.5.0",
     "html-loader": "^0.2.2",
-    "gulp-task-listing": "^0.3.0"
+    "gulp-task-listing": "^0.3.0",
+    "compression-webpack-plugin": "^0.1.1"
   },
   "engines": {
     "node": ">=0.10.0"

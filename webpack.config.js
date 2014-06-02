@@ -2,43 +2,46 @@
 
 var path = require('path');
 var webpack = require('webpack');
-var jshintrc = require('./.jshintrc.json');
 
 module.exports = {
-  contentBase: __dirname + "/src/",
   target: 'web',
   cache: true,
+  stats: {
+    colors: true,
+    reasons: true
+  },
   entry: {
-    head: './src/jsx/head',
-    app: './src/jsx/app'
+    head: './src/js/head',
+    app: './src/js/app'
   },
   output: {
-    path: path.join(__dirname, 'public'),
-    publicPath: '/',
-    filename: '[name].js',
-    chunkFilename: '[chunkhash].js'
+    path: path.join(__dirname, 'public', 'js'),
+    publicPath: "/",
+    filename: "[name].js"
   },
+  externals: [
+    {
+      react: "React"
+    }
+  ],
   module: {
-    preLoaders: [
-      {
-        test: "\\.jsx?$",
-        exclude: ["(node|web)_modules", "jam"],
-        loader: "jsxhint"
-      }
-    ],
     loaders: [
       { test: /\.jsx$/, loader: "jsx-loader?insertPragma=React.DOM" },
       { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
       { test: /\.html$/, loader: 'html-loader' },
-      { test: /\.png/, loader: "url-loader?mimetype=image/png" },
-      { test: /\.gif/, loader: "url-loader?mimetype=image/gif" },
-      { test: /\.jpe?g/, loader: "url-loader?mimetype=image/jpeg" }
+      { test: /\.png$/, loader: "url-loader?mimetype=image/png" },
+      { test: /\.gif$/, loader: "url-loader?mimetype=image/gif" },
+      { test: /\.jpe?g$/, loader: "url-loader?mimetype=image/jpeg" }
     ],
     noParse: /\.min\.js/
   },
   resolve: {
     extensions: ['', '.jsx', '.js', '.styl'],
-    modulesDirectories: ['src/images', 'src/styl', 'src/jsx', 'src/jsx/components', 'node_modules']
+    modulesDirectories: ['src/styl', 'src/js', 'src/js/components', 'node_modules']
   },
-  plugins: []
+  plugins: [
+    new webpack.ProvidePlugin({
+      React: "react"
+    })
+  ]
 };

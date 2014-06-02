@@ -1,11 +1,9 @@
 'use strict';
 
-var React = require('react');
-
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      name: 'Webpack'
+      name: 'World'
     };
   },
   render: function() {
