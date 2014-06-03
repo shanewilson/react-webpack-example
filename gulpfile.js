@@ -25,23 +25,28 @@ gulp.task('clean', function() {
 
 gulp.task('html', function() {
   return gulp.src(config.paths.src.html)
-    .pipe($.cdnizer([
-      {
-        file: 'vendor/angular/*.js',
-        package: 'angular',
-        test: 'angular',
-        cdn: '//ajax.googleapis.com/ajax/libs/angularjs/${version}/${filenameMin}'
-      },
-      {
-        file: 'vendor/react/*.js',
-        package: 'react',
-        test: 'React',
-        cdn: '//cccdnjs.cloudflare.com/ajax/libs/react/${version}/${filenameMin}'
-      }
-      ]))
     .pipe($.if(production,
-      $.minifyHtml({conditionals: true, cdata: true, empty: true}),
-      $.htmlPrettify({indent_char: ' ', indent_size: 2})))
+      $.replace('.js', '.min.js')))
+    .pipe($.if(production,
+      $.cdnizer({
+        fallbackTest: '<script>if(typeof ${ test } === "undefined") cdnizerLoad("${ filepath }");</script>',
+        files: [
+          {
+            file: 'vendor/angular/*.min.js',
+            package: 'angular',
+            test: 'angular',
+            cdn: '//ajax.googleapis.com/ajax/libs/angularjs/${version}/${filenameMin}'
+          },
+          {
+            file: 'vendor/react/*.min.js',
+            package: 'react',
+            test: 'React',
+            cdn: '//cdnjs.cloudflare.com/ajax/libs/react/${version}/${filenameMin}'
+          }
+        ]})))
+//    .pipe($.if(production,
+//      $.minifyHtml({conditionals: true, cdata: true, empty: true}),
+//      $.htmlPrettify({indent_char: ' ', indent_size: 2})))
     .pipe(gulp.dest(config.paths.dest.path));
 });
 
@@ -117,21 +122,31 @@ gulp.task('webpack:build', ['js:lint'], function() {
   }
 
   if (watch) webpackConfig.watch = true;
+  else if (production) webpackConfig.output.filename = "[name].[hash].min.js";
 
   return webpack(webpackConfig, function(err, stats) {
-    if (err) {
-      throw new $.util.PluginError('webpack:build', err);
-    }
+    if (err) throw new $.util.PluginError('webpack:build', err);
 
     $.util.log('webpack:build', stats.toString({
       colors: true
     }));
+
     if (watch) {
       gulp.start('js:lint');
       browserSync.reload({once: true});
+    } else {
+      if (production) rev(stats.toJson().assets);
     }
   });
 });
+
+function rev(files) {
+  var stream = gulp.src(config.paths.dest.html);
+  files.forEach(function(file) {
+    stream.pipe($.replace(file.name.split('.')[0] + '.min.js', file.name))
+  });
+  return stream.pipe(gulp.dest(config.paths.dest.path));
+}
 
 gulp.task('default', $.taskListing);
 
@@ -146,9 +161,3 @@ gulp.task('serve', function() {
 gulp.task('build', ['clean'], function() {
   return gulp.start('html', 'js:vendor', 'webpack:build');
 });
-
-
-// TODO
-// External JS
-// Rev
-// prod > min

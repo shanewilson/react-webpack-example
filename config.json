@@ -15,6 +15,7 @@
     },
     "dest": {
       "path": "./public",
+      "html": "./public/index.html",
       "vendor": "./public/vendor",
       "js": "./public/js",
       "css": "./public/css",
