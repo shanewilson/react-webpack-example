@@ -25,7 +25,20 @@ gulp.task('clean', function() {
 
 gulp.task('html', function() {
   return gulp.src(config.paths.src.html)
-
+    .pipe($.cdnizer([
+      {
+        file: 'vendor/angular/*.js',
+        package: 'angular',
+        test: 'angular',
+        cdn: '//ajax.googleapis.com/ajax/libs/angularjs/${version}/${filenameMin}'
+      },
+      {
+        file: 'vendor/react/*.js',
+        package: 'react',
+        test: 'React',
+        cdn: '//cccdnjs.cloudflare.com/ajax/libs/react/${version}/${filenameMin}'
+      }
+      ]))
     .pipe($.if(production,
       $.minifyHtml({conditionals: true, cdata: true, empty: true}),
       $.htmlPrettify({indent_char: ' ', indent_size: 2})))
@@ -47,6 +60,11 @@ gulp.task('bs:reload', function() {
   browserSync.reload();
 });
 
+gulp.task('js:vendor', function() {
+  return gulp.src(config.paths.src.js.vendor)
+    .pipe(gulp.dest(config.paths.dest.vendor));
+});
+
 gulp.task('js:lint', function() {
   return gulp.src(config.paths.src.js.glob)
     .pipe($.react())
@@ -60,7 +78,7 @@ gulp.task('js:lint', function() {
     .pipe($.if(!watch, $.jshint.reporter('fail')))
 });
 
-gulp.task('webpack:build', function() {
+gulp.task('webpack:build', ['js:lint'], function() {
   if (production) {
     webpackConfig.output.filename = "[name].min.js";
     webpackConfig.plugins = webpackConfig.plugins.concat(
@@ -104,6 +122,7 @@ gulp.task('webpack:build', function() {
     if (err) {
       throw new $.util.PluginError('webpack:build', err);
     }
+
     $.util.log('webpack:build', stats.toString({
       colors: true
     }));
@@ -125,7 +144,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('build', ['clean'], function() {
-  return gulp.start('html', 'webpack:build');
+  return gulp.start('html', 'js:vendor', 'webpack:build');
 });
 
 
