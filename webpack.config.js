@@ -15,8 +15,7 @@ module.exports = {
     app: './src/js/app'
   },
   output: {
-    path: path.join(__dirname, 'public', 'js'),
-    publicPath: "/",
+    publicPath: "/js/",
     filename: "[name].js"
   },
   externals: [

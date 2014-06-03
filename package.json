@@ -42,7 +42,13 @@
     "html-loader": "0.2.2",
     "compression-webpack-plugin": "0.1.1",
     "npm-check-updates": "^1.2.0",
-    "gulp-replace": "^0.3.0"
+    "gulp-replace": "^0.3.0",
+    "gulp-todo": "^0.2.0",
+    "gulp-plato": "^0.2.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-rev": "^0.4.0",
+    "fs": "0.0.1",
+    "gulp-filter": "^0.4.1"
   },
   "engines": {
     "node": ">=0.10.0"

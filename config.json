@@ -3,23 +3,11 @@
     "src": {
       "js": {
         "vendor": "./vendor/**/*.js",
-        "glob": "./src/js/**/*",
-        "entry": "./src/js/app.js"
+        "glob": "./src/js/**/*"
       },
-      "css": {
-        "glob": "./src/styl/**/*.styl",
-        "entry": "./src/styl/styles.styl"
-      },
-      "html": "./src/index.html",
-      "images": "./src/images/**/*"
+      "html": "./src/index.html"
     },
-    "dest": {
-      "path": "./public",
-      "html": "./public/index.html",
-      "vendor": "./public/vendor",
-      "js": "./public/js",
-      "css": "./public/css",
-      "images": "./public/images"
-    }
+    "stage": "./stage",
+    "prod": "./dist"
   }
 }

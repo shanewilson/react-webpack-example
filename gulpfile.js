@@ -13,20 +13,44 @@ var webpackConfig = Object.create(require('./webpack.config.js'));
 var CompressionPlugin = require("compression-webpack-plugin");
 
 var config = require('./config.json');
+var jshintrc = require('./.jshintrc.json');
+var bower = require('./bower.json');
 var production = !!$.util.env.production;
+var output = production ? config.paths.prod : config.paths.stage;
+webpackConfig.output.path = output + '/js';
 var watch = false;
 
 $.util.log('Environment', $.util.colors.blue(production ? 'Production' : 'Development'));
 
 gulp.task('clean', function() {
-  return gulp.src(config.paths.dest.path, {read: false})
+  return gulp.src(output, {read: false})
     .pipe($.clean());
+});
+
+gulp.task('todo', function() {
+  gulp.src(config.paths.src.js.glob)
+    .pipe($.react())
+    .pipe($.todo())
+    .pipe(gulp.dest('todo'));
+});
+
+// Generates Plato complexity analysis
+gulp.task('plato', function() {
+  gulp.src(config.paths.src.js.glob)
+    .pipe($.react())
+    .pipe($.plato('report', {
+      jshint: {
+        options: jshintrc
+      },
+      complexity: {
+        trycatch: true
+      }
+    }));
 });
 
 gulp.task('html', function() {
   return gulp.src(config.paths.src.html)
-    .pipe($.if(production,
-      $.replace('.js', '.min.js')))
+    .pipe($.if(production, $.replace('.js', '.min.js')))
     .pipe($.if(production,
       $.cdnizer({
         fallbackTest: '<script>if(typeof ${ test } === "undefined") cdnizerLoad("${ filepath }");</script>',
@@ -47,13 +71,13 @@ gulp.task('html', function() {
 //    .pipe($.if(production,
 //      $.minifyHtml({conditionals: true, cdata: true, empty: true}),
 //      $.htmlPrettify({indent_char: ' ', indent_size: 2})))
-    .pipe(gulp.dest(config.paths.dest.path));
+    .pipe(gulp.dest(output));
 });
 
 gulp.task('browser:sync', function() {
   return browserSync.init(null, {
     server: {
-      baseDir: config.paths.dest.path
+      baseDir: output
     },
     open: false,
     notify: true
@@ -66,8 +90,17 @@ gulp.task('bs:reload', function() {
 });
 
 gulp.task('js:vendor', function() {
-  return gulp.src(config.paths.src.js.vendor)
-    .pipe(gulp.dest(config.paths.dest.vendor));
+  var vf = production ? "./vendor/**/*.min.js" : config.paths.src.js.vendor;
+  var stream = gulp.src(vf);
+
+  if (production) {
+    stream.pipe($.rev())
+      .pipe(gulp.dest(output + "/vendor"))
+      .pipe($.rev.manifest())
+      .pipe(gulp.dest(output + "/vendor"))
+  }
+
+  return stream.pipe(gulp.dest(output + "/vendor"));
 });
 
 gulp.task('js:lint', function() {
@@ -85,7 +118,7 @@ gulp.task('js:lint', function() {
 
 gulp.task('webpack:build', ['js:lint'], function() {
   if (production) {
-    webpackConfig.output.filename = "[name].min.js";
+    webpackConfig.output.filename = "[name].[hash].min.js";
     webpackConfig.plugins = webpackConfig.plugins.concat(
       new webpack.DefinePlugin({
         'process.env': {
@@ -122,7 +155,6 @@ gulp.task('webpack:build', ['js:lint'], function() {
   }
 
   if (watch) webpackConfig.watch = true;
-  else if (production) webpackConfig.output.filename = "[name].[hash].min.js";
 
   return webpack(webpackConfig, function(err, stats) {
     if (err) throw new $.util.PluginError('webpack:build', err);
@@ -131,21 +163,35 @@ gulp.task('webpack:build', ['js:lint'], function() {
       colors: true
     }));
 
+    if (production) rev(stats.toJson().assets);
+
     if (watch) {
       gulp.start('js:lint');
       browserSync.reload({once: true});
-    } else {
-      if (production) rev(stats.toJson().assets);
     }
   });
 });
 
 function rev(files) {
-  var stream = gulp.src(config.paths.dest.html);
-  files.forEach(function(file) {
-    stream.pipe($.replace(file.name.split('.')[0] + '.min.js', file.name))
+  var vendorFiles = require(output + "/vendor/rev-manifest.json");
+
+  var fs = require('fs');
+  fs.readFile(output + "/index.html", 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }
+
+    files.forEach(function(file) {
+      data = data.replace(file.name.split('.')[0] + '.min.js', file.name);
+    });
+    for (var file in vendorFiles) {
+      if (vendorFiles.hasOwnProperty(file)) data = data.replace(file, vendorFiles[file]);
+    }
+
+    fs.writeFile(output + "/index.html", data, 'utf8', function (err) {
+      if (err) return console.log(err);
+    });
   });
-  return stream.pipe(gulp.dest(config.paths.dest.path));
 }
 
 gulp.task('default', $.taskListing);
