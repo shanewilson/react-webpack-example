@@ -54,8 +54,9 @@
     "deps": "npm install --quiet --loglevel warn && ./node_modules/bower/bin/bower install --quiet",
     "upgrade": "./node_modules/npm-check-updates/bin/npm-check-updates -u && npm update --quiet && npm run tests",
     "tests": " ./node_modules/jest/bin/jest",
-    "dev": "webpack-dev-server",
-    "stage": "./node_modules/gulp/bin/gulp build",
-    "dist": "./node_modules/gulp/bin/gulp build --production"
+    "dev": "./node_modules/gulp/bin/gulp.js serve",
+    "stage": "./node_modules/gulp/bin/gulp.js serve --production",
+    "build": "./node_modules/gulp/bin/gulp.js build",
+    "dist": "./node_modules/gulp/bin/gulp.js build --production"
   }
 }

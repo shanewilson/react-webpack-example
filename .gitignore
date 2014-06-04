@@ -2,5 +2,5 @@
 node_modules/
 npm-debug.log
 dist/
-vendor/
+bower_components/
 

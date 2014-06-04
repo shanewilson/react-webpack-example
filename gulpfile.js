@@ -14,9 +14,9 @@ var CompressionPlugin = require("compression-webpack-plugin");
 
 var config = require('./config.json');
 var jshintrc = require('./.jshintrc.json');
-var bower = require('./bower.json');
+
 var production = !!$.util.env.production;
-var output = production ? config.paths.prod : config.paths.stage;
+var output = config.paths.prod;
 webpackConfig.output.path = output + '/js';
 var watch = false;
 
@@ -35,13 +35,13 @@ gulp.task('html', function() {
         fallbackTest: '<script>if(typeof ${ test } === "undefined") cdnizerLoad("${ filepath }");</script>',
         files: [
           {
-            file: 'vendor/angular/*.min.js',
+            file: 'bower_components/angular/*.min.js',
             package: 'angular',
             test: 'angular',
             cdn: '//ajax.googleapis.com/ajax/libs/angularjs/${version}/${filenameMin}'
           },
           {
-            file: 'vendor/react/*.min.js',
+            file: 'bower_components/react/*.min.js',
             package: 'react',
             test: 'React',
             cdn: '//cdnjs.cloudflare.com/ajax/libs/react/${version}/${filenameMin}'
@@ -69,7 +69,7 @@ gulp.task('bs:reload', function() {
 });
 
 gulp.task('js:vendor', function() {
-  var vf = production ? "./vendor/**/*.min.js" : config.paths.src.js.vendor;
+  var vf = production ? "./bower_components/**/*.min.js" : config.paths.src.js.vendor;
   var stream = gulp.src(vf);
 
   if (production) {

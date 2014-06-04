@@ -1,3 +1,3 @@
 npm run deps
-gulp serve
+npm run dev
 localhost:3002
