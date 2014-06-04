@@ -27,27 +27,6 @@ gulp.task('clean', function() {
     .pipe($.clean());
 });
 
-gulp.task('todo', function() {
-  gulp.src(config.paths.src.js.glob)
-    .pipe($.react())
-    .pipe($.todo())
-    .pipe(gulp.dest('todo'));
-});
-
-// Generates Plato complexity analysis
-gulp.task('plato', function() {
-  gulp.src(config.paths.src.js.glob)
-    .pipe($.react())
-    .pipe($.plato('report', {
-      jshint: {
-        options: jshintrc
-      },
-      complexity: {
-        trycatch: true
-      }
-    }));
-});
-
 gulp.task('html', function() {
   return gulp.src(config.paths.src.html)
     .pipe($.if(production, $.replace('.js', '.min.js')))
@@ -68,9 +47,9 @@ gulp.task('html', function() {
             cdn: '//cdnjs.cloudflare.com/ajax/libs/react/${version}/${filenameMin}'
           }
         ]})))
-//    .pipe($.if(production,
-//      $.minifyHtml({conditionals: true, cdata: true, empty: true}),
-//      $.htmlPrettify({indent_char: ' ', indent_size: 2})))
+    .pipe($.if(production,
+      $.minifyHtml({conditionals: true, cdata: true, empty: true}),
+      $.htmlPrettify({indent_char: ' ', indent_size: 2})))
     .pipe(gulp.dest(output));
 });
 
