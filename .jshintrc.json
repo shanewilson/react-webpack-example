@@ -1,6 +1,6 @@
 {
   "bitwise": true,
-  "camelcase": false,
+  "camelcase": true,
   "curly": true,
   "eqeqeq": true,
   "es3": false,
@@ -19,7 +19,7 @@
   "strict": true,
   "trailing": true,
   "maxlen": 120,
-
+  "quotmark": false,
   "gcl": true,
 
   "node": true,

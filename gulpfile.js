@@ -7,6 +7,7 @@ var $ = require("gulp-load-plugins")({
   lazy: true
 });
 
+var fs = require('graceful-fs');
 var browserSync = require('browser-sync');
 var webpack = require('webpack');
 var webpackConfig = Object.create(require('./webpack.config.js'));
@@ -24,7 +25,7 @@ $.util.log('Environment', $.util.colors.blue(production ? 'Production' : 'Develo
 
 gulp.task('clean', function() {
   return gulp.src(output, {read: false})
-    .pipe($.clean());
+    .pipe($.rimraf());
 });
 
 gulp.task('html', function() {
@@ -154,7 +155,6 @@ gulp.task('webpack:build', ['js:lint'], function() {
 function rev(files) {
   var vendorFiles = require(output + "/vendor/rev-manifest.json");
 
-  var fs = require('fs');
   fs.readFile(output + "/index.html", 'utf8', function (err,data) {
     if (err) {
       return console.log(err);

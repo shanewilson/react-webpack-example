@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var Hello = require('hello');
-// TODO do soemthing
+var Hello = require("hello");
+// TODO do something
 React.renderComponent(
   new Hello({
-    page: ''
+    page: ""
   }),
   // FIXME problem here
-  document.getElementById('content')
+  document.getElementById("content")
 );

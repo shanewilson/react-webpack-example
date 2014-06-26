@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      name: 'World'
+      name: "World"
     };
   },
   render: function() {
