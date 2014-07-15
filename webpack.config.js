@@ -1,22 +1,25 @@
 'use strict';
 
-var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
   target: 'web',
   cache: true,
+  devtool: '#source-map',
+  debug: true,
+  profile: true,
   stats: {
     colors: true,
     reasons: true
   },
   entry: {
-    head: './src/js/head',
     app: './src/js/app'
   },
   output: {
+    pathInfo: true,
     publicPath: "/js/",
-    filename: "[name].js"
+    filename: "[name].js",
+    chunkFilename: '[id].js'
   },
   externals: [
     {
@@ -25,7 +28,7 @@ module.exports = {
   ],
   module: {
     loaders: [
-      { test: /\.jsx$/, loader: "jsx-loader?insertPragma=React.DOM" },
+      { test: /\.jsx$/, loader: "jsx-loader?harmony&insertPragma=React.DOM" },
       { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
       { test: /\.html$/, loader: 'html-loader' },
       { test: /\.png$/, loader: "url-loader?mimetype=image/png" },
@@ -36,7 +39,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.jsx', '.js', '.styl'],
-    modulesDirectories: ['src/styl', 'src/js', 'src/js/components', 'node_modules']
+    modulesDirectories: ['src/styl', 'src/js', 'src/js/views', 'src/js/components', 'node_modules']
   },
   plugins: [
     new webpack.ProvidePlugin({

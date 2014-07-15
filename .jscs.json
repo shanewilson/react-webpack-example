@@ -20,7 +20,7 @@
     "validateQuoteMarks": null,
     "disallowKeywords": ["with"],
     "disallowImplicitTypeConversion": ["numeric", "binary", "string"],
-
+    "disallowTrailingWhitespace": null,
     "excludeFiles": [
       "node_modules/**",
       "__tests__"

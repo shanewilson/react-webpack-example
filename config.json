@@ -2,7 +2,7 @@
   "paths": {
     "src": {
       "js": {
-        "vendor": "./bower_components/**/*.js",
+        "bower": "./bower_components/**/*.js",
         "glob": "./src/js/**/*"
       },
       "html": "./src/index.html"

@@ -1,3 +1,6 @@
+/* jshint strict: false, camelcase: false */
+/* global require */
+
 'use strict';
 
 var gulp = require('gulp');
@@ -13,51 +16,58 @@ var webpack = require('webpack');
 var webpackConfig = Object.create(require('./webpack.config.js'));
 var CompressionPlugin = require("compression-webpack-plugin");
 
-var config = require('./config.json');
-var jshintrc = require('./.jshintrc.json');
-
 var production = !!$.util.env.production;
-var output = config.paths.prod;
-webpackConfig.output.path = output + '/js';
 var watch = false;
+
+// <paths>
+var paths = {
+  "src": "./src",
+  "dev": "./dist",
+  "stage": "./dist",
+  "bower": "./bower_components/**/*",
+  js : {},
+  html: {}
+};
+paths.dest = production ? paths.stage : paths.dev;
+paths.js.src = paths.src + "/js/**/*";
+paths.js.dest = paths.dest + "/js";
+paths.bower = production ? paths.bower + ".min.js" : paths.bower + ".js";
+paths.vendor = paths.dest + "/vendor";
+paths.html.src = paths.src + "/index.html";
+paths.html.dest = paths.dest + "/index.html";
+// </paths>
 
 $.util.log('Environment', $.util.colors.blue(production ? 'Production' : 'Development'));
 
 gulp.task('clean', function() {
-  return gulp.src(output, {read: false})
+  return gulp.src(paths.dest, {read: false})
     .pipe($.rimraf());
 });
 
 gulp.task('html', function() {
-  return gulp.src(config.paths.src.html)
+  return gulp.src(paths.html.src)
     .pipe($.if(production, $.replace('.js', '.min.js')))
     .pipe($.if(production,
       $.cdnizer({
         fallbackTest: '<script>if(typeof ${ test } === "undefined") cdnizerLoad("${ filepath }");</script>',
         files: [
           {
-            file: 'bower_components/angular/*.min.js',
-            package: 'angular',
-            test: 'angular',
-            cdn: '//ajax.googleapis.com/ajax/libs/angularjs/${version}/${filenameMin}'
-          },
-          {
-            file: 'bower_components/react/*.min.js',
+            file: 'vendor/react/react.min.js',
             package: 'react',
             test: 'React',
-            cdn: '//cdnjs.cloudflare.com/ajax/libs/react/${version}/${filenameMin}'
+            cdn: '//fb.me/react-${version}.min.js'
           }
         ]})))
     .pipe($.if(production,
       $.minifyHtml({conditionals: true, cdata: true, empty: true}),
       $.htmlPrettify({indent_char: ' ', indent_size: 2})))
-    .pipe(gulp.dest(output));
+    .pipe(gulp.dest(paths.dest));
 });
 
 gulp.task('browser:sync', function() {
   return browserSync.init(null, {
     server: {
-      baseDir: output
+      baseDir: paths.dest
     },
     open: false,
     notify: true
@@ -69,35 +79,63 @@ gulp.task('bs:reload', function() {
   browserSync.reload();
 });
 
-gulp.task('js:vendor', function() {
-  var vf = production ? "./bower_components/**/*.min.js" : config.paths.src.js.vendor;
-  var stream = gulp.src(vf);
+gulp.task('js:bower', function() {
+  var stream = gulp.src(paths.bower);
 
   if (production) {
     stream.pipe($.rev())
-      .pipe(gulp.dest(output + "/vendor"))
-      .pipe($.rev.manifest())
-      .pipe(gulp.dest(output + "/vendor"))
+    .pipe(gulp.dest(paths.vendor))
+    .pipe($.rev.manifest())
+    .pipe(gulp.dest(paths.vendor));
   }
 
-  return stream.pipe(gulp.dest(output + "/vendor"));
+  return stream.pipe(gulp.dest(paths.vendor));
 });
 
 gulp.task('js:lint', function() {
-  return gulp.src(config.paths.src.js.glob)
+  return gulp.src(paths.js.src)
     .pipe($.react())
     .pipe($.jscs())
     .on('error', function(e) {
       $.util.log(e.message);
       if (!watch) process.exit(0);
     })
-    .pipe($.jshint('.jshintrc.json'))
+    .pipe($.jshint('.jshintrc'))
     .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!watch, $.jshint.reporter('fail')))
+    .pipe($.if(!watch, $.jshint.reporter('fail')));
 });
 
+function rev(files) {
+  var vendorFiles = require(paths.vendor + "/rev-manifest.json");
+
+  fs.readFile(paths.html.dest, 'utf8', function (err,data) {
+    if (err) {
+      return $.util.log(err);
+    }
+
+    files.forEach(function(file) {
+      data = data.replace(file.name.split('.')[0] + '.min.js', file.name);
+    });
+    for (var file in vendorFiles) {
+      if (vendorFiles.hasOwnProperty(file)) data = data.replace(file, vendorFiles[file]);
+    }
+
+    fs.writeFile(paths.html.dest, data, 'utf8', function (err) {
+      if (err) return $.util.log(err);
+    });
+  });
+}
+
 gulp.task('webpack:build', ['js:lint'], function() {
+  webpackConfig.output.path = paths.js.dest;
   if (production) {
+    // Turning off dev settings
+    webpackConfig.bail = true;
+    webpackConfig.debug = false;
+    webpackConfig.profile = false;
+    webpackConfig.output.pathInfo = false;
+
+    // Adding production settings
     webpackConfig.output.filename = "[name].[hash].min.js";
     webpackConfig.plugins = webpackConfig.plugins.concat(
       new webpack.DefinePlugin({
@@ -128,10 +166,6 @@ gulp.task('webpack:build', ['js:lint'], function() {
         threshold: 10240,
         minRatio: 0.8
       }));
-  } else {
-    webpackConfig.devtool = 'source-map';
-    webpackConfig.debug = true;
-    webpackConfig.output.pathInfo = true;
   }
 
   if (watch) webpackConfig.watch = true;
@@ -140,49 +174,33 @@ gulp.task('webpack:build', ['js:lint'], function() {
     if (err) throw new $.util.PluginError('webpack:build', err);
 
     $.util.log('webpack:build', stats.toString({
-      colors: true
+      colors: true,
+      reasons: true
     }));
 
     if (production) rev(stats.toJson().assets);
 
+    if (!browserSync.active) gulp.start('browser:sync');
+
     if (watch) {
       gulp.start('js:lint');
-      browserSync.reload({once: true});
+      var s = production ? 200 : 0; // need to wait for rev to finish
+      setTimeout(browserSync.reload, s);
     }
   });
 });
-
-function rev(files) {
-  var vendorFiles = require(output + "/vendor/rev-manifest.json");
-
-  fs.readFile(output + "/index.html", 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-
-    files.forEach(function(file) {
-      data = data.replace(file.name.split('.')[0] + '.min.js', file.name);
-    });
-    for (var file in vendorFiles) {
-      if (vendorFiles.hasOwnProperty(file)) data = data.replace(file, vendorFiles[file]);
-    }
-
-    fs.writeFile(output + "/index.html", data, 'utf8', function (err) {
-      if (err) return console.log(err);
-    });
-  });
-}
 
 gulp.task('default', $.taskListing);
 
 gulp.task('serve', function() {
   watch = true;
 
-  gulp.watch(config.paths.src.html, ['html', 'bs:reload']);
+  var ts = production ? ['build'] : ['html', 'bs:reload'];
+  gulp.watch(paths.html.src, ts);
 
-  return gulp.start('build', 'browser:sync');
+  return gulp.start('build');
 });
 
 gulp.task('build', ['clean'], function() {
-  return gulp.start('html', 'js:vendor', 'webpack:build');
+  return gulp.start('html', 'js:bower', 'webpack:build');
 });
