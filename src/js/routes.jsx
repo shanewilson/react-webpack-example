@@ -3,9 +3,9 @@
 var React = require('react');
 var Route = require('react-nested-router').Route;
 
-var HomeView = require('./views/home');
-var ProjectsView = require('./views/projects');
-var ProjectView = require('./views/project');
+var HomeView = require('./views/home.jsx');
+var ProjectsView = require('./views/projects.jsx');
+var ProjectView = require('./views/project.jsx');
 
 var Routes = React.createClass({
   render: function() {

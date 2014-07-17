@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var LinkTo = require('linkTo');
+var LinkTo = require('../linkTo/linkTo.jsx');
 var LinkToHome = LinkTo.Home;
 var LinkToProjects = LinkTo.Projects;
 var LinkToProject = LinkTo.Project;

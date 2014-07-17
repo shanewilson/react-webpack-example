@@ -9,7 +9,7 @@ module.exports = {
   bail: true,
   devtool: '#source-map',
   entry: {
-    app: './src/js/app'
+    app: './src/js/entry.jsx'
   },
   output: {
     path: '/dist/',
@@ -17,12 +17,7 @@ module.exports = {
     filename: "[name].js",
     chunkFilename: '[id].js'
   },
-  externals: [
-    // {
-    //   react: "React",
-    //   'react-nested-router': "Router"
-    // }
-  ],
+  externals: [],
   module: {
     preLoaders: [
       {
@@ -42,12 +37,7 @@ module.exports = {
     noParse: /\.min\.js/
   },
   resolve: {
-    extensions: ['', '.jsx', '.js', '.styl'],
-    modulesDirectories: ['src/styl', 'src/js', 'src/js/views', 'src/js/components', 'node_modules']
+    modulesDirectories: ['node_modules']
   },
-  plugins: [
-    // new webpack.ProvidePlugin({
-    //   React: "react"
-    // })
-  ]
+  plugins: []
 };
