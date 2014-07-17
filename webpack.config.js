@@ -3,33 +3,37 @@
 var webpack = require('webpack');
 
 module.exports = {
+  contentBase: __dirname + "/dist/",
   target: 'web',
   cache: true,
+  bail: true,
   devtool: '#source-map',
-  debug: true,
-  profile: true,
-  stats: {
-    colors: true,
-    reasons: true
-  },
   entry: {
     app: './src/js/app'
   },
   output: {
-    pathInfo: true,
+    path: '/dist/',
     publicPath: "/js/",
     filename: "[name].js",
     chunkFilename: '[id].js'
   },
   externals: [
-    {
-      react: "React"
-    }
+    // {
+    //   react: "React",
+    //   'react-nested-router': "Router"
+    // }
   ],
   module: {
+    preLoaders: [
+      {
+        test: /\.jsx?/,
+        exclude: __dirname + '/node_modules',
+        loader: 'jshint-loader!jsx-loader?harmony&insertPragma=React.DOM'
+      }
+    ],
     loaders: [
       { test: /\.jsx$/, loader: "jsx-loader?harmony&insertPragma=React.DOM" },
-      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
+      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader?paths=node_modules/jeet/stylus/' },
       { test: /\.html$/, loader: 'html-loader' },
       { test: /\.png$/, loader: "url-loader?mimetype=image/png" },
       { test: /\.gif$/, loader: "url-loader?mimetype=image/gif" },
@@ -42,8 +46,8 @@ module.exports = {
     modulesDirectories: ['src/styl', 'src/js', 'src/js/views', 'src/js/components', 'node_modules']
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      React: "react"
-    })
+    // new webpack.ProvidePlugin({
+    //   React: "react"
+    // })
   ]
 };

@@ -27,6 +27,6 @@
   "browser": true,
 
   "globals": {
-    "React": false
+    
   }
 }

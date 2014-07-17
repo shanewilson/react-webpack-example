@@ -11,19 +11,19 @@ var $ = require("gulp-load-plugins")({
 });
 
 var fs = require('graceful-fs');
-var browserSync = require('browser-sync');
+
 var webpack = require('webpack');
+var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = Object.create(require('./webpack.config.js'));
 var CompressionPlugin = require("compression-webpack-plugin");
 
 var production = !!$.util.env.production;
-var watch = false;
 
 // <paths>
 var paths = {
   "src": "./src",
   "dev": "./dist",
-  "stage": "./dist",
+  "stage": "./target",
   "bower": "./bower_components/**/*",
   js : {},
   html: {}
@@ -36,6 +36,42 @@ paths.vendor = paths.dest + "/vendor";
 paths.html.src = paths.src + "/index.html";
 paths.html.dest = paths.dest + "/index.html";
 // </paths>
+
+// <webpackConfig>
+if (production) {
+  // Adding production settings
+  webpackConfig.output.filename = "[name].[hash].min.js";
+  webpackConfig.plugins = webpackConfig.plugins.concat(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: {
+        except: ['require', 'export', '$super']
+      },
+      compress: {
+        sequences: true,
+        dead_code: true,
+        conditionals: true,
+        booleans: true,
+        unused: true,
+        if_return: true,
+        join_vars: true,
+        drop_console: true
+      }
+    }),
+    new CompressionPlugin({
+      asset: "{file}.gz",
+      algorithm: "gzip",
+      regExp: /\.js$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
+    }));
+}
+// </webpackConfig>
 
 $.util.log('Environment', $.util.colors.blue(production ? 'Production' : 'Development'));
 
@@ -64,21 +100,6 @@ gulp.task('html', function() {
     .pipe(gulp.dest(paths.dest));
 });
 
-gulp.task('browser:sync', function() {
-  return browserSync.init(null, {
-    server: {
-      baseDir: paths.dest
-    },
-    open: false,
-    notify: true
-  });
-});
-
-// Reload all Browsers
-gulp.task('bs:reload', function() {
-  browserSync.reload();
-});
-
 gulp.task('js:bower', function() {
   var stream = gulp.src(paths.bower);
 
@@ -92,30 +113,16 @@ gulp.task('js:bower', function() {
   return stream.pipe(gulp.dest(paths.vendor));
 });
 
-gulp.task('js:lint', function() {
-  return gulp.src(paths.js.src)
-    .pipe($.react())
-    .pipe($.jscs())
-    .on('error', function(e) {
-      $.util.log(e.message);
-      if (!watch) process.exit(0);
-    })
-    .pipe($.jshint('.jshintrc'))
-    .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!watch, $.jshint.reporter('fail')));
-});
-
 function rev(files) {
   var vendorFiles = require(paths.vendor + "/rev-manifest.json");
 
   fs.readFile(paths.html.dest, 'utf8', function (err,data) {
-    if (err) {
-      return $.util.log(err);
-    }
+    if (err) return $.util.log(err);
 
     files.forEach(function(file) {
       data = data.replace(file.name.split('.')[0] + '.min.js', file.name);
     });
+
     for (var file in vendorFiles) {
       if (vendorFiles.hasOwnProperty(file)) data = data.replace(file, vendorFiles[file]);
     }
@@ -126,81 +133,58 @@ function rev(files) {
   });
 }
 
-gulp.task('webpack:build', ['js:lint'], function() {
+gulp.task('webpack:build', ['html', 'js:lint', 'js:bower'], function() {
   webpackConfig.output.path = paths.js.dest;
-  if (production) {
-    // Turning off dev settings
-    webpackConfig.bail = true;
-    webpackConfig.debug = false;
-    webpackConfig.profile = false;
-    webpackConfig.output.pathInfo = false;
-
-    // Adding production settings
-    webpackConfig.output.filename = "[name].[hash].min.js";
-    webpackConfig.plugins = webpackConfig.plugins.concat(
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production')
-        }
-      }),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-        mangle: {
-          except: ['require', 'export', '$super']
-        },
-        compress: {
-          sequences: true,
-          dead_code: true,
-          conditionals: true,
-          booleans: true,
-          unused: true,
-          if_return: true,
-          join_vars: true,
-          drop_console: true
-        }
-      }),
-      new CompressionPlugin({
-        asset: "{file}.gz",
-        algorithm: "gzip",
-        regExp: /\.js$|\.html$/,
-        threshold: 10240,
-        minRatio: 0.8
-      }));
-  }
-
-  if (watch) webpackConfig.watch = true;
 
   return webpack(webpackConfig, function(err, stats) {
     if (err) throw new $.util.PluginError('webpack:build', err);
 
-    $.util.log('webpack:build', stats.toString({
+    $.util.log('Webpack', stats.toString({
       colors: true,
       reasons: true
     }));
 
     if (production) rev(stats.toJson().assets);
-
-    if (!browserSync.active) gulp.start('browser:sync');
-
-    if (watch) {
-      gulp.start('js:lint');
-      var s = production ? 200 : 0; // need to wait for rev to finish
-      setTimeout(browserSync.reload, s);
-    }
   });
 });
 
+gulp.task("webpack:serve", ['html', 'js:bower'], function() {
+    // Start a webpack-dev-server
+    webpackConfig.bail = false;
+    webpackConfig.debug = true;
+    webpackConfig.profile = true;
+    webpackConfig.output.pathInfo = true;
+    webpackConfig.devtool = "eval";
+
+    var compiler = webpack(webpackConfig);
+
+    new WebpackDevServer(compiler, {
+      noInfo: true,
+      contentBase: webpackConfig.contentBase,
+      publicPath: webpackConfig.output.publicPath,
+      stats: {
+        colors:true,
+        reasons: true
+      }
+    }).listen(9000, "localhost", function(err) {
+        if(err) throw new $.util.PluginError("webpack:serve", err);
+
+        // Server listening
+        $.util.log("Starting", $.util.colors.blue("Webpack Development Server"));
+        $.util.log("Listening", $.util.colors.magenta("http://localhost:9000/webpack-dev-server/index.html"));
+    });
+});
+
 gulp.task('default', $.taskListing);
+// var watch = false;
+gulp.task('serve', ['clean'], function() {
+  // watch = true;
+  // gulp.watch(paths.js.src, ['js:lint']);
+  gulp.watch(paths.html.src, ['html']);
 
-gulp.task('serve', function() {
-  watch = true;
-
-  var ts = production ? ['build'] : ['html', 'bs:reload'];
-  gulp.watch(paths.html.src, ts);
-
-  return gulp.start('build');
+  gulp.start('webpack:serve');
 });
 
 gulp.task('build', ['clean'], function() {
-  return gulp.start('html', 'js:bower', 'webpack:build');
+  return gulp.start('webpack:build');
 });

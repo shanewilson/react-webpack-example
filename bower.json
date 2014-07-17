@@ -2,6 +2,6 @@
   "name": "webpack-gulp-starter",
   "version": "1.0.0",
   "dependencies": {
-    "react": "0.11.0-rc1"
+
   }
 }
