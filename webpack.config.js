@@ -37,6 +37,7 @@ module.exports = {
     noParse: /\.min\.js/
   },
   resolve: {
+    extentions: ['jsx'],
     modulesDirectories: ['node_modules']
   },
   plugins: []

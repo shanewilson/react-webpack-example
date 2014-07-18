@@ -83,7 +83,7 @@ gulp.task('clean', function() {
 gulp.task('html', function() {
   return gulp.src(paths.html.src)
     .pipe($.if(production, $.replace('.js', '.min.js')))
-    .pipe($.if(production,
+    .pipe($.if(false,
       $.cdnizer({
         fallbackTest: '<script>if(typeof ${ test } === "undefined") cdnizerLoad("${ filepath }");</script>',
         files: [
@@ -114,7 +114,8 @@ gulp.task('js:bower', function() {
 });
 
 function rev(files) {
-  var vendorFiles = require(paths.vendor + "/rev-manifest.json");
+  var manifest = paths.vendor + "/rev-manifest.json";
+  var vendorFiles = fs.existsSync(manifest) ? require(manifest) : [];
 
   fs.readFile(paths.html.dest, 'utf8', function (err,data) {
     if (err) return $.util.log(err);
@@ -133,7 +134,7 @@ function rev(files) {
   });
 }
 
-gulp.task('webpack:build', ['html', 'js:lint', 'js:bower'], function() {
+gulp.task('webpack:build', ['html', 'js:bower'], function() {
   webpackConfig.output.path = paths.js.dest;
 
   return webpack(webpackConfig, function(err, stats) {

@@ -16,12 +16,26 @@
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
+    ],
+    "collectCoverage": true,
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
+    "testFileExtensions": [
+      "js"
+    ],
+    "testDirectoryName": "components",
+    "testPathDirs": [
+      "<rootDir>/src/js"
     ]
   },
   "dependencies": {
     "react": "0.10.0",
+    "react-nested-router": "0.2.1",
     "react-tools": "0.10.0",
-    "react-nested-router": "0.2.1"
+    "rnr-constrained-route": "0.0.1"
   },
   "devDependencies": {
     "bower": "1.3.8",
@@ -62,7 +76,8 @@
     "upgrade": "./node_modules/npm-check-updates/bin/npm-check-updates -u && npm test",
     "test": "jest",
     "serve": "./node_modules/gulp/bin/gulp.js serve",
-    "build": "jest && ./node_modules/gulp/bin/gulp.js build",
+    "build": "./node_modules/gulp/bin/gulp.js build",
+    "stage": "./node_modules/gulp/bin/gulp.js build --production",
     "dist": "jest && ./node_modules/gulp/bin/gulp.js build --production"
   }
 }

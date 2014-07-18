@@ -1,14 +1,16 @@
 "use strict";
 
+require('./appStyle.styl');
+
 var React = require('react');
 
-var Navigation = require('./components/navigation/navigation.jsx');
+var SiteNavigation = require('../navigation/siteNavigation.jsx');
 
 var App = React.createClass({
   render: function() {
     return (
       <div>
-        <Navigation/>
+        <SiteNavigation />
         <article>{this.props.activeRoute}</article>
       </div>
     );

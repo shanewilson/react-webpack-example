@@ -1,33 +1,56 @@
 "use strict";
 
+require('./linkToStyle.styl');
+
 var React = require('react');
 
 var Link = require('react-nested-router').Link;
 
-var Home = React.createClass({
+var LinkTo = React.createClass({
+  propTypes: {
+    children: React.PropTypes.string.isRequired,
+    target: React.PropTypes.string.isRequired
+  },
   render: function() {
-    return <Link className="link-home" to="home">{this.props.children}</Link>;
-  }
-});
-
-var Projects = React.createClass({
-  render: function() {
-    return <Link className="link-projects" to="projects">{this.props.children}</Link>;
-  }
-});
-
-var Project = React.createClass({
-  render: function() {
-    return (
-      <Link className="link-projects" to="project" projectId={this.props.projectId}>
-        {this.props.children}
-      </Link>
+    var target = this.props.target;
+    return this.transferPropsTo(
+      <Link className={"LinkTo LinkTo" + target} to={target}>{this.props.children}</Link>
     );
   }
 });
 
+var LinkToHome = React.createClass({
+  propTypes: {
+    children: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return <LinkTo target="Home">{this.props.children}</LinkTo>;
+  }
+});
+
+var LinkToProjects = React.createClass({
+  propTypes: {
+    children: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return <LinkTo target="Projects">{this.props.children}</LinkTo>;
+  }
+});
+
+var LinkToProject = React.createClass({
+  propTypes: {
+    children: React.PropTypes.string,
+    projectId:  React.PropTypes.string.isRequired
+  },
+  render: function() {
+    var linkName = this.props.children || this.props.projectId;
+    return <LinkTo target="Project" projectId={this.props.projectId}>{linkName}</LinkTo>;
+  }
+});
+
 module.exports = {
-  Home: Home,
-  Projects: Projects,
-  Project: Project,
+  LinkTo: LinkTo,
+  LinkToHome: LinkToHome,
+  LinkToProjects: LinkToProjects,
+  LinkToProject: LinkToProject,
 };
