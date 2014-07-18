@@ -2,6 +2,8 @@
 
 var webpack = require('webpack');
 
+var jsxLoader = 'jsx-loader?harmony&insertPragma=React.DOM';
+
 module.exports = {
   contentBase: __dirname + "/dist/",
   target: 'web',
@@ -9,7 +11,7 @@ module.exports = {
   bail: true,
   devtool: '#source-map',
   entry: {
-    app: './src/js/entry.jsx'
+    app: './src/entry.jsx'
   },
   output: {
     path: '/dist/',
@@ -23,12 +25,12 @@ module.exports = {
       {
         test: /\.jsx?/,
         exclude: __dirname + '/node_modules',
-        loader: 'jshint-loader!jsx-loader?harmony&insertPragma=React.DOM'
+        loader: 'jshint-loader!' + jsxLoader
       }
     ],
     loaders: [
-      { test: /\.jsx$/, loader: "jsx-loader?harmony&insertPragma=React.DOM" },
-      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader?paths=node_modules/jeet/stylus/' },
+      { test: /\.jsx$/, loader: jsxLoader },
+      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
       { test: /\.html$/, loader: 'html-loader' },
       { test: /\.png$/, loader: "url-loader?mimetype=image/png" },
       { test: /\.gif$/, loader: "url-loader?mimetype=image/gif" },
@@ -37,7 +39,7 @@ module.exports = {
     noParse: /\.min\.js/
   },
   resolve: {
-    extentions: ['jsx'],
+    extentions: ['jsx', 'styl'],
     modulesDirectories: ['node_modules']
   },
   plugins: []

@@ -23,7 +23,7 @@ var production = !!$.util.env.production;
 var paths = {
   "src": "./src",
   "dev": "./dist",
-  "stage": "./target",
+  "stage": "./dist",
   "bower": "./bower_components/**/*",
   js : {},
   html: {}

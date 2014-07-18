@@ -1,10 +1,8 @@
 "use strict";
 
-require('./appStyle.styl');
-
 var React = require('react');
 
-var SiteNavigation = require('../navigation/siteNavigation.jsx');
+var SiteNavigation = require('./components/navigation/siteNavigation.jsx');
 
 var App = React.createClass({
   render: function() {
