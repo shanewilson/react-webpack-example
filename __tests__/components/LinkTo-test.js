@@ -1,4 +1,4 @@
-var __path__ = './linkTo.jsx';
+var __path__ = '../../src/components/LinkTo.jsx';
 
 jest.dontMock(__path__);
 
@@ -8,7 +8,7 @@ describe('LinkTo', function() {
     var TestUtils = React.addons.TestUtils;
 
     var App = React.createClass({render:function(){return null;}});
-    var Routes = require('../routes/routes.jsx');
+    var Routes = require('../../src/routes.jsx');
 
     var routes = <Routes app={App}/>
     TestUtils.renderIntoDocument(routes);
@@ -19,20 +19,18 @@ describe('LinkTo', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
       var LinkTo = require(__path__).LinkTo;
-      var Component = <LinkTo target="Home" />;
-      TestUtils.renderIntoDocument(Component);
+      var Component = TestUtils.renderIntoDocument(<LinkTo target="home" />);
 
-      var element = TestUtils.findRenderedDOMComponentWithClass(Component, 'LinkTo');
+      var element = TestUtils.findRenderedDOMComponentWithClass(Component, 'ns-LinkTo');
       expect(element).toBeDefined();
-      element = TestUtils.findRenderedDOMComponentWithClass(Component, 'LinkToHome');
+      element = TestUtils.findRenderedDOMComponentWithClass(Component, 'ns-LinkTo--home');
       expect(element).toBeDefined();
     });
     it('sets display name', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
       var LinkTo = require(__path__).LinkTo;
-      var Component = <LinkTo target="Home">Link Name</LinkTo>;
-      TestUtils.renderIntoDocument(Component);
+      var Component = TestUtils.renderIntoDocument(<LinkTo target="home">Link Name</LinkTo>);
 
       var element = Component.getDOMNode();
       expect(element.innerHTML).toEqual('Link Name');
@@ -41,8 +39,7 @@ describe('LinkTo', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
       var LinkTo = require(__path__).LinkTo;
-      var Component = <LinkTo extra="true" target="Home" />;
-      TestUtils.renderIntoDocument(Component);
+      var Component = TestUtils.renderIntoDocument(<LinkTo extra="true" target="home" />);
 
       var Link = require('react-nested-router').Link;
       var LinkComponent = TestUtils.findRenderedComponentWithType(Component, Link);
@@ -51,13 +48,30 @@ describe('LinkTo', function() {
     });
   });
 
-  describe('LinkToProject', function() {
+  describe.only('Home', function() {
+    it('has a matching route', function() {
+      var TestUtils = require('react/addons').addons.TestUtils;
+
+      var LinkTo = require(__path__);
+      var Component = TestUtils.renderIntoDocument(<LinkTo.Home />);
+    });
+  });
+
+  describe('Projects', function() {
+    it('has a matching route', function() {
+      var TestUtils = require('react/addons').addons.TestUtils;
+
+      var LinkTo = require(__path__);
+      var Component = TestUtils.renderIntoDocument(<LinkTo.Projects />);
+    });
+  });
+
+  describe('Project', function() {
     it('passes on a project id', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkToProject = require(__path__).LinkToProject;
-      var Component = <LinkToProject projectId="123" />;
-      TestUtils.renderIntoDocument(Component);
+      var LinkToProject = require(__path__).Project;
+      var Component = TestUtils.renderIntoDocument(<LinkToProject projectId="123" />);
 
       var LinkTo = require(__path__).LinkTo;
       var LinkToComponent = TestUtils.findRenderedComponentWithType(Component, LinkTo);
@@ -67,9 +81,8 @@ describe('LinkTo', function() {
     it('uses link name when given', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkToProject = require(__path__).LinkToProject;
-      var Component = <LinkToProject projectId="123">Project 123</LinkToProject>;
-      TestUtils.renderIntoDocument(Component);
+      var LinkToProject = require(__path__).Project;
+      var Component = TestUtils.renderIntoDocument(<LinkToProject projectId="123">Project 123</LinkToProject>);
 
       var LinkTo = require(__path__).LinkTo;
       var LinkToComponent = TestUtils.findRenderedComponentWithType(Component, LinkTo);
@@ -79,9 +92,8 @@ describe('LinkTo', function() {
     it('uses project id as name by default', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkToProject = require(__path__).LinkToProject;
-      var Component = <LinkToProject projectId="123" />;
-      TestUtils.renderIntoDocument(Component);
+      var LinkToProject = require(__path__).Project;
+      var Component = TestUtils.renderIntoDocument(<LinkToProject projectId="123" />);
 
       var LinkTo = require(__path__).LinkTo;
       var LinkToComponent = TestUtils.findRenderedComponentWithType(Component, LinkTo);

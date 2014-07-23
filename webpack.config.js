@@ -2,7 +2,7 @@
 
 var webpack = require('webpack');
 
-var jsxLoader = 'jsx-loader?harmony&insertPragma=React.DOM';
+var jsxLoader = 'jsx?insertPragma=React.DOM';
 
 module.exports = {
   contentBase: __dirname + "/dist/",
@@ -25,16 +25,16 @@ module.exports = {
       {
         test: /\.jsx?/,
         exclude: __dirname + '/node_modules',
-        loader: 'jshint-loader!' + jsxLoader
+        loader: 'jshint!' + jsxLoader
       }
     ],
     loaders: [
       { test: /\.jsx$/, loader: jsxLoader },
-      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
-      { test: /\.html$/, loader: 'html-loader' },
-      { test: /\.png$/, loader: "url-loader?mimetype=image/png" },
-      { test: /\.gif$/, loader: "url-loader?mimetype=image/gif" },
-      { test: /\.jpe?g$/, loader: "url-loader?mimetype=image/jpeg" }
+      { test: /\.styl$/, loader: 'style!css!stylus?paths=node_modules/'},
+      { test: /\.scss$/, loader: 'style!css!sass?includePaths[]=node_modules/node-neat/assets/stylesheets/&includePaths[]=node_modules/node-bourbon/assets/stylesheets/'},
+      { test: /\.png$/, loader: "url?mimetype=image/png" },
+      { test: /\.gif$/, loader: "url?mimetype=image/gif" },
+      { test: /\.jpe?g$/, loader: "url?mimetype=image/jpeg" }
     ],
     noParse: /\.min\.js/
   },
