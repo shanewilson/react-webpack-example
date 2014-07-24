@@ -31,7 +31,6 @@ module.exports = {
     loaders: [
       { test: /\.jsx$/, loader: jsxLoader },
       { test: /\.styl$/, loader: 'style!css!stylus?paths=node_modules/'},
-      { test: /\.scss$/, loader: 'style!css!sass?includePaths[]=node_modules/node-neat/assets/stylesheets/&includePaths[]=node_modules/node-bourbon/assets/stylesheets/'},
       { test: /\.png$/, loader: "url?mimetype=image/png" },
       { test: /\.gif$/, loader: "url?mimetype=image/gif" },
       { test: /\.jpe?g$/, loader: "url?mimetype=image/jpeg" }
