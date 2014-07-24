@@ -9,7 +9,7 @@ var App = React.createClass({
     return (
       <div>
         <NavBar />
-        <div>{this.props.activeRoute}</div>
+        <this.props.activeRouteHandler/>
       </div>
     );
   }

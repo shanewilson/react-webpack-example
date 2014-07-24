@@ -27,13 +27,22 @@ var LinkTo = React.createClass({
 
 var Home = React.createClass({
   render: function() {
-    return <LinkTo target="home">{this.props.children}</LinkTo>;
+    var linkName = this.props.children || "Home";
+    return <LinkTo target="home">{linkName}</LinkTo>;
   }
 });
 
 var Projects = React.createClass({
   render: function() {
-    return <LinkTo target="projects">{this.props.children}</LinkTo>;
+    var linkName = this.props.children || "Projects";
+    return <LinkTo target="projects">{linkName}</LinkTo>;
+  }
+});
+
+var Styleguide = React.createClass({
+  render: function() {
+    var linkName = this.props.children || "Styleguide";
+    return <LinkTo target="styleguide">{linkName}</LinkTo>;
   }
 });
 
@@ -66,5 +75,6 @@ module.exports = {
   Home: Home,
   Projects: Projects,
   Project: Project,
+  Styleguide: Styleguide,
   External: External
 };

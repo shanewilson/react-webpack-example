@@ -1,4 +1,4 @@
-var __path__ = '../../src/components/LinkTo.jsx';
+var __path__ = '../../src/js/components/LinkTo.jsx';
 
 jest.dontMock(__path__);
 
@@ -8,7 +8,7 @@ describe('LinkTo', function() {
     var TestUtils = React.addons.TestUtils;
 
     var App = React.createClass({render:function(){return null;}});
-    var Routes = require('../../src/routes.jsx');
+    var Routes = require('../../src/js/routes.jsx');
 
     var routes = <Routes app={App}/>
     TestUtils.renderIntoDocument(routes);
