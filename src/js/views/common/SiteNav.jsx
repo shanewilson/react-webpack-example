@@ -3,19 +3,20 @@
 var React = require('react');
 
 var Links = require('../../components/LinkTo.jsx');
+var NavBar = require('../../components/NavBar.jsx');
 
-var NavBar = React.createClass({
+var SiteNav = React.createClass({
   render: function() {
     return (
-      <nav className="ns-NavBar">
+      <NavBar>
         <ul>
-          <li><Links.Home>Home</Links.Home></li>
+          <li><Links.Home /></li>
           <li><Links.Projects /></li>
           <li><Links.Styleguide /></li>
         </ul>
-      </nav>
+      </NavBar>
     );
   }
 });
 
-module.exports = NavBar;
+module.exports = SiteNav;

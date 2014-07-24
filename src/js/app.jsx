@@ -2,13 +2,13 @@
 
 var React = require('react');
 
-var NavBar = require('./views/common/NavBar.jsx');
+var SiteNav = require('./views/common/SiteNav.jsx');
 
 var App = React.createClass({
   render: function() {
     return (
       <div>
-        <NavBar />
+        <SiteNav />
         <this.props.activeRouteHandler/>
       </div>
     );
