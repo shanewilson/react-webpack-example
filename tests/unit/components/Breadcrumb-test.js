@@ -1,4 +1,4 @@
-var __path__ = '../../src/js/components/Breadcrumb.jsx';
+var __path__ = '../../../src/js/components/Breadcrumb.jsx';
 
 jest.dontMock(__path__);
 

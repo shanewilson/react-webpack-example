@@ -1,4 +1,4 @@
-var __path__ = '../../src/js/components/NavBar.jsx';
+var __path__ = '../../../src/js/components/NavBar.jsx';
 
 jest.dontMock(__path__);
 
