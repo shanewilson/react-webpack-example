@@ -177,10 +177,8 @@ gulp.task("webpack:serve", ['html', 'js:bower'], function() {
 });
 
 gulp.task('default', $.taskListing);
-// var watch = false;
+
 gulp.task('serve', ['clean'], function() {
-  // watch = true;
-  // gulp.watch(paths.js.src, ['js:lint']);
   gulp.watch(paths.html.src, ['html']);
 
   gulp.start('webpack:serve');

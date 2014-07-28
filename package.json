@@ -75,12 +75,12 @@
     "clean": "rm -rf ./node_modules/ ./bower_components/",
     "deps": "npm install --quiet --loglevel warn && ./node_modules/bower/bin/bower install --quiet",
     "upgrade": "./node_modules/npm-check-updates/bin/npm-check-updates -u && npm test",
-    "unittest": "jest",
+    "test": "jest",
     "browsertest": "./node_modules/nightwatch/bin/nightwatch -e firefox,chrome",
-    "test": "npm run unittest && npm run browsertest",
     "serve": "./node_modules/gulp/bin/gulp.js serve",
     "build": "./node_modules/gulp/bin/gulp.js build",
-    "stage": "./node_modules/gulp/bin/gulp.js build --production",
-    "dist": "npm test && ./node_modules/gulp/bin/gulp.js build --production"
+    "prod": "./node_modules/gulp/bin/gulp.js build --production",
+    "stage": "npm test && npm run build && npm run browsertest",
+    "dist": "npm test && npm run prod && npm run browsertest"
   }
 }
