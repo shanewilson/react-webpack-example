@@ -2,7 +2,7 @@
 
 var React = require('react/addons');
 
-var Link = require('react-nested-router').Link;
+var Link = require('react-router').Link;
 
 var LinkTo = React.createClass({
   propTypes: {
