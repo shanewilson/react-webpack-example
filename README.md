@@ -1,4 +1,4 @@
-`Buzzwords: #reactjs #gulp #webpack #jest #stylus #bower #selenium`
+`Buzzwords: #reactjs #gulp #webpack #jest #stylus #bower #selenium #hot-module-replacement`
 
 Technologies
 =
@@ -24,51 +24,6 @@ The project is setup to use Bower and NPM
 Tests
 =
 
-Browser tests are run with Nightwatch
-
-```
-> npm run browsertest
-...
-
-Starting selenium server in parallel mode... started - PID:  69637
-
-Started child process for env:  firefox
-
-Started child process for env:  chrome
-
- chrome 	Test Test Suite
- chrome 	===============
- chrome
- chrome 	Results for:  step one
- chrome 	✔  Element <body> was visible after 74 milliseconds.
- chrome 	✔  Element <button[name=btnG]> was visible after 54 milliseconds.
- chrome
- chrome 	OK. 2 assertions passed. (4753 ms)
- chrome
- chrome 	Results for:  step two
- chrome 	✔  Testing if element <#main> contains text: "The Night Watch".
- chrome
- chrome 	OK. 1 assertions passed. (2251 ms)
- chrome
- chrome 	OK. 3 total assertions passed. (7036 ms)
-
- firefox 	Test Test Suite
- firefox 	===============
- firefox
- firefox 	Results for:  step one
- firefox 	✔  Element <body> was visible after 176 milliseconds.
- firefox 	✔  Element <button[name=btnG]> was visible after 53 milliseconds.
- firefox
- firefox 	OK. 2 assertions passed. (4863 ms)
- firefox
- firefox 	Results for:  step two
- firefox 	✔  Testing if element <#main> contains text: "The Night Watch".
- firefox
- firefox 	OK. 1 assertions passed. (3375 ms)
- firefox
- firefox 	OK. 3 total assertions passed. (8273 ms)
-```
-
 Unit tests are run using Jest.
 
 ```
@@ -81,6 +36,59 @@ Found 3 matching tests...
  PASS  __tests__/components/LinkTo-test.js (3.064s)
 3 tests passed (3 total)
 Run time: 5.97s
+```
+
+Browser tests are run with Nightwatch
+
+```
+> npm run browsertest
+...
+
+Starting selenium server in parallel mode... started - PID:  11996
+
+Started child process for env:  firefox
+
+Started child process for env:  chrome
+
+ firefox 	Test Test Suite
+ firefox 	===============
+ firefox
+ firefox 	Results for:  step one
+ firefox 	✔  Element <body> was visible after 93 milliseconds.
+ firefox 	✔  Element <nav> was visible after 50 milliseconds.
+ firefox 	✔  Testing if element <nav> is present.
+ firefox 	✔  Testing if element <h1> contains text: "Projects".
+ firefox
+ firefox 	OK. 4 assertions passed. (3855 ms)
+ firefox
+ firefox 	Results for:  step two
+ firefox 	✔  Testing if element <.ns-LinkTo--projects> is present.
+ firefox 	✔  Element <.ns-LinkTo--project> was visible after 26 milliseconds.
+ firefox 	✔  Testing if element <h1> contains text: "Project PR1".
+ firefox
+ firefox 	OK. 3 assertions passed. (542 ms)
+ firefox
+ firefox 	OK. 7 total assertions passed. (4429 ms)
+
+ chrome 	Test Test Suite
+ chrome 	===============
+ chrome
+ chrome 	Results for:  step one
+ chrome 	✔  Element <body> was visible after 58 milliseconds.
+ chrome 	✔  Element <nav> was visible after 41 milliseconds.
+ chrome 	✔  Testing if element <nav> is present.
+ chrome 	✔  Testing if element <h1> contains text: "Projects".
+ chrome
+ chrome 	OK. 4 assertions passed. (3647 ms)
+ chrome
+ chrome 	Results for:  step two
+ chrome 	✔  Testing if element <.ns-LinkTo--projects> is present.
+ chrome 	✔  Element <.ns-LinkTo--project> was visible after 52 milliseconds.
+ chrome 	✔  Testing if element <h1> contains text: "Project PR1".
+ chrome
+ chrome 	OK. 3 assertions passed. (1108 ms)
+ chrome
+ chrome 	OK. 7 total assertions passed. (4790 ms)
 ```
 
 Development
@@ -105,13 +113,10 @@ Webpack bundles all the assets in production mode and Gulp creates unique file n
 npm run dist
 ...
 Found 3 matching tests...
- PASS  __tests__/components/Breadcrumb-test.js (2.396s)
- PASS  __tests__/components/NavBar-test.js (2.473s)
- PASS  __tests__/components/LinkTo-test.js (3.064s)
-3 tests passed (3 total)
-Run time: 5.97s
 ...
 Environment Production
+...
+Starting selenium server in parallel mode...
 ...
 > cd dist
 > python -m SimpleHTTPServer
@@ -119,3 +124,9 @@ Serving HTTP on 0.0.0.0 port 8000
 ...
 > open http://localhost:8000/
 ```
+
+Resources
+=
+
+- https://github.com/petehunt/webpack-howto
+- http://gaearon.github.io/react-hot-loader/
