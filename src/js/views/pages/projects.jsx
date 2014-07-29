@@ -26,7 +26,7 @@ var Projects = React.createClass({
           ]
         });
       }
-    }.bind(this), 2000);
+    }.bind(this), 0);
   },
   render: function() {
     return (

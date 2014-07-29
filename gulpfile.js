@@ -40,6 +40,12 @@ paths.html.dest = paths.dest + "/index.html";
 // <webpackConfig>
 if (production) {
   // Adding production settings
+  webpackConfig.bail = true;
+  webpackConfig.debug = false;
+  webpackConfig.profile = false;
+  webpackConfig.output.pathInfo = false;
+  webpackConfig.devtool = "#source-map";
+
   webpackConfig.output.filename = "[name].[hash].min.js";
   webpackConfig.plugins = webpackConfig.plugins.concat(
     new webpack.DefinePlugin({
@@ -151,28 +157,25 @@ gulp.task('webpack:build', ['html', 'js:bower'], function() {
 
 gulp.task("webpack:serve", ['html', 'js:bower'], function() {
     // Start a webpack-dev-server
-    webpackConfig.bail = false;
-    webpackConfig.debug = true;
-    webpackConfig.profile = true;
-    webpackConfig.output.pathInfo = true;
-    webpackConfig.devtool = "eval";
-
+    var server = "localhost";
+    var port = 9000;
     var compiler = webpack(webpackConfig);
 
     new WebpackDevServer(compiler, {
-      noInfo: true,
+      noInfo: false,
+      hot: true,
       contentBase: webpackConfig.contentBase,
       publicPath: webpackConfig.output.publicPath,
       stats: {
         colors:true,
         reasons: true
       }
-    }).listen(9000, "localhost", function(err) {
+    }).listen(port, server, function(err) {
         if(err) throw new $.util.PluginError("webpack:serve", err);
 
         // Server listening
         $.util.log("Starting", $.util.colors.blue("Webpack Development Server"));
-        $.util.log("Listening", $.util.colors.magenta("http://localhost:9000/webpack-dev-server/index.html"));
+        $.util.log("Listening", $.util.colors.magenta("http://"+server+":"+port+"/webpack-dev-server/index.html"));
     });
 });
 

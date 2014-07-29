@@ -72,7 +72,7 @@ Started child process for env:  chrome
 Unit tests are run using Jest.
 
 ```
-> npm run unittest
+> npm test
 ...
 
 Found 3 matching tests...
@@ -83,19 +83,13 @@ Found 3 matching tests...
 Run time: 5.97s
 ```
 
-You can also run all tests
-
-```
-> npm test
-```
-
 Development
 =
 
 The development server is setup using Webpack
 
 ```
-> npm run serve
+> npm start
 Environment Development
 ...
 Starting Webpack Development Server

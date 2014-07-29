@@ -8,12 +8,17 @@ module.exports = {
   contentBase: __dirname + "/dist/",
   target: 'web',
   cache: true,
-  bail: true,
-  devtool: '#source-map',
-  entry: {
-    app: './src/entry.jsx'
-  },
+  bail: false,
+  debug: true,
+  profile: true,
+  devtool: "eval",
+  entry: [
+    'webpack-dev-server/client?http://localhost:9000',
+    'webpack/hot/dev-server',
+    './src/entry.jsx'
+  ],
   output: {
+    pathInfo: true,
     path: '/dist/',
     publicPath: "/js/",
     filename: "[name].js",
@@ -29,7 +34,7 @@ module.exports = {
       }
     ],
     loaders: [
-      { test: /\.jsx$/, loader: jsxLoader },
+      { test: /\.jsx$/, loaders: ['react-hot', jsxLoader] },
       { test: /\.styl$/, loader: 'style!css!stylus?paths=node_modules/'},
       { test: /\.png$/, loader: "url?mimetype=image/png" },
       { test: /\.gif$/, loader: "url?mimetype=image/gif" },
@@ -38,8 +43,9 @@ module.exports = {
     noParse: /\.min\.js/
   },
   resolve: {
-    extentions: ['jsx', 'styl'],
-    modulesDirectories: ['node_modules']
+    extentions: ['jsx', 'styl']
   },
-  plugins: []
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
