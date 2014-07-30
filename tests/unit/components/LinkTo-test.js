@@ -57,6 +57,26 @@ describe('LinkTo', function() {
     });
   });
 
+
+  describe.only('Styleguide', function() {
+    it('has a matching route', function() {
+      var TestUtils = require('react/addons').addons.TestUtils;
+
+      var LinkTo = require(__path__);
+      var Component = TestUtils.renderIntoDocument(<LinkTo.Styleguide />);
+    });
+  });
+
+
+  describe.only('Cart', function() {
+    it('has a matching route', function() {
+      var TestUtils = require('react/addons').addons.TestUtils;
+
+      var LinkTo = require(__path__);
+      var Component = TestUtils.renderIntoDocument(<LinkTo.Cart />);
+    });
+  });
+
   describe('Projects', function() {
     it('has a matching route', function() {
       var TestUtils = require('react/addons').addons.TestUtils;

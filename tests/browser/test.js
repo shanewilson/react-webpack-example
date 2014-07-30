@@ -5,18 +5,18 @@ module.exports = {
       .waitForElementVisible('body', 1000)
       .waitForElementVisible('nav', 1000)
       .assert.elementPresent('nav')
-      .click('.ns-LinkTo--projects')
+      .click('.ns-LinkTo--widgets')
       .pause(200)
-      .assert.containsText('h1', 'Projects')
+      .assert.containsText('h1', 'Widgets')
   },
 
   "step two" : function (browser) {
     browser
-      .assert.elementPresent('.ns-LinkTo--projects')
-      .waitForElementVisible('.ns-LinkTo--project', 1000)
-      .click('.ns-LinkTo--project')
+      .assert.elementPresent('.ns-LinkTo--widgets')
+      .waitForElementVisible('.ns-LinkTo--widget', 1000)
+      .click('.ns-LinkTo--widget')
       .pause(200)
-      .assert.containsText('h1', 'Project PR1')
+      .assert.containsText('h1', 'Widget WD1')
       .end();
   }
 };

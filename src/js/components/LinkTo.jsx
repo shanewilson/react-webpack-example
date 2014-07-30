@@ -32,10 +32,10 @@ var Home = React.createClass({
   }
 });
 
-var Projects = React.createClass({
+var Widgets = React.createClass({
   render: function() {
-    var linkName = this.props.children || "Projects";
-    return <LinkTo target="projects">{linkName}</LinkTo>;
+    var linkName = this.props.children || "Widgets";
+    return <LinkTo target="widgets">{linkName}</LinkTo>;
   }
 });
 
@@ -46,13 +46,20 @@ var Styleguide = React.createClass({
   }
 });
 
-var Project = React.createClass({
+var Widget = React.createClass({
   propTypes: {
-    projectId:  React.PropTypes.string.isRequired
+    widgetId:  React.PropTypes.string.isRequired
   },
   render: function() {
-    var linkName = this.props.children || this.props.projectId;
-    return <LinkTo target="project" projectId={this.props.projectId}>{linkName}</LinkTo>;
+    var linkName = this.props.children || this.props.widgetId;
+    return <LinkTo target="widget" widgetId={this.props.widgetId}>{linkName}</LinkTo>;
+  }
+});
+
+var Cart = React.createClass({
+  render: function() {
+    var linkName = this.props.children || "View Cart";
+    return <LinkTo target="cart">{linkName}</LinkTo>;
   }
 });
 
@@ -73,8 +80,9 @@ var External = React.createClass({
 module.exports = {
   LinkTo: LinkTo,
   Home: Home,
-  Projects: Projects,
-  Project: Project,
+  Widgets: Widgets,
+  Widget: Widget,
+  Cart: Cart,
   Styleguide: Styleguide,
   External: External
 };

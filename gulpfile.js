@@ -162,7 +162,7 @@ gulp.task("webpack:serve", ['html', 'js:bower'], function() {
     var compiler = webpack(webpackConfig);
 
     new WebpackDevServer(compiler, {
-      noInfo: false,
+      noInfo: true,
       hot: true,
       contentBase: webpackConfig.contentBase,
       publicPath: webpackConfig.output.publicPath,
