@@ -2,7 +2,7 @@
 
 var webpack = require('webpack');
 
-var jsxLoader = 'jsx?insertPragma=React.DOM';
+var jsxLoader = 'jsx?insertPragma=React.DOM&harmony=true';
 
 module.exports = {
   contentBase: __dirname + "/dist/",
@@ -29,12 +29,12 @@ module.exports = {
     preLoaders: [
       {
         test: /\.jsx?/,
-        exclude: __dirname + '/node_modules',
+        exclude: [__dirname + '/node_modules', __dirname + '/src/js/lib'],
         loader: 'jshint!' + jsxLoader
       }
     ],
     loaders: [
-      { test: /\.jsx$/, loaders: ['react-hot', jsxLoader] },
+      { test: /\.jsx?$/, loaders: [jsxLoader] },
       { test: /\.styl$/, loader: 'style!css!stylus?paths=node_modules/'},
       { test: /\.png$/, loader: "url?mimetype=image/png" },
       { test: /\.gif$/, loader: "url?mimetype=image/gif" },
@@ -43,7 +43,7 @@ module.exports = {
     noParse: /\.min\.js/
   },
   resolve: {
-    extentions: ['jsx', 'styl']
+    extentions: ['js', 'jsx', 'styl']
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()

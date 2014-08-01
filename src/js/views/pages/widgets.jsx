@@ -3,17 +3,17 @@
 var React = require('react');
 
 var LinkTo = require('../../components/LinkTo.jsx');
+var AddToCart = require('../../components/AddToCart.jsx');
+var WidgetStore = require('../../stores/WidgetStore.js');
+var CartStore = require('../../stores/CartStore.js');
 
 var WidgetsTableRow = React.createClass({
   render: function() {
     return (
       <tr>
-        <td><input type="checkbox"
-                   name="widget"
-                   checked="checked"
-                   value={this.props.widget.id} /></td>
+        <td><AddToCart widget={this.props.widget}/></td>
         <td><LinkTo.Widget widgetId={this.props.widget.id} /></td>
-        <td>{this.props.widget.name}</td>
+        <td>{this.props.widget.selected}{this.props.widget.name}</td>
         <td>{this.props.widget.cost}</td>
       </tr>
     );
@@ -27,9 +27,9 @@ var WidgetsTable = React.createClass({
       <thead>
         <tr>
           <th><input type="checkbox" name="widget" /></th>
+          <th>ID</th>
           <th>Name</th>
           <th>Cost</th>
-          <th>ID</th>
         </tr>
       </thead>
       <tbody>
@@ -42,45 +42,38 @@ var WidgetsTable = React.createClass({
   }
 });
 
+function setSelected() {
+  var _widgets = WidgetStore.getAll();
+
+  _widgets.map(function(w){
+    if (CartStore.get(w.id)) {
+      w.selected = true;
+    } else {
+      w.selected = false;
+    }
+  });
+
+  return {widgets: _widgets};
+}
+
 var Widgets = React.createClass({
   getInitialState: function() {
-    return {
-      widgets: []
-    };
+    return setSelected();
+  },
+
+  /**
+   * Event handler for 'change' events coming from the WidgetStore
+   */
+  _onChange: function() {
+    this.setState(setSelected());
   },
   componentDidMount: function() {
-    setTimeout(function(){
-      if (this.isMounted()) {
-        this.setState({
-          widgets: [
-          {
-            id: "WD1",
-            name: "Widget 1",
-            cost: 1,
-            selected: true
-          },
-          {
-            id: "WD2",
-            name: "Widget 2",
-            cost: 2,
-            selected: false
-          },
-          {
-            id: "WD3",
-            name: "Widget 3",
-            cost: 1.50,
-            selected: false
-          },
-          {
-            id: "WD4",
-            name: "Widget 4",
-            cost: 2.50,
-            selected: false
-          }
-          ]
-        });
-      }
-    }.bind(this), 0);
+    WidgetStore.addChangeListener(this._onChange);
+    CartStore.addChangeListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    WidgetStore.removeChangeListener(this._onChange);
+    CartStore.removeChangeListener(this._onChange);
   },
   render: function() {
     return (

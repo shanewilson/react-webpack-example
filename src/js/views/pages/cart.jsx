@@ -3,53 +3,77 @@
 var React = require('react');
 
 var LinkTo = require('../../components/LinkTo.jsx');
+var AddToCart = require('../../components/AddToCart.jsx');
+var CartStore = require('../../stores/CartStore.js');
 
-var CartsTable = React.createClass({
+var WidgetsTableRow = React.createClass({
+  render: function() {
+    return (
+      <tr>
+        <td><AddToCart widget={this.props.widget}/></td>
+        <td><LinkTo.Widget widgetId={this.props.widget.id} /></td>
+        <td>{this.props.widget.name}</td>
+        <td>{this.props.widget.cost}</td>
+      </tr>
+    );
+  }
+});
+
+var WidgetsTable = React.createClass({
   render: function() {
     return (
       <table>
-        <thead>
+      <thead>
         <tr>
-          <th></th>
+          <th><input type="checkbox" name="widget" /></th>
+          <th>ID</th>
           <th>Name</th>
           <th>Cost</th>
-          <th>ID</th>
         </tr>
-        </thead>
-        <tbody>
-           {this.props.widgets.map(function(widget) {
-             return (
-               <tr key={widget.id}>
-                 <td><input type="checkbox" name="cart" value={widget.id} /></td>
-                 <td><LinkTo.Widget widgetId={widget.id} /></td>
-                 <td>{widget.name}</td>
-                 <td>{widget.cost}</td>
-               </tr>
-             );
-           })}
-        </tbody>
+      </thead>
+      <tbody>
+        {this.props.widgets.map(function(widget) {
+          return <WidgetsTableRow key={widget.id} widget={widget}/>;
+        })}
+      </tbody>
       </table>
     );
   }
 });
 
-var Carts = React.createClass({
-   getInitialState: function() {
+var Cart = React.createClass({
+  getInitialState: function() {
     return {
-        widgets: []
+      widgets: CartStore.getAll()
     };
+  },
+  /**
+   * Event handler for 'change' events coming from the WidgetStore
+   */
+  _onChange: function() {
+    this.setState({
+      widgets: CartStore.getAll()
+    });
+  },
+  componentDidMount: function() {
+    CartStore.addChangeListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    CartStore.removeChangeListener(this._onChange);
   },
   render: function() {
     return (
       <div>
-        <aside>aside</aside>
         <article>
-          <h1>Carts</h1>
-          <CartsTable widgets={this.state.widgets} />
+        <h1>Cart</h1>
+        <button className="btn">Remove selected from cart</button>
+        <button className="btn">Download selected</button>
+        <button className="btn">Download all</button>
+        <WidgetsTable widgets={this.state.widgets} />
         </article>
       </div>
     );
   }
 });
 
-module.exports = Carts;
+module.exports = Cart;
