@@ -18,7 +18,6 @@ var _widgets = [];
  * @param {object} widget
  */
 function add(widget) {
-  console.log("add:", widget);
   _widgets.push(widget);
 }
 
@@ -85,7 +84,6 @@ AppDispatcher.register(function(payload) {
 
   switch(action.actionType) {
     case CartConstants.CART_ADD:
-      console.log(action.widget);
       add(action.widget);
       break;
 

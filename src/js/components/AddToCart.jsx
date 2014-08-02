@@ -19,10 +19,8 @@ var AddToCart = React.createClass({
   render: function() {
     return (
       <input type="checkbox"
-      name="widget"
       checked={this.props.widget.selected}
-      onChange={this._onChange}
-      value={this.props.widget} />
+      onChange={this._onChange} />
     );
   }
 });
