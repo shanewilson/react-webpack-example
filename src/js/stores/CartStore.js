@@ -4,38 +4,51 @@
 
 "use strict";
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
+
 var EventEmitter = require('events').EventEmitter;
-var CartConstants = require('../constants/CartConstants');
 var merge = require('react/lib/merge');
+var m = require('mori');
+
+var AppDispatcher = require('../dispatcher/AppDispatcher');
+var CartConstants = require('../constants/CartConstants');
 
 var CHANGE_EVENT = 'change';
 
-var _widgets = [];
+var _widgets = m.hash_map();
 
 /**
  * Add a Widget.
  * @param {object} widget
  */
 function add(widget) {
-  _widgets.push(widget);
+  _widgets = m.assoc(_widgets, m.get(widget, "id"), widget);
 }
 
 /**
  * Remove a Widget.
- * @param  {string} id
+ * @param {widget} widget
  */
 function remove(id) {
-  _widgets = _widgets.filter(function(widget) {
-      return widget.id !== id;
-  });
+  _widgets = m.dissoc(_widgets, id);
+}
+
+/**
+ * Toggle presence of Widget.
+ * @param {object} widget
+ */
+function toggle(widget) {
+  if (m.get(widget, "selected")) {
+    remove(m.get(widget, "id"));
+  } else {
+    add(widget);
+  }
 }
 
 /**
  * Remove all Widgets.
  */
 function removeAll() {
-  _widgets = [];
+  _widgets = m.hash_map();
 }
 
 var CartStore = merge(EventEmitter.prototype, {
@@ -62,20 +75,16 @@ var CartStore = merge(EventEmitter.prototype, {
    * @return {array}
    */
   getAll: function() {
-    return _widgets;
+    return m.vals(_widgets);
   },
 
   /**
-   * Get a Widgets by id.
-   * @param {string} id
+   * Get the Cart
    * @return {object}
    */
-  get: function(id) {
-    return _widgets.filter(function(widget) {
-        return widget.id === id;
-    })[ 0 ];
-
-  },
+  getCart: function() {
+    return _widgets;
+  }
 });
 
 // Register to handle all updates
@@ -89,6 +98,10 @@ AppDispatcher.register(function(payload) {
 
     case CartConstants.CART_REMOVE:
       remove(action.id);
+      break;
+
+    case CartConstants.CART_TOGGLE:
+      toggle(action.widget);
       break;
 
     case CartConstants.CART_REMOVE_ALL:

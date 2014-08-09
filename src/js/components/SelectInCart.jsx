@@ -1,17 +1,17 @@
 "use strict";
 
 var React = require('react');
-
-var CartActions = require('../actions/CartActions.js');
+var m = require('mori');
 
 var CBToggle = require('../components/CBToggle.jsx');
 
-var AddToCart = React.createClass({
+var SelectInCart = React.createClass({
   propTypes: {
-    widget: React.PropTypes.object.isRequired
+    widget: React.PropTypes.object.isRequired,
+    index: React.PropTypes.number.isRequired
   },
   handleChange: function() {
-    CartActions.toggle(this.props.widget);
+    this.props.handleChange(m.get(this.props.widget, "id"));
   },
   render: function() {
     return (
@@ -20,4 +20,4 @@ var AddToCart = React.createClass({
   }
 });
 
-module.exports = AddToCart;
+module.exports = SelectInCart;

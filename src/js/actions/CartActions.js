@@ -10,7 +10,7 @@ var CartConstants = require('../constants/CartConstants');
 var CartActions = {
 
   /**
-   * @param  {object} widget
+   * @param {object} widget
    */
   add: function(widget) {
     AppDispatcher.handleViewAction({
@@ -20,7 +20,7 @@ var CartActions = {
   },
 
   /**
-   * @param  {string} id
+   * @param {string} id
    */
   remove: function(id) {
     AppDispatcher.handleViewAction({
@@ -30,14 +30,23 @@ var CartActions = {
   },
 
   /**
-   * Remove all Widgets
+   * @param {string} id
+   */
+  toggle: function(widget) {
+    AppDispatcher.handleViewAction({
+      actionType: CartConstants.CART_TOGGLE,
+      widget: widget
+    });
+  },
+
+  /**
+   * Remove all
    */
   removeAll: function() {
     AppDispatcher.handleViewAction({
       actionType: CartConstants.CART_REMOVE_ALL
     });
   }
-
 };
 
 module.exports = CartActions;

@@ -1,12 +1,13 @@
 "use strict";
 
-var React = require('react/addons');
+var React = require('react');
+var m = require('mori');
 
 var CartStore = require("../stores/CartStore.js");
 
 function cartItems(){
   return {
-    widgets: CartStore.getAll()
+    widgets: CartStore.getCart()
   };
 }
 
@@ -27,7 +28,7 @@ var CartCount = React.createClass({
     CartStore.removeChangeListener(this._onChange);
   },
   render: function() {
-    return <span className="ns-CartCount">[{this.state.widgets.length}]</span>;
+    return <span className="ns-CartCount">[{m.count(this.state.widgets)}]</span>;
   }
 });
 
