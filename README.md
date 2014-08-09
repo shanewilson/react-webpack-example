@@ -1,9 +1,11 @@
-`Buzzwords: #reactjs #gulp #webpack #jest #stylus #bower #selenium #hot-module-replacement`
+`Buzzwords: #reactjs #mori #gulp #webpack #jest #stylus #bower #selenium #hot-module-replacement`
 
 Technologies
 =
 
 - [React](http://facebook.github.io/react/) - A Javascript Library For Building User Interfaces
+- [React-Router](https://github.com/rackt/react-router) - A complete routing library for React.
+- [mori](http://swannodette.github.io/mori) - A library for using ClojureScript's persistent data structures and supporting API from the comfort of vanilla JavaScript.
 - [Gulp.js](http://gulpjs.com/) - The streaming build system
 - [Webpack](http://webpack.github.io/) - Module Bundler
 - [Jest](http://facebook.github.io/jest/) - Painless Javascript Unit Testing
