@@ -1,6 +1,7 @@
 var __path__ = '../../../src/js/components/LinkTo.jsx';
 
 jest.dontMock(__path__);
+jest.dontMock('events');
 
 describe('LinkTo', function() {
   beforeEach(function() {
@@ -41,79 +42,79 @@ describe('LinkTo', function() {
       var LinkTo = require(__path__).LinkTo;
       var Component = TestUtils.renderIntoDocument(<LinkTo extra="true" target="home" />);
 
-      var Link = require('react-nested-router').Link;
+      var Link = require('react-router').Link;
       var LinkComponent = TestUtils.findRenderedComponentWithType(Component, Link);
 
       expect(LinkComponent.props.extra).toEqual('true');
     });
   });
 
-  describe.only('Home', function() {
+  describe('Home', function() {
     it('has a matching route', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkTo = require(__path__);
-      var Component = TestUtils.renderIntoDocument(<LinkTo.Home />);
+      var LinkToHome = require(__path__).Home;
+      var Component = TestUtils.renderIntoDocument(<LinkToHome />);
     });
   });
 
 
-  describe.only('Styleguide', function() {
+  describe('Styleguide', function() {
     it('has a matching route', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkTo = require(__path__);
-      var Component = TestUtils.renderIntoDocument(<LinkTo.Styleguide />);
+      var LinkToStyleguide = require(__path__).Styleguide;
+      var Component = TestUtils.renderIntoDocument(<LinkToStyleguide />);
     });
   });
 
 
-  describe.only('Cart', function() {
+  describe('Cart', function() {
     it('has a matching route', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkTo = require(__path__);
-      var Component = TestUtils.renderIntoDocument(<LinkTo.Cart />);
+      var LinkToCart = require(__path__).Cart;
+      var Component = TestUtils.renderIntoDocument(<LinkToCart />);
     });
   });
 
-  describe('Projects', function() {
+  describe('Widgets', function() {
     it('has a matching route', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkTo = require(__path__);
-      var Component = TestUtils.renderIntoDocument(<LinkTo.Projects />);
+      var LinkToWidgets = require(__path__).Widgets;
+      var Component = TestUtils.renderIntoDocument(<LinkToWidgets />);
     });
   });
 
-  describe('Project', function() {
-    it('passes on a project id', function() {
+  describe('Widget', function() {
+    it('passes on a widget id', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkToProject = require(__path__).Project;
-      var Component = TestUtils.renderIntoDocument(<LinkToProject projectId="123" />);
+      var LinkToWidget = require(__path__).Widget;
+      var Component = TestUtils.renderIntoDocument(<LinkToWidget widgetId="123" />);
 
       var LinkTo = require(__path__).LinkTo;
       var LinkToComponent = TestUtils.findRenderedComponentWithType(Component, LinkTo);
 
-      expect(LinkToComponent.props.projectId).toEqual('123');
+      expect(LinkToComponent.props.widgetId).toEqual('123');
     });
     it('uses link name when given', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkToProject = require(__path__).Project;
-      var Component = TestUtils.renderIntoDocument(<LinkToProject projectId="123">Project 123</LinkToProject>);
+      var LinkToWidget = require(__path__).Widget;
+      var Component = TestUtils.renderIntoDocument(<LinkToWidget widgetId="123">Widget 123</LinkToWidget>);
 
       var LinkTo = require(__path__).LinkTo;
       var LinkToComponent = TestUtils.findRenderedComponentWithType(Component, LinkTo);
 
-      expect(LinkToComponent.props.children).toEqual('Project 123');
+      expect(LinkToComponent.props.children).toEqual('Widget 123');
     });
-    it('uses project id as name by default', function() {
+    it('uses widget id as name by default', function() {
       var TestUtils = require('react/addons').addons.TestUtils;
 
-      var LinkToProject = require(__path__).Project;
-      var Component = TestUtils.renderIntoDocument(<LinkToProject projectId="123" />);
+      var LinkToWidget = require(__path__).Widget;
+      var Component = TestUtils.renderIntoDocument(<LinkToWidget widgetId="123" />);
 
       var LinkTo = require(__path__).LinkTo;
       var LinkToComponent = TestUtils.findRenderedComponentWithType(Component, LinkTo);

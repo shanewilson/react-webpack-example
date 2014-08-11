@@ -3,7 +3,6 @@
 require('./styles/styles.styl');
 
 var React = require('react');
-window.React = React;
 
 var App = require('./js/app.jsx');
 var Routes = require('./js/routes.jsx');

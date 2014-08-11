@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var PureRenderMixin = React.addons.PureRenderMixin;
 
 var Route = require('react-router').Route;
@@ -20,10 +20,10 @@ var AppRoutes = React.createClass({
       <Routes>
         <Route handler={this.props.app}>
           <Route name="home" path="/" handler={Home} />
-          <Route name="widgets" path="/widgets" handler={Widgets} />
-          <Route name="widget" path="/widgets/:widgetId" handler={Widget} />
-          <Route name="cart" path="/cart" handler={Cart} />
-          <Route name="styleguide" path="/styleguide" handler={Styleguide} />
+          <Route name="widgets" handler={Widgets} />
+          <Route name="widget" path="/widgets/{widgetId}" handler={Widget} />
+          <Route name="cart" handler={Cart} />
+          <Route name="styleguide" handler={Styleguide} />
           <Route name="404" handler={e404} />
         </Route>
       </Routes>

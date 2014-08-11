@@ -1,6 +1,6 @@
 "use strict";
 
-var React = require('react/addons');
+var React = require('react');
 
 var Link = require('react-router').Link;
 
@@ -15,7 +15,7 @@ var LinkTo = React.createClass({
   render: function() {
     var cx = React.addons.classSet;
     var target = this.props.target;
-    return this.transferPropsTo(
+    return (
       <Link
         className={cx("ns-LinkTo", "ns-LinkTo--" + this.props.target)}
         to={target}>

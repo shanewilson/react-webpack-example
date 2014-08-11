@@ -1,0 +1,1 @@
+window.mori = require('mori');

@@ -11,11 +11,11 @@ module.exports = {
   bail: false,
   debug: true,
   profile: true,
-  devtool: "eval",
+  devtool: 'eval',
   entry: [
-    'webpack-dev-server/client?http://localhost:9000',
-    'webpack/hot/dev-server',
-    './src/entry.jsx'
+     'webpack-dev-server/client?http://localhost:9000',
+     'webpack/hot/dev-server',
+     './src/entry.jsx'
   ],
   output: {
     pathInfo: true,
@@ -24,7 +24,10 @@ module.exports = {
     filename: "[name].js",
     chunkFilename: '[id].js'
   },
-  externals: [],
+  externals: {
+    react: 'React',
+    mori: true
+  },
   module: {
     preLoaders: [
       {
