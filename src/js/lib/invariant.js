@@ -23,8 +23,7 @@
  */
 
 var invariant = function(condition, format, a, b, c, d, e, f) {
-  // FIXME: Can't get webpack.DefinePlugin to work
-  if (true) {
+  if (process.env.NODE_ENV !== "production") {
     if (format === undefined) {
       throw new Error('invariant requires an error message argument');
     }

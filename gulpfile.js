@@ -182,7 +182,7 @@ function revVendor(files) {
 
     // Files coming from /libs
     files.forEach(function(file) {
-      data = data.replace(file.name.split('.')[0] + '.min.js', file.name);
+      data = data.replace("/libs/" + file.name.split('.')[0] + '.min.js', "/libs/" + file.name);
     });
 
     // Files coming from bower

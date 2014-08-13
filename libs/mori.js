@@ -1,1 +1,1 @@
-window.mori = require('mori');
+require('script!mori');
