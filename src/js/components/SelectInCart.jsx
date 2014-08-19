@@ -7,8 +7,7 @@ var CBToggle = require('../components/CBToggle.jsx');
 
 var SelectInCart = React.createClass({
   propTypes: {
-    widget: React.PropTypes.object.isRequired,
-    index: React.PropTypes.number.isRequired
+    widget: React.PropTypes.object.isRequired
   },
   handleChange: function() {
     this.props.handleChange(m.get(this.props.widget, "id"));

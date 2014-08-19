@@ -10,49 +10,49 @@ var m = require('mori');
 
 var CHANGE_EVENT = 'change';
 
-var _widgets = m.hash_map(
-  "facets", m.hash_map(
-    "cost", m.hash_map(
-      "type", "term",
-      "values", m.vector(
-        m.hash_map(
-          "value", 1,
-          "count", 1
-        ),
-        m.hash_map(
-          "value", 1.5,
-          "count", 2
-        ),
-        m.hash_map(
-          "value", 2,
-          "count", 2
-        )
-      )
-    )
-  ),
-  "items", m.vector(
-    m.hash_map(
-      "id", "WD1",
-      "name", "Widget 1",
-      "cost", 1
-    ),
-    m.hash_map(
-      "id", "WD2",
-      "name", "Widget 2",
-      "cost", 2
-    ),
-    m.hash_map(
-      "id", "WD3",
-      "name", "Widget 3",
-      "cost", 1.50
-    ),
-    m.hash_map(
-      "id", "WD4",
-      "name", "Widget 4",
-      "cost", 2.50
-    )
-  )
-);
+var _widgets = m.js_to_clj({
+  facets: {
+    "cost": {
+      "type": "term",
+      "values": [
+      {
+        "value": 1,
+        "count": 1
+      },
+      {
+        "value": 1.5,
+        "count": 2
+      },
+      {
+        "value": 2,
+        "count": 2
+      }
+      ]
+    }
+  },
+  items: [
+  {
+    id: "WD1",
+    name: "Widget 1",
+    cost: 1
+  },
+  {
+    id: "WD2",
+    name: "Widget 2",
+    cost: 2
+  },
+  {
+    id: "WD3",
+    name: "Widget 3",
+    cost: 1.50
+  },
+  {
+    id: "WD4",
+    name: "Widget 4",
+    cost: 2.50
+  }
+  ]
+});
 
 var WidgetStore = merge(EventEmitter.prototype, {
   emitChange: function() {

@@ -42,10 +42,10 @@ var SelectAll = React.createClass({
     this.setState({selected: !this.state.selected});
   },
   render: function() {
+    var text = this.state.selected ? "-" : "+";
+
     return (
-      <input type="checkbox"
-      checked={this.state.selected}
-      onChange={this._onChange} />
+      <button type="button" onClick={this._onChange}>{text}</button>
     );
   }
 });
@@ -53,9 +53,13 @@ var SelectAll = React.createClass({
 var WidgetsTableRow = React.createClass({
   mixins: [PureRenderMixin],
 
+  propTypes: {
+    widget: React.PropTypes.object.isRequired
+  },
   render: function() {
+    var style = m.get(this.props.widget, "selected") ? {color: "green"} : {};
     return (
-      <tr>
+      <tr style={style}>
       <td><AddToCart widget={this.props.widget}/></td>
       <td><LinkTo.Widget widgetId={m.get(this.props.widget, "id")} /></td>
       <td>{m.get(this.props.widget, "name")}</td>
@@ -68,6 +72,9 @@ var WidgetsTableRow = React.createClass({
 var WidgetsTable = React.createClass({
   mixins: [PureRenderMixin],
 
+  propTypes: {
+    widgets: React.PropTypes.object.isRequired
+  },
   render: function() {
     return (
       <table>
@@ -89,17 +96,32 @@ var WidgetsTable = React.createClass({
   }
 });
 
+var Term = React.createClass({
+  mixins: [PureRenderMixin],
+
+  propTypes: {
+    term: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    var v = m.get(this.props.term, "value");
+    var c = m.get(this.props.term, "count");
+
+    return (<li key={v}>{v} - {c}</li>);
+  }
+});
+
 var Facet = React.createClass({
   mixins: [PureRenderMixin],
 
+  propTypes: {
+    facet: React.PropTypes.object.isRequired
+  },
   render: function() {
     var xs = m.get(this.props.facet, "values");
     return (
       <ul>
       {(m.into_array(xs)).map(function(term) {
-        var v = m.get(term, "value");
-        var c = m.get(term, "count");
-        return (<li key={v}>{v} - {c}</li>);
+        return (<Term key={m.get(term, "value")} term={term} />);
       })}
       </ul>
     );
@@ -109,6 +131,9 @@ var Facet = React.createClass({
 var WidgetsFacets = React.createClass({
   mixins: [PureRenderMixin],
 
+  propTypes: {
+    facets: React.PropTypes.object.isRequired
+  },
   render: function() {
     return (
       <ul>
@@ -142,10 +167,6 @@ var Widgets = React.createClass({
   getInitialState: function() {
     return this._updateState();
   },
-
-  /**
-  * Event handler for 'change' events coming from the WidgetStore
-  */
   _onChange: function() {
     return this.setState(this._updateState());
   },

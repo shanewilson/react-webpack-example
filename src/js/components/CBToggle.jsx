@@ -9,10 +9,10 @@ var CBToggle = React.createClass({
     handleChange: React.PropTypes.func.isRequired,
   },
   render: function() {
+    var text = m.get(this.props.widget, "selected") ? "-" : "+";
     return (
-      <input type="checkbox"
-      checked={m.get(this.props.widget, "selected")}
-      onChange={this.props.handleChange} />
+      <button type="button"
+      onClick={this.props.handleChange}>{text}</button>
     );
   }
 });
