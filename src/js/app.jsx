@@ -2,6 +2,8 @@
 
 var React = require('react');
 
+var RouteHandler = require('react-router').RouteHandler;
+
 var SiteNav = require('./views/common/SiteNav.jsx');
 
 var App = React.createClass({
@@ -9,7 +11,7 @@ var App = React.createClass({
     return (
       <div>
         <SiteNav />
-        <this.props.activeRouteHandler/>
+        <RouteHandler />
       </div>
     );
   }

@@ -17,7 +17,7 @@
   "plusplus": false,
   "undef": true,
   "unused": true,
-  "strict": true,
+  "strict": false,
   "trailing": true,
   "maxlen": 120,
   "quotmark": false,

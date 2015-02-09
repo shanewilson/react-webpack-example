@@ -3,10 +3,10 @@
 require('./styles/styles.styl');
 
 var React = require('react');
+var Router = require('react-router');
 
-var App = require('./js/app.jsx');
-var Routes = require('./js/routes.jsx');
+var routes = require('./js/routes.jsx');
 
-React.renderComponent((
-  <Routes app={App}/>
-), document.getElementById("app"));
+Router.run(routes, Router.HistoryLocation, function (Handler) {
+  React.render(<Handler/>, document.getElementById("app"));
+});

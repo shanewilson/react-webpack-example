@@ -2,7 +2,7 @@
   "name": "react-webpack-example",
   "version": "0.0.1",
   "dependencies": {
-    "react": "0.11.1",
+    "react": "~0.12.2",
     "mori": "0.2.9"
   }
 }

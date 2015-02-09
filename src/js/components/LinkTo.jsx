@@ -52,7 +52,7 @@ var Widget = React.createClass({
   },
   render: function() {
     var linkName = this.props.children || this.props.widgetId;
-    return <LinkTo target="widget" widgetId={this.props.widgetId}>{linkName}</LinkTo>;
+    return <Link to="widget" params={{widgetId:this.props.widgetId}}>{linkName}</Link>;
   }
 });
 
