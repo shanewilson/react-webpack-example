@@ -15,7 +15,6 @@ var fs = require('graceful-fs');
 var webpack = require('webpack');
 var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = Object.create(require('./webpack.config.js'));
-var webpackLibsConfig = Object.create(require('./webpack.libs.config.js'));
 var CompressionPlugin = require("compression-webpack-plugin");
 
 var production = !!$.util.env.production;
@@ -80,21 +79,6 @@ if (production) {
       minRatio: 0.8
     })
     ];
-
-  webpackLibsConfig.output.filename = "[name].[hash].min.js";
-  webpackLibsConfig.plugins = [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    }),
-    new CompressionPlugin({
-      asset: "{file}.gz",
-      algorithm: "gzip",
-      regExp: /\.js$|\.html$/,
-      threshold: 10240,
-      minRatio: 0.8
-    })];
 }
 // </webpackConfig>
 
@@ -196,21 +180,7 @@ function revVendor(files) {
   });
 }
 
-gulp.task('webpack:libs', function() {
-  webpackLibsConfig.output.path = paths.js.dest + '/libs';
-
-  if (fs.existsSync('./libs')) {
-    return webpack(webpackLibsConfig, function(err, stats) {
-      if (err) throw new $.util.PluginError('webpack:libs', err);
-
-      if (production) {
-        revVendor(stats.toJson().assets);
-      }
-    });
-  }
-});
-
-gulp.task("webpack:serve", ['html', 'js:bower', 'webpack:libs'], function() {
+gulp.task("webpack:serve", ['html', 'js:bower'], function() {
     // Start a webpack-dev-server
     var server = "localhost";
     var port = 9000;

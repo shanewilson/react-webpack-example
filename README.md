@@ -14,15 +14,18 @@ Technologies
 - [Jeet](http://jeet.gs/) - A grid system for humans
 - [Axis](https://github.com/jenius/axis) - Axis is a terse, feature-rich css library built on top of stylus
 
-Setup
+Development
 =
 
-The project is setup to use Bower and NPM
+The development server is setup using Webpack
 
 ```
-> npm run deps
+> npm start
+Environment Development
+...
+Starting Webpack Development Server
+Listening http://localhost:9000/webpack-dev-server/index.html
 ```
-
 Tests
 =
 
@@ -91,19 +94,6 @@ Started child process for env:  chrome
  chrome 	OK. 3 assertions passed. (1108 ms)
  chrome
  chrome 	OK. 7 total assertions passed. (4790 ms)
-```
-
-Development
-=
-
-The development server is setup using Webpack
-
-```
-> npm start
-Environment Development
-...
-Starting Webpack Development Server
-Listening http://localhost:9000/webpack-dev-server/index.html
 ```
 
 Production
