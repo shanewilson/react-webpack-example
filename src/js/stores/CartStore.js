@@ -7,29 +7,29 @@
 
 var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');
-var m = require('mori');
+var Immutable = require('immutable');
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var CartConstants = require('../constants/CartConstants');
 
 var CHANGE_EVENT = 'change';
 
-var _widgets = m.hash_map();
+var _widgets = Immutable.OrderedMap();
 
 /**
  * Add a Widget.
  * @param {object} widget
  */
 function add(widget) {
-  _widgets = m.assoc(_widgets, m.get(widget, "id"), widget);
+  _widgets = _widgets.set(widget.get('id'), Immutable.Map(widget));
 }
 
 /**
  * Remove a Widget.
- * @param {widget} widget
+ * @param {string} id
  */
 function remove(id) {
-  _widgets = m.dissoc(_widgets, id);
+  _widgets = _widgets.delete(id);
 }
 
 /**
@@ -37,8 +37,8 @@ function remove(id) {
  * @param {object} widget
  */
 function toggle(widget) {
-  if (m.get(widget, "selected")) {
-    remove(m.get(widget, "id"));
+  if (widget.get("selected")) {
+    remove(widget.get("id"));
   } else {
     add(widget);
   }
@@ -48,7 +48,7 @@ function toggle(widget) {
  * Remove all Widgets.
  */
 function removeAll() {
-  _widgets = m.hash_map();
+  _widgets = Immutable.OrderedMap();
 }
 
 var CartStore = merge(EventEmitter.prototype, {
@@ -75,7 +75,7 @@ var CartStore = merge(EventEmitter.prototype, {
    * @return {array}
    */
   getAll: function() {
-    return m.vals(_widgets);
+    return _widgets.values();
   },
 
   /**

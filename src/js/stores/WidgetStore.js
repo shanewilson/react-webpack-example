@@ -6,11 +6,11 @@
 
 var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');
-var m = require('mori');
+var Immutable = require('immutable');
 
 var CHANGE_EVENT = 'change';
 
-var _widgets = m.js_to_clj({
+var _widgets = Immutable.fromJS({
   facets: {
     "cost": {
       "type": "term",
@@ -78,7 +78,7 @@ var WidgetStore = merge(EventEmitter.prototype, {
   * @return {array}
   */
   getAll: function() {
-    return m.get(_widgets, "items");
+    return _widgets.get("items");
   },
 
   /**
@@ -86,15 +86,15 @@ var WidgetStore = merge(EventEmitter.prototype, {
   * @param {int} ix
   * @return {object}
   */
-  gget: function(ix) {
-    return m.get(this.getAll(), ix);
+  get: function(ix) {
+    return this.getAll().get(ix);
   },
   /**
   * Get all Facets
   * @return {object}
   */
   getFacets: function() {
-    return m.get(_widgets, "facets");
+    return _widgets.get("facets");
   },
 
   /**
@@ -103,7 +103,7 @@ var WidgetStore = merge(EventEmitter.prototype, {
   * @return {object}
   */
   getFacet: function(term) {
-    return m.get(this.getFacets(), term);
+    return this.getFacets().get(term);
   }
 });
 

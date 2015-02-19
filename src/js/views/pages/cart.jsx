@@ -2,7 +2,7 @@
 
 var React = require('react');
 var PureRenderMixin = require('react').addons.PureRenderMixin;
-var m = require('mori');
+var Immutable = require('immutable');
 
 var CartStore = require('../../stores/CartStore.js');
 
@@ -17,9 +17,9 @@ var SelectAll = React.createClass({
     widgets: React.PropTypes.object.isRequired
   },
   _checkSelected: function(xs) {
-    var selected = m.every(function(w){
-      return m.get(w, "selected") === true;
-    }, xs);
+    var selected = xs.every(function(w){
+      return w.get("selected") === true;
+    });
     return { selected: selected };
   },
   getInitialState: function(nextProps) {
@@ -53,9 +53,9 @@ var WidgetsTableRow = React.createClass({
       index={this.props.index}
       widget={this.props.widget}/>
       </td>
-      <td><LinkTo.Widget widgetId={m.get(this.props.widget, "id")} /></td>
-      <td>{m.get(this.props.widget, "name")}</td>
-      <td>{m.get(this.props.widget, "cost")}</td>
+      <td><LinkTo.Widget widgetId={this.props.widget.get("id")} /></td>
+      <td>{this.props.widget.get("name")}</td>
+      <td>{this.props.widget.get("cost")}</td>
       </tr>
     );
   }
@@ -76,14 +76,14 @@ var WidgetsTable = React.createClass({
       </tr>
       </thead>
       <tbody>
-      {(m.into_array(this.props.widgets)).map(function(widget) {
+      {this.props.widgets.map(function(widget) {
         return (
           <WidgetsTableRow
-          key={m.get(widget, "id")}
+          key={widget.get("id")}
           handleChange={this.props.handleChange}
           widget={widget}/>
         );
-      }.bind(this))}
+      }.bind(this)).toJS()}
       </tbody>
       </table>
     );
@@ -94,22 +94,23 @@ var Cart = React.createClass({
   mixins: [PureRenderMixin],
 
   _updateAll: function(selected) {
-    var ws = m.reduce(function(acc, val) {
-      return m.merge(acc, val);
+    var xs = this.state.widgets.map(function(w) {
+      var k = w.get(0);
+      var v = w.get(1).set("selected", !selected);
+      return Immutable.Map(k, v);
+    });
+
+    var ws = xs.reduce(function(acc, val) {
+      return acc.merge(val);
     },
-    m.hash_map(),
-    m.map(function(w) {
-      var k = m.get(w, 0);
-      var v = m.assoc(m.get(w, 1), "selected", !selected);
-      return m.hash_map(k, v);
-    }, this.state.widgets));
+    Immutable.OrderedMap());
 
     this.setState({widgets: ws});
   },
   _updateState: function(id) {
-    var w = m.get(this.state.widgets, id);
-    w = m.assoc(w, "selected", !m.get(w, "selected"));
-    var ws = m.assoc(this.state.widgets, id, w);
+    var w = this.state.widgets.get(id);
+    w = w.set("selected", !w.get("selected"));
+    var ws = this.state.widgets.set(id, w);
 
     this.setState({widgets: ws});
   },
@@ -128,8 +129,9 @@ var Cart = React.createClass({
   },
   render: function() {
     var table;
-    var widgets = m.vals(this.state.widgets);
-    if (m.count(widgets)) {
+
+    var widgets = this.state.widgets.valueSeq();
+    if (widgets.count()) {
       table = (
         <div>
         <button className="btn">Remove Selected</button>

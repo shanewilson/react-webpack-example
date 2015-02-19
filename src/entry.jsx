@@ -1,12 +1,14 @@
+/* global document */
 "use strict";
 
 require('./styles/styles.styl');
 
-var React = require('react');
+var React = require("react/addons");
 var Router = require('react-router');
-
 var routes = require('./js/routes.jsx');
 
-Router.run(routes, Router.HistoryLocation, function (Handler) {
-  React.render(<Handler/>, document.getElementById("app"));
+document.addEventListener("DOMContentLoaded", function(event) {
+  Router.run(routes, Router.HistoryLocation, function (Handler, state) {
+    React.render(<Handler/>, document.getElementById("app"));
+  });
 });

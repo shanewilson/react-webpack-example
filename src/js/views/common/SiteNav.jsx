@@ -14,11 +14,13 @@ var SiteNav = React.createClass({
           <li><Links.Home /></li>
           <li><Links.Widgets /></li>
           <li><CartCount /><Links.Cart /></li>
-          <li><Links.Styleguide /></li>
         </ul>
       </NavBar>
     );
   }
 });
+/*
 
+ <li><Links.Styleguide /></li>
+ */
 module.exports = SiteNav;

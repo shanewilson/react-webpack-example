@@ -2,8 +2,6 @@
 
 var webpack = require('webpack');
 
-var jsxLoader = 'jsx?insertPragma=React.DOM&harmony=true';
-
 module.exports = {
   contentBase: __dirname + "/dist/",
   target: 'web',
@@ -14,7 +12,7 @@ module.exports = {
   devtool: 'eval',
   entry: [
      'webpack-dev-server/client?http://localhost:9000',
-     'webpack/hot/dev-server',
+     'webpack/hot/only-dev-server',
      './src/entry.jsx'
   ],
   output: {
@@ -24,20 +22,10 @@ module.exports = {
     filename: "[name].js",
     chunkFilename: '[id].js'
   },
-  externals: {
-    react: 'React',
-    mori: true
-  },
   module: {
-    preLoaders: [
-      {
-        test: /\.jsx?/,
-        exclude: [__dirname + '/node_modules', __dirname + '/src/js/lib'],
-        loader: 'jshint!' + jsxLoader
-      }
-    ],
     loaders: [
-      { test: /\.jsx?$/, loaders: [jsxLoader] },
+      { test: require.resolve("react/addons"), loader: "expose?React" },
+      { test: /\.jsx?$/, loaders: ['react-hot', 'jsx?harmony'], exclude: /node_modules/ },
       { test: /\.styl$/, loader: 'style!css!stylus?paths=node_modules/'},
       { test: /\.png$/, loader: "url?mimetype=image/png" },
       { test: /\.gif$/, loader: "url?mimetype=image/gif" },
@@ -50,6 +38,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development')

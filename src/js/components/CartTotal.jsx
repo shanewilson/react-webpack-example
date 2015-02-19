@@ -1,33 +1,33 @@
 "use strict";
 
 var React = require('react');
-var m = require('mori');
+var Immutable = require('immutable');
 
 var CartTotal = React.createClass({
   getInitialState: function() {
-    return {widgets: m.vector()};
+    return {widgets: Immutable.List()};
   },
   render: function() {
-    var total = m.reduce(function(sum, w) {
-      return m.get(w, "cost") + sum;
-    }, 0, this.props.widgets);
+    var total = this.props.widgets.reduce(function(sum, w) {
+      return w.get("cost") + sum;
+    }, 0);
 
-    var selected = m.filter(function(x){
-      return m.get(x, "selected");
-    }, this.props.widgets);
+    var selected = this.props.widgets.filter(function(x){
+      return x.get("selected");
+    });
 
-    var selTotal = m.reduce(function(sum, w) {
-      return m.get(w, "cost") + sum;
-    }, 0, selected);
+    var selTotal = selected.reduce(function(sum, w) {
+      return w.get("cost") + sum;
+    }, 0);
 
     return (
       <div>
         <div>
-          Cart contains {m.count(this.props.widgets)} Widgets.
+          Cart contains {this.props.widgets.count()} Widgets.
           Total cost is {total}
         </div>
         <div>
-          {m.count(selected)} Widgets selected.
+          {selected.count()} Widgets selected.
           Selected cost is {selTotal}
         </div>
       </div>

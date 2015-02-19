@@ -1,7 +1,6 @@
 "use strict";
 
 var React = require('react');
-var m = require('mori');
 var PureRenderMixin = require('react').addons.PureRenderMixin;
 
 var WidgetStore = require('../../stores/WidgetStore.js');
@@ -18,9 +17,9 @@ var SelectAll = React.createClass({
     widgets: React.PropTypes.object.isRequired
   },
   _checkSelected: function(xs) {
-    var selected = m.every(function(w){
-      return m.get(w, "selected") === true;
-    }, xs);
+    var selected = xs.every(function(w){
+      return w.get("selected") === true;
+    });
     return { selected: selected };
   },
   getInitialState: function(nextProps) {
@@ -31,10 +30,10 @@ var SelectAll = React.createClass({
     this.setState(this._checkSelected(nextProps.widgets));
   },
   _onChange: function() {
-    m.each(this.props.widgets, function(widget) {
+    this.props.widgets.forEach(function(widget) {
       if (this.state.selected) {
-        CartActions.remove(m.get(widget, "id"));
-      } else if (!m.get(widget, "selected")){
+        CartActions.remove(widget.get("id"));
+      } else if (!widget.get("selected")){
         CartActions.add(widget);
       }
     }.bind(this));
@@ -57,13 +56,13 @@ var WidgetsTableRow = React.createClass({
     widget: React.PropTypes.object.isRequired
   },
   render: function() {
-    var style = m.get(this.props.widget, "selected") ? {color: "green"} : {};
+    var style = this.props.widget.get("selected") ? {color: "green"} : {};
     return (
       <tr style={style}>
       <td><AddToCart widget={this.props.widget}/></td>
-      <td><LinkTo.Widget widgetId={m.get(this.props.widget, "id")} /></td>
-      <td>{m.get(this.props.widget, "name")}</td>
-      <td>{m.get(this.props.widget, "cost")}</td>
+      <td><LinkTo.Widget widgetId={this.props.widget.get("id")} /></td>
+      <td>{this.props.widget.get("name")}</td>
+      <td>{this.props.widget.get("cost")}</td>
       </tr>
     );
   }
@@ -87,9 +86,9 @@ var WidgetsTable = React.createClass({
       </tr>
       </thead>
       <tbody>
-      {(m.into_array(this.props.widgets)).map(function(widget) {
-        return (<WidgetsTableRow key={m.get(widget, "id")} widget={widget}/>);
-      })}
+      {this.props.widgets.map(function(widget) {
+        return (<WidgetsTableRow key={widget.get("id")} widget={widget}/>);
+      }).toJS()}
       </tbody>
       </table>
     );
@@ -103,8 +102,8 @@ var Term = React.createClass({
     term: React.PropTypes.object.isRequired
   },
   render: function() {
-    var v = m.get(this.props.term, "value");
-    var c = m.get(this.props.term, "count");
+    var v = this.props.term.get("value");
+    var c = this.props.term.get("count");
 
     return (<li key={v}>{v} - {c}</li>);
   }
@@ -117,11 +116,11 @@ var Facet = React.createClass({
     facet: React.PropTypes.object.isRequired
   },
   render: function() {
-    var xs = m.get(this.props.facet, "values");
+    var xs = this.props.facet.get("values");
     return (
       <ul>
-      {(m.into_array(xs)).map(function(term) {
-        return (<Term key={m.get(term, "value")} term={term} />);
+      {xs.map(function(term) {
+        return (<Term key={term.get("value")} term={term} />);
       })}
       </ul>
     );
@@ -137,7 +136,7 @@ var WidgetsFacets = React.createClass({
   render: function() {
     return (
       <ul>
-      <Facet facet={m.get(this.props.facets, "cost")}/>
+      <Facet facet={this.props.facets.get("cost")}/>
       </ul>
     );
   }
@@ -148,13 +147,12 @@ var Widgets = React.createClass({
 
   _setSelectedWidgets: function(widgets) {
     var ids = CartStore.getCart();
-
-    return m.map(function(w) {
-      if (m.has_key(ids, m.get(w, "id"))){
-        w = m.assoc(w, "selected", true);
+    return widgets.map(function(w) {
+      if (ids.has(w.get("id"))) {
+        w = w.set("selected", true);
       }
       return w;
-    }, widgets);
+    });
   },
   _updateState: function() {
     return {
