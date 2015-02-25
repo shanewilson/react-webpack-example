@@ -1,6 +1,6 @@
 "use strict";
 
-var React = require('react');
+var React = require('react/addons');
 
 var Link = require('react-router').Link;
 
@@ -36,13 +36,6 @@ var Widgets = React.createClass({
   render: function() {
     var linkName = this.props.children || "Widgets";
     return <LinkTo target="widgets">{linkName}</LinkTo>;
-  }
-});
-
-var Styleguide = React.createClass({
-  render: function() {
-    var linkName = this.props.children || "Styleguide";
-    return <LinkTo target="styleguide">{linkName}</LinkTo>;
   }
 });
 
@@ -83,6 +76,5 @@ module.exports = {
   Widgets: Widgets,
   Widget: Widget,
   Cart: Cart,
-  Styleguide: Styleguide,
   External: External
 };

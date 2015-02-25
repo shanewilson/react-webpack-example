@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react');
+var React = require('react/addons');
 //var PureRenderMixin = React.addons.PureRenderMixin;
 
 var Router = require('react-router');
@@ -12,7 +12,6 @@ var Home = require('./views/pages/home.jsx');
 var Widgets = require('./views/pages/widgets.jsx');
 var Widget = require('./views/pages/widget.jsx');
 var Cart = require('./views/pages/cart.jsx');
-//var Styleguide = require('./views/pages/styleguide.jsx');
 //var e404 = require('./views/pages/404.jsx');
 
 var routes = (
