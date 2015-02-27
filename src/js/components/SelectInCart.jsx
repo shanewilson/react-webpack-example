@@ -1,10 +1,8 @@
-"use strict";
+import React from 'react/addons'
 
-var React = require('react');
+import CBToggle from '../components/CBToggle.jsx'
 
-var CBToggle = require('../components/CBToggle.jsx');
-
-var SelectInCart = React.createClass({
+export default React.createClass({
   propTypes: {
     widget: React.PropTypes.object.isRequired
   },
@@ -16,6 +14,4 @@ var SelectInCart = React.createClass({
       <CBToggle widget={this.props.widget} handleChange={this.handleChange}/>
     );
   }
-});
-
-module.exports = SelectInCart;
+})

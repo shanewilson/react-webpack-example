@@ -1,8 +1,6 @@
-"use strict";
+import React from 'react/addons'
 
-var React = require('react');
-
-var CBToggle = React.createClass({
+export default React.createClass({
   propTypes: {
     widget: React.PropTypes.object.isRequired,
     handleChange: React.PropTypes.func.isRequired,
@@ -14,6 +12,4 @@ var CBToggle = React.createClass({
       onClick={this.props.handleChange}>{text}</button>
     );
   }
-});
-
-module.exports = CBToggle;
+})

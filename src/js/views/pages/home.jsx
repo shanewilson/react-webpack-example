@@ -1,8 +1,6 @@
-"use strict";
+import React from 'react/addons'
 
-var React = require('react');
-
-var Home = React.createClass({
+export default React.createClass({
   render: function() {
     return (
       <div>
@@ -14,8 +12,6 @@ var Home = React.createClass({
           </section>
         </article>
       </div>
-    );
+    )
   }
-});
-
-module.exports = Home;
+})

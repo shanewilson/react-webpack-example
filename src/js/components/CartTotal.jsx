@@ -1,38 +1,34 @@
-"use strict";
+import React from 'react/addons'
+import Immutable from 'immutable'
 
-var React = require('react');
-var Immutable = require('immutable');
-
-var CartTotal = React.createClass({
-  getInitialState: function() {
+export default React.createClass({
+  getInitialState: function () {
     return {widgets: Immutable.List()};
   },
-  render: function() {
-    var total = this.props.widgets.reduce(function(sum, w) {
+  render: function () {
+    var total = this.props.widgets.reduce(function (sum, w) {
       return w.get("cost") + sum;
     }, 0);
 
-    var selected = this.props.widgets.filter(function(x){
+    var selected = this.props.widgets.filter(function (x) {
       return x.get("selected");
     });
 
-    var selTotal = selected.reduce(function(sum, w) {
+    var selTotal = selected.reduce(function (sum, w) {
       return w.get("cost") + sum;
     }, 0);
 
     return (
-      <div>
         <div>
-          Cart contains {this.props.widgets.count()} Widgets.
-          Total cost is {total}
-        </div>
-        <div>
+          <div>
+            Cart contains {this.props.widgets.count()} Widgets.
+            Total cost is {total}
+          </div>
+          <div>
           {selected.count()} Widgets selected.
-          Selected cost is {selTotal}
+            Selected cost is {selTotal}
+          </div>
         </div>
-      </div>
     );
   }
-});
-
-module.exports = CartTotal;
+})

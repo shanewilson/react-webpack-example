@@ -1,8 +1,6 @@
-"use strict";
+import React from 'react/addons'
 
-var React = require('react/addons');
-
-var Link = require('react-router').Link;
+import {Link} from 'react-router'
 
 var LinkTo = React.createClass({
   propTypes: {
@@ -70,7 +68,7 @@ var External = React.createClass({
   }
 });
 
-module.exports = {
+export default {
   LinkTo: LinkTo,
   Home: Home,
   Widgets: Widgets,

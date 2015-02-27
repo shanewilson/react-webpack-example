@@ -1,13 +1,7 @@
-/**
- * TodoActions
- */
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import CartConstants from '../constants/CartConstants'
 
-"use strict";
-
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var CartConstants = require('../constants/CartConstants');
-
-var CartActions = {
+export default {
 
   /**
    * @param {object} widget
@@ -47,6 +41,4 @@ var CartActions = {
       actionType: CartConstants.CART_REMOVE_ALL
     });
   }
-};
-
-module.exports = CartActions;
+}

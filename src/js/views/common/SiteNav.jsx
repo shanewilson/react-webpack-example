@@ -1,26 +1,17 @@
-"use strict";
+import React from 'react'
 
-var React = require('react');
+import {Home, Widgets, Cart} from '../../components/LinkTo.jsx'
+import NavBar from '../../components/NavBar.jsx'
+import CartCount from '../../components/CartCount.jsx'
 
-var Links = require('../../components/LinkTo.jsx');
-var NavBar = require('../../components/NavBar.jsx');
-var CartCount = require('../../components/CartCount.jsx');
-
-var SiteNav = React.createClass({
-  render: function() {
-    return (
+export default React.createClass({
+  render: () => (
       <NavBar>
         <ul>
-          <li><Links.Home /></li>
-          <li><Links.Widgets /></li>
-          <li><CartCount /><Links.Cart /></li>
+          <li><Home /></li>
+          <li><Widgets /></li>
+          <li><CartCount /><Cart /></li>
         </ul>
       </NavBar>
-    );
-  }
-});
-/*
-
- <li><Links.Styleguide /></li>
- */
-module.exports = SiteNav;
+    )
+})

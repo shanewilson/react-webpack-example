@@ -1,20 +1,13 @@
-/**
- * CartStore
- */
+import EventEmitter from 'events'
+import merge from 'react/lib/merge'
+import Immutable from 'immutable'
 
-"use strict";
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import CartConstants from '../constants/CartConstants'
 
+const CHANGE_EVENT = 'change';
 
-var EventEmitter = require('events').EventEmitter;
-var merge = require('react/lib/merge');
-var Immutable = require('immutable');
-
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var CartConstants = require('../constants/CartConstants');
-
-var CHANGE_EVENT = 'change';
-
-var _widgets = Immutable.OrderedMap();
+let _widgets = Immutable.OrderedMap();
 
 /**
  * Add a Widget.
@@ -51,7 +44,7 @@ function removeAll() {
   _widgets = Immutable.OrderedMap();
 }
 
-var CartStore = merge(EventEmitter.prototype, {
+export default CartStore = merge(EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -89,7 +82,7 @@ var CartStore = merge(EventEmitter.prototype, {
 
 // Register to handle all updates
 AppDispatcher.register(function(payload) {
-  var action = payload.action;
+  const action = payload.action;
 
   switch(action.actionType) {
     case CartConstants.CART_ADD:
@@ -120,5 +113,3 @@ AppDispatcher.register(function(payload) {
 
   return true; // No errors.  Needed by promise in Dispatcher.
 });
-
-module.exports = CartStore;

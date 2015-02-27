@@ -1,8 +1,6 @@
-"use strict";
+import React from 'react/addons'
 
-var React = require('react');
-
-var CartStore = require("../stores/CartStore.js");
+import CartStore from "../stores/CartStore.js"
 
 function cartItems(){
   return {
@@ -10,7 +8,7 @@ function cartItems(){
   };
 }
 
-var CartCount = React.createClass({
+export default React.createClass({
   getInitialState: function() {
     return cartItems();
   },
@@ -29,6 +27,4 @@ var CartCount = React.createClass({
   render: function() {
     return <span className="ns-CartCount">[{this.state.widgets.count()}]</span>;
   }
-});
-
-module.exports = CartCount;
+})

@@ -1,11 +1,5 @@
-"use strict";
+import React from 'react/addons'
 
-var React = require('react');
-
-var error404 = React.createClass({
-  render: function() {
-    return <h2>404</h2>;
-  }
-});
-
-module.exports = error404;
+export default React.createClass({
+  render: () => <h2>404</h2>
+})

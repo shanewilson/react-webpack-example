@@ -1,14 +1,12 @@
-"use strict";
+import React from 'react'
+import Router from 'react-router'
 
-var React = require('react');
-var Router = require('react-router');
+import Breadcrumb from '../../components/Breadcrumb.jsx'
+import LinkTo from '../../components/LinkTo.jsx'
 
-var Breadcrumb = require('../../components/Breadcrumb.jsx');
-var LinkTo = require('../../components/LinkTo.jsx');
-
-var Widget = React.createClass({
-  mixins: [ Router.State ],
-  render: function () {
+export default React.createClass({
+  mixins: [Router.State],
+  render: function() {
     return (
         <div>
           <aside>aside</aside>
@@ -26,8 +24,6 @@ var Widget = React.createClass({
             </section>
           </article>
         </div>
-    );
+    )
   }
-});
-
-module.exports = Widget;
+})

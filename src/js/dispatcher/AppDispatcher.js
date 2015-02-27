@@ -1,14 +1,7 @@
-/**
- * A singleton that operates as the central hub for application updates.
- */
+import Dispatcher from '../lib/Dispatcher'
+import copyProperties from 'react/lib/copyProperties'
 
-"use strict";
-
-var Dispatcher = require('../lib/Dispatcher');
-
-var copyProperties = require('react/lib/copyProperties');
-
-var AppDispatcher = copyProperties(new Dispatcher(), {
+export default copyProperties(new Dispatcher(), {
 
   /**
    * @param {object} action The details of the action, including the action's
@@ -22,6 +15,4 @@ var AppDispatcher = copyProperties(new Dispatcher(), {
     this.dispatch(payload);
   }
 
-});
-
-module.exports = AppDispatcher;
+})

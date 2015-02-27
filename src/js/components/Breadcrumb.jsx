@@ -1,8 +1,6 @@
-"use strict";
+import React from 'react/addons'
 
-var React = require('react');
-
-var Breadcrumb = React.createClass({
+export default React.createClass({
   propTypes: {
     children: React.PropTypes.oneOfType([
       React.PropTypes.object,
@@ -12,6 +10,4 @@ var Breadcrumb = React.createClass({
   render: function() {
     return <ul className="ns-Breadcrumb">{this.props.children}</ul>;
   }
-});
-
-module.exports = Breadcrumb;
+})

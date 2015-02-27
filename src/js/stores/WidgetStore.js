@@ -1,16 +1,10 @@
-/**
-* WidgetStore
-*/
+import EventEmitter from 'events'
+import merge from 'react/lib/merge'
+import Immutable from 'immutable'
 
-"use strict";
+const CHANGE_EVENT = 'change';
 
-var EventEmitter = require('events').EventEmitter;
-var merge = require('react/lib/merge');
-var Immutable = require('immutable');
-
-var CHANGE_EVENT = 'change';
-
-var _widgets = Immutable.fromJS({
+const _widgets = Immutable.fromJS({
   facets: {
     "cost": {
       "type": "term",
@@ -54,7 +48,7 @@ var _widgets = Immutable.fromJS({
   ]
 });
 
-var WidgetStore = merge(EventEmitter.prototype, {
+export default WidgtStore = merge(EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -105,6 +99,4 @@ var WidgetStore = merge(EventEmitter.prototype, {
   getFacet: function(term) {
     return this.getFacets().get(term);
   }
-});
-
-module.exports = WidgetStore;
+})

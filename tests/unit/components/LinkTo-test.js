@@ -1,14 +1,15 @@
+require("babel/polyfill");
 var __path__ = '../../../src/js/components/LinkTo.jsx';
 
 jest.dontMock(__path__);
 jest.dontMock('events');
 var React = require('react/addons');
-var func = React.PropTypes.func;
+var { func } = React.PropTypes;
 var Router = require('react-router');
 var routes = require('../../../src/js/routes.jsx');
 
 // https://github.com/rackt/react-router/blob/master/docs/guides/testing.md
-var stubRouterContext = function(Component, props, stubs) {
+var stubRouterContext = (Component, props, stubs) => {
   return React.createClass({
     childContextTypes: {
       makePath: func,
@@ -25,7 +26,7 @@ var stubRouterContext = function(Component, props, stubs) {
     },
 
     getChildContext () {
-      return {
+      return Object.assign({
         makePath () {},
         makeHref () {},
         transitionTo () {},
@@ -37,11 +38,11 @@ var stubRouterContext = function(Component, props, stubs) {
         getCurrentParams () {},
         getCurrentQuery () {},
         isActive () {}
-      };
+      }, stubs);
     },
 
     render () {
-      return <Component />
+      return <Component {...props} />
     }
   });
 };

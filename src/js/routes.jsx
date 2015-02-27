@@ -1,32 +1,19 @@
-'use strict';
+import React from 'react/addons'
+import Router from 'react-router'
 
-var React = require('react/addons');
-//var PureRenderMixin = React.addons.PureRenderMixin;
+import App from './app.jsx'
+import Home from './views/pages/home.jsx'
+import Widgets from './views/pages/widgets.jsx'
+import Widget from './views/pages/widget.jsx'
+import Cart from './views/pages/cart.jsx'
 
-var Router = require('react-router');
-var DefaultRoute = Router.DefaultRoute;
-var Route = Router.Route;
+const { DefaultRoute, Route } = Router;
 
-var App = require('./app.jsx');
-var Home = require('./views/pages/home.jsx');
-var Widgets = require('./views/pages/widgets.jsx');
-var Widget = require('./views/pages/widget.jsx');
-var Cart = require('./views/pages/cart.jsx');
-//var e404 = require('./views/pages/404.jsx');
-
-var routes = (
+export default (
     <Route path="/index.html" handler={App}>
       <DefaultRoute name="home" handler={Home} />
       <Route name="widgets" handler={Widgets} />
       <Route name="widget" path="/widgets/:widgetId" handler={Widget} />
       <Route name="cart" handler={Cart} />
     </Route>
-);
-
-/*
-
- <Route name="styleguide" handler={Styleguide} />
- <Route name="404" handler={e404} />
- */
-
-module.exports = routes;
+)

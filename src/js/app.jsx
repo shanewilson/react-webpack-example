@@ -1,20 +1,15 @@
-"use strict";
+import React from 'react/addons'
+import { RouteHandler } from 'react-router'
 
-var React = require('react');
+import SiteNav from './views/common/SiteNav.jsx'
 
-var RouteHandler = require('react-router').RouteHandler;
-
-var SiteNav = require('./views/common/SiteNav.jsx');
-
-var App = React.createClass({
+export default React.createClass({
   render: function() {
     return (
       <div>
         <SiteNav />
         <RouteHandler />
       </div>
-    );
+    )
   }
-});
-
-module.exports = App;
+})
