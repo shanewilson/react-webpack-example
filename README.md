@@ -1,4 +1,4 @@
-`Buzzwords: #reactjs #immutablejs #gulp #webpack #jest #stylus #bower #selenium #hot-module-replacement`
+`Buzzwords: #reactjs #immutablejs #gulp #webpack #jest #stylus #bower #selenium #hot-module-replacement #es6 #babeljs`
 
 Technologies
 =
@@ -13,6 +13,7 @@ Technologies
 - [Stylus](http://learnboost.github.io/stylus/) - Expressive, dynamic, robust CSS
 - [Jeet](http://jeet.gs/) - A grid system for humans
 - [Axis](https://github.com/jenius/axis) - Axis is a terse, feature-rich css library built on top of stylus
+- [Babel](https://babeljs.io/) - Babel will turn your ES6+ code into ES5 friendly code, so you can start using it right now without waiting for browser support
 
 Development
 =
