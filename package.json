@@ -67,6 +67,7 @@
     "jsx-loader": "0.12.2",
     "nightwatch": "0.5.36",
     "npm-check-updates": "1.5.1",
+    "react-a11y": "0.0.6",
     "react-hot-loader": "1.1.4",
     "script-loader": "0.6.1",
     "selenium-standalone": "4.1.0",
