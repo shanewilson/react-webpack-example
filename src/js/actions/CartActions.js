@@ -7,7 +7,7 @@ export default {
    * @param {object} widget
    */
   add: function(widget) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: CartConstants.CART_ADD,
       widget: widget
     });
@@ -17,17 +17,17 @@ export default {
    * @param {string} id
    */
   remove: function(id) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: CartConstants.CART_REMOVE,
       id: id
     });
   },
 
   /**
-   * @param {string} id
+   * @param {string} widget
    */
   toggle: function(widget) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: CartConstants.CART_TOGGLE,
       widget: widget
     });
@@ -37,7 +37,7 @@ export default {
    * Remove all
    */
   removeAll: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: CartConstants.CART_REMOVE_ALL
     });
   }

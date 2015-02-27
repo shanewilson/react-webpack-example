@@ -1,5 +1,4 @@
 import EventEmitter from 'events'
-import merge from 'react/lib/merge'
 import Immutable from 'immutable'
 
 const CHANGE_EVENT = 'change';
@@ -48,7 +47,7 @@ const _widgets = Immutable.fromJS({
   ]
 });
 
-export default WidgtStore = merge(EventEmitter.prototype, {
+export default WidgtStore = Object.assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },

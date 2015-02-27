@@ -46,6 +46,7 @@
     "compression-webpack-plugin": "0.1.2",
     "css-loader": "0.9.1",
     "expose-loader": "0.6.0",
+    "flux": "^2.0.1",
     "graceful-fs": "3.0.5",
     "gulp": "3.8.10",
     "gulp-cdnizer": "1.1.2",

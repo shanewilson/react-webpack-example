@@ -1,5 +1,4 @@
 import EventEmitter from 'events'
-import merge from 'react/lib/merge'
 import Immutable from 'immutable'
 
 import AppDispatcher from '../dispatcher/AppDispatcher'
@@ -44,7 +43,7 @@ function removeAll() {
   _widgets = Immutable.OrderedMap();
 }
 
-export default CartStore = merge(EventEmitter.prototype, {
+export default CartStore = Object.assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -81,8 +80,7 @@ export default CartStore = merge(EventEmitter.prototype, {
 });
 
 // Register to handle all updates
-AppDispatcher.register(function(payload) {
-  const action = payload.action;
+AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
     case CartConstants.CART_ADD:
