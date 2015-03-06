@@ -1,7 +1,7 @@
 `Buzzwords: #reactjs #immutablejs #webpack #jest #stylus #selenium #hot-module-replacement #es6 #babeljs`
 
-version with Gulp: 8132c077870d41fbb08c9b2562b6204ea5cc4a75
-version with Browser-sync: d7d251bea5935ceafdd89700ad6ff986c32c506c
+- [Version with Gulp](https://github.com/shanewilson/react-webpack-example/tree/8132c077870d41fbb08c9b2562b6204ea5cc4a75)
+- [Version with Browser-sync](https://github.com/shanewilson/react-webpack-example/tree/d7d251bea5935ceafdd89700ad6ff986c32c506c)
 
 Technologies
 =
