@@ -74,24 +74,20 @@
     "style-loader": "0.8.3",
     "stylus-loader": "0.5.0",
     "url-loader": "0.5.5",
-    "webpack": "1.5.3",
+    "webpack": "1.7.1",
     "webpack-dev-server": "1.7.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "clean": "rm -rf ./node_modules/ ./bower_components/",
-    "postinstall": "bower install --quiet",
-    "upgrade": "./node_modules/npm-check-updates/bin/npm-check-updates -u &&  ./node_modules/bower/bin/bower update && npm test",
+    "upgrade": "npm-check-updates -u && npm test",
     "test": "jest",
-    "browsertest": "./node_modules/nightwatch/bin/nightwatch -e firefox,chrome",
+    "browser": "nightwatch -e firefox,chrome",
     "prestart": "npm install",
-    "start": "./node_modules/gulp/bin/gulp.js serve",
+    "start": "webpack-dev-server --content-base src --hot --inline --https --colors -d --quiet --history-api-fallback",
     "prebuild": "npm install",
-    "build": "./node_modules/gulp/bin/gulp.js build",
-    "prod": "./node_modules/gulp/bin/gulp.js build --production",
-    "stage": "npm test && npm run build && npm run browsertest",
-    "dist": "npm test && npm run prod && npm run browsertest"
+    "build": "rm -rf dist/ && BUILD_ENV=build webpack",
+    "dist": "npm test && npm run build && npm run browser"
   }
 }

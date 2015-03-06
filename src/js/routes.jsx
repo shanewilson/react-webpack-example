@@ -10,7 +10,7 @@ import Cart from './views/pages/cart.jsx'
 const { DefaultRoute, Route } = Router;
 
 export default (
-    <Route path="/index.html" handler={App}>
+    <Route path="/" handler={App}>
       <DefaultRoute name="home" handler={Home} />
       <Route name="widgets" handler={Widgets} />
       <Route name="widget" path="/widgets/:widgetId" handler={Widget} />
