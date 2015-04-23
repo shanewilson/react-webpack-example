@@ -18,7 +18,7 @@ var config = {
   module: {
     loaders: [
       {test: require.resolve("react/addons"), loader: "expose?React"},
-      {test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader?experimental&optional=runtime'], exclude: /node_modules/},
+      {test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader?optional=runtime'], exclude: /node_modules/},
       {test: /\.styl$/, loader: 'style!css!stylus?paths=node_modules/'},
       {test: /\.png$/, loader: "url?mimetype=image/png"},
       {test: /\.gif$/, loader: "url?mimetype=image/gif"},

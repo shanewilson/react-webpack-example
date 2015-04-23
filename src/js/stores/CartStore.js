@@ -43,7 +43,7 @@ function removeAll() {
   _widgets = Immutable.OrderedMap();
 }
 
-export default CartStore = Object.assign({}, EventEmitter.prototype, {
+const CartStore = Object.assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -111,3 +111,5 @@ AppDispatcher.register(function(action) {
 
   return true; // No errors.  Needed by promise in Dispatcher.
 });
+
+export default CartStore;

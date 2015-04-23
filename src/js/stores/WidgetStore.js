@@ -47,7 +47,7 @@ const _widgets = Immutable.fromJS({
   ]
 });
 
-export default WidgtStore = Object.assign({}, EventEmitter.prototype, {
+const WidgtStore = Object.assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -98,4 +98,6 @@ export default WidgtStore = Object.assign({}, EventEmitter.prototype, {
   getFacet: function(term) {
     return this.getFacets().get(term);
   }
-})
+});
+
+export default WidgtStore;
