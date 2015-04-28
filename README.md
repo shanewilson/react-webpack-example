@@ -1,4 +1,4 @@
-`Buzzwords: #reactjs #immutablejs #webpack #jest #stylus #selenium #hot-module-replacement #es6 #babeljs`
+`Buzzwords: #reactjs #immutablejs #webpack #jest #stylus #selenium #hot-module-replacement #es6 #babeljs #authentication`
 
 - [Version with Gulp](https://github.com/shanewilson/react-webpack-example/tree/8132c077870d41fbb08c9b2562b6204ea5cc4a75)
 - [Version with Browser-sync](https://github.com/shanewilson/react-webpack-example/tree/d7d251bea5935ceafdd89700ad6ff986c32c506c)
@@ -105,3 +105,4 @@ Resources
 
 - https://github.com/petehunt/webpack-howto
 - http://gaearon.github.io/react-hot-loader/
+- https://github.com/auth0/react-flux-jwt-authentication-sample
