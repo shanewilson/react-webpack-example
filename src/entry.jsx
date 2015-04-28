@@ -7,8 +7,6 @@ import routes from './js/routes.jsx'
 //import a11y from 'react-a11y'
 //a11y({throw: true});
 
-document.addEventListener("DOMContentLoaded", (event) => {
-  Router.run(routes, Router.HistoryLocation, (Handler, state) => {
-    React.render(<Handler/>, document.getElementById("app"))
-  });
+Router.run(routes, Router.HistoryLocation, (Handler, state) => {
+  React.render(<Handler/>, document.getElementById("app"))
 });

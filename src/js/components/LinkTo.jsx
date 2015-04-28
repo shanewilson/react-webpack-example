@@ -30,6 +30,20 @@ var Home = React.createClass({
   }
 });
 
+var Login = React.createClass({
+  render: function() {
+    var linkName = this.props.children || "Login";
+    return <LinkTo target="login">{linkName}</LinkTo>;
+  }
+});
+
+var Logout = React.createClass({
+  render: function() {
+    var linkName = this.props.children || "Logout";
+    return <LinkTo target="logout">{linkName}</LinkTo>;
+  }
+});
+
 var Widgets = React.createClass({
   render: function() {
     var linkName = this.props.children || "Widgets";
@@ -74,5 +88,7 @@ export default {
   Widgets: Widgets,
   Widget: Widget,
   Cart: Cart,
-  External: External
+  External: External,
+  Login: Login,
+  Logout: Logout
 };

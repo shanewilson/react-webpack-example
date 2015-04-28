@@ -156,4 +156,5 @@ const Cart = React.createClass({
   }
 });
 
-module.exports = Cart;
+import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx'
+export default AuthenticatedRoute(Cart);

@@ -146,7 +146,9 @@ const WidgetsFacets = React.createClass({
   }
 });
 
-export default React.createClass({
+import AuthenticatedRoute from './../../components/AuthenticatedRoute.jsx'
+
+var WS = React.createClass({
   mixins: [PureRenderMixin],
 
   _setSelectedWidgets: function (widgets) {
@@ -194,3 +196,5 @@ export default React.createClass({
     );
   }
 });
+
+export default AuthenticatedRoute(WS)

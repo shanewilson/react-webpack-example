@@ -4,7 +4,9 @@ import Router from 'react-router'
 import Breadcrumb from '../../components/Breadcrumb.jsx'
 import LinkTo from '../../components/LinkTo.jsx'
 
-export default React.createClass({
+import AuthenticatedRoute from './../../components/AuthenticatedRoute.jsx'
+
+var W = React.createClass({
   mixins: [Router.State],
   render: function() {
     return (
@@ -27,3 +29,5 @@ export default React.createClass({
     )
   }
 })
+
+export default AuthenticatedRoute(W)
