@@ -10,7 +10,7 @@ class SiteNav extends React.Component {
   render() {
     return (
         <NavBar>
-          {true ? (
+          {this.props.user ? (
               <ul>
                 <li><Home /></li>
                 <li><Widgets /></li>
