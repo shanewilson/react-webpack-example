@@ -1,0 +1,22 @@
+@import "./_variables.css";
+
+.MyApp {
+    background: var(--bgColour);
+}
+
+.MyApp --heading {
+   color: color( var(--primaryColour) blackness(+20%) );
+}
+
+.MyApp article {
+    margin: 2rem;
+    padding: 1rem;
+    border: 1px solid color( var(--bgColour) blackness(+20%) );
+    box-shadow: 2px 2px 2px color( var(--bgColour) blackness(+10%) );
+}
+
+@media (--mobile) {
+    --heading {
+       margin-top: 0;
+    }
+}

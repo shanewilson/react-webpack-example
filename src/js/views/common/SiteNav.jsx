@@ -14,7 +14,7 @@ class SiteNav extends React.Component {
               <ul>
                 <li><Home /></li>
                 <li><Widgets /></li>
-                <li><CartCount /><Cart /></li>
+                <li><Cart>Cart <CartCount /></Cart></li>
                 <li><Logout /></li>
               </ul>
           ) : ""}

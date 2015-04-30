@@ -1,3 +1,5 @@
+require("./NavBar.css");
+
 import React from 'react/addons'
 
 export default React.createClass({
@@ -9,7 +11,7 @@ export default React.createClass({
   },
   render: function() {
     return (
-      <nav className="ns-NavBar">{this.props.children}</nav>
+      <nav className="Navbar">{this.props.children}</nav>
     );
   }
 })

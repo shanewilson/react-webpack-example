@@ -1,0 +1,11 @@
+:root {
+    --blue: #418bca;
+    --red: #d9544f;
+    --green: #16a085;
+
+    --primaryColour: var(--blue);
+    --bgColour: #f3f3f3;
+}
+
+@custom-media    --mobile (width <= 640px);
+@custom-selector --heading h1, h2, h3, h4, h5, h6;

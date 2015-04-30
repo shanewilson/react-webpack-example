@@ -25,6 +25,11 @@ export default React.createClass({
     CartStore.removeChangeListener(this._onChange);
   },
   render: function() {
-    return <span className="ns-CartCount">[{this.state.widgets.count()}]</span>;
+    return (
+      <span className="ns-CartCount">
+        <i className="fa fa-shopping-cart"></i>
+        [{this.state.widgets.count()}]
+      </span>
+    );
   }
 })

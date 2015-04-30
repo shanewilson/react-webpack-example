@@ -11,10 +11,8 @@ class Login extends React.Component {
   }
 
   constructor() {
-    super()
-    this.login = this.login.bind(this)
-    this.adminLogin = this.adminLogin.bind(this)
-    this.userLogin = this.userLogin.bind(this)
+    super();
+    this.login = this.login.bind(this);
     this.forward = this.forward.bind(this)
   }
 
@@ -27,27 +25,13 @@ class Login extends React.Component {
   }
 
   login(user) {
-    AuthActions.login(user)
+    AuthActions.login(user);
   }
 
   forward() {
-    var { router } = this.context
-    var nextPath = router.getCurrentQuery().nextPath
-
-
-    if (nextPath) {
-      router.replaceWith(nextPath);
-    } else {
-      router.replaceWith('/');
-    }
-  }
-
-  adminLogin() {
-    this.login(1)
-  }
-
-  userLogin() {
-    this.login(2)
+    var { router } = this.context;
+    var nextPath = router.getCurrentQuery().nextPath || '/';
+    router.replaceWith(nextPath);
   }
 
   render() {
@@ -57,8 +41,8 @@ class Login extends React.Component {
             <h1>Login!</h1>
             <section>
               <h2>You must login!</h2>
-              <button onClick={this.adminLogin}>I am admin!</button>
-              <button onClick={this.userLogin}>I am user!</button>
+              <button onClick={() => this.login(1)}>I am admin!</button>
+              <button onClick={() => this.login(2)}>I am user!</button>
             </section>
           </article>
         </div>

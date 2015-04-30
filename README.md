@@ -1,5 +1,6 @@
-`Buzzwords: #reactjs #immutablejs #webpack #jest #stylus #selenium #hot-module-replacement #es6 #babeljs #authentication`
+`Buzzwords: #reactjs #immutablejs #webpack #jest #selenium #hot-module-replacement #es6 #babeljs #authentication #postcss`
 
+- [Version with Stylus](https://github.com/shanewilson/react-webpack-example/tree/64e435063f6e9f8aa880965f7ea5099d28e7bf50)
 - [Version with Gulp](https://github.com/shanewilson/react-webpack-example/tree/8132c077870d41fbb08c9b2562b6204ea5cc4a75)
 - [Version with Browser-sync](https://github.com/shanewilson/react-webpack-example/tree/d7d251bea5935ceafdd89700ad6ff986c32c506c)
 
@@ -12,9 +13,7 @@ Technologies
 - [Webpack](http://webpack.github.io/) - Module Bundler
 - [Jest](http://facebook.github.io/jest/) - Painless Javascript Unit Testing
 - [Nightwatch](http://nightwatchjs.org/) - is an easy to use Node.js based End-to-End (E2E) testing solution for browser based apps and websites.
-- [Stylus](http://learnboost.github.io/stylus/) - Expressive, dynamic, robust CSS
-- [Jeet](http://jeet.gs/) - A grid system for humans
-- [Axis](https://github.com/jenius/axis) - Axis is a terse, feature-rich css library built on top of stylus
+- [PostCSS] - is a tool for transforming CSS with JS plugins
 - [Babel](https://babeljs.io/) - Babel will turn your ES6+ code into ES5 friendly code, so you can start using it right now without waiting for browser support
 
 Development
@@ -28,6 +27,15 @@ https://localhost:8080/
 webpack result is served from /js/
 content is served from .../react-webpack-example/src
 404s will fallback to /index.html
+Hash: 6304c41877c95731fb5f
+Version: webpack 1.8.9
+Time: 4620ms
+      Asset     Size  Chunks             Chunk Names
+    main.js  1.38 MB       0  [emitted]  main
+main.js.map  1.51 MB       0  [emitted]  main
+chunk    {0} main.js, main.js.map (main) 1.21 MB [rendered]
+...
+webpack: bundle is now VALID.
 ```
 
 Tests
@@ -84,14 +92,20 @@ Webpack bundles all the assets in production mode and Gulp creates unique file n
 ```
 NODE_ENV=production npm run build
 ...
-Hash: ff11248f45c60ea43a0a
-Version: webpack 1.7.1
-Time: 7934ms
-                               Asset     Size  Chunks             Chunk Names
-    main.ff11248f45c60ea43a0a.min.js   294227       0  [emitted]  main
-main.ff11248f45c60ea43a0a.min.js.map  2626969       0  [emitted]  main
- main.ff11248f45c60ea43a0a.min.js.gz    86858          [emitted]
-    + 242 hidden modules
+Hash: a347df5e60d93385aa06
+Version: webpack 1.8.9
+Time: 8028ms
+                                 Asset       Size  Chunks             Chunk Names
+      main.a347df5e60d93385aa06.min.js     254 kB       0  [emitted]  main
+    style.a347df5e60d93385aa06.min.css  629 bytes       0  [emitted]  main
+  main.a347df5e60d93385aa06.min.js.map    2.44 MB       0  [emitted]  main
+style.a347df5e60d93385aa06.min.css.map  111 bytes       0  [emitted]  main
+   main.a347df5e60d93385aa06.min.js.gz    68.2 kB          [emitted]
+    + 268 hidden modules
+Child extract-text-webpack-plugin:
+        + 2 hidden modules
+Child extract-text-webpack-plugin:
+        + 2 hidden modules
 
 > cd dist
 > python -m SimpleHTTPServer
