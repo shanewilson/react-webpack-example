@@ -1,47 +1,47 @@
-import EventEmitter from 'events'
-import Immutable from 'immutable'
+import EventEmitter from 'events';
+import Immutable from 'immutable';
 
 const CHANGE_EVENT = 'change';
 
 const _widgets = Immutable.fromJS({
   facets: {
-    "cost": {
-      "type": "term",
-      "values": [
+    'cost': {
+      'type': 'term',
+      'values': [
       {
-        "value": 1,
-        "count": 1
+        'value': 1,
+        'count': 1
       },
       {
-        "value": 1.5,
-        "count": 2
+        'value': 1.5,
+        'count': 2
       },
       {
-        "value": 2,
-        "count": 2
+        'value': 2,
+        'count': 2
       }
       ]
     }
   },
   items: [
   {
-    id: "WD1",
-    name: "Widget 1",
+    id: 'WD1',
+    name: 'Widget 1',
     cost: 1
   },
   {
-    id: "WD2",
-    name: "Widget 2",
+    id: 'WD2',
+    name: 'Widget 2',
     cost: 2
   },
   {
-    id: "WD3",
-    name: "Widget 3",
+    id: 'WD3',
+    name: 'Widget 3',
     cost: 1.50
   },
   {
-    id: "WD4",
-    name: "Widget 4",
+    id: 'WD4',
+    name: 'Widget 4',
     cost: 2.50
   }
   ]
@@ -71,7 +71,7 @@ const WidgtStore = Object.assign({}, EventEmitter.prototype, {
   * @return {array}
   */
   getAll: function() {
-    return _widgets.get("items");
+    return _widgets.get('items');
   },
 
   /**
@@ -87,7 +87,7 @@ const WidgtStore = Object.assign({}, EventEmitter.prototype, {
   * @return {object}
   */
   getFacets: function() {
-    return _widgets.get("facets");
+    return _widgets.get('facets');
   },
 
   /**

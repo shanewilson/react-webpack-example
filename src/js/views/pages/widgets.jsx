@@ -1,12 +1,14 @@
-import React from'react/addons'
+import React from'react/addons';
 const {PureRenderMixin } = React.addons;
 
-import WidgetStore from'../../stores/WidgetStore.js'
-import CartStore from'../../stores/CartStore.js'
-import CartActions from'../../actions/CartActions.js'
+import WidgetStore from'../../stores/WidgetStore.js';
+import CartStore from'../../stores/CartStore.js';
+import CartActions from'../../actions/CartActions.js';
 
-import LinkTo from'../../components/LinkTo.jsx'
-import AddToCart from'../../components/AddToCart.jsx'
+import LinkTo from'../../components/LinkTo.jsx';
+import AddToCart from'../../components/AddToCart.jsx';
+
+import AuthenticatedRoute from './../../components/AuthenticatedRoute.jsx';
 
 const SelectAll = React.createClass({
   mixins: [PureRenderMixin],
@@ -16,7 +18,7 @@ const SelectAll = React.createClass({
   },
   _checkSelected: function (xs) {
     const selected = xs.every(function (w) {
-      return w.get("selected") === true;
+      return w.get('selected') === true;
     });
     return {selected: selected};
   },
@@ -30,8 +32,8 @@ const SelectAll = React.createClass({
   _onChange: function () {
     this.props.widgets.forEach(function (widget) {
       if (this.state.selected) {
-        CartActions.remove(widget.get("id"));
-      } else if (!widget.get("selected")) {
+        CartActions.remove(widget.get('id'));
+      } else if (!widget.get('selected')) {
         CartActions.add(widget);
       }
     }.bind(this));
@@ -39,10 +41,10 @@ const SelectAll = React.createClass({
     this.setState({selected: !this.state.selected});
   },
   render: function () {
-    const text = this.state.selected ? "-" : "+";
+    const text = this.state.selected ? '-' : '+';
 
     return (
-        <button type="button" onClick={this._onChange}>{text}</button>
+        <button type='button' onClick={this._onChange}>{text}</button>
     );
   }
 });
@@ -54,17 +56,17 @@ const WidgetsTableRow = React.createClass({
     widget: React.PropTypes.object.isRequired
   },
   render: function () {
-    const style = this.props.widget.get("selected") ? {color: "green"} : {};
+    const style = this.props.widget.get('selected') ? {color: 'green'} : {};
     return (
         <tr style={style}>
           <td>
             <AddToCart widget={this.props.widget}/>
           </td>
           <td>
-            <LinkTo.Widget widgetId={this.props.widget.get("id")} />
+            <LinkTo.Widget widgetId={this.props.widget.get('id')} />
           </td>
-          <td>{this.props.widget.get("name")}</td>
-          <td>{this.props.widget.get("cost")}</td>
+          <td>{this.props.widget.get('name')}</td>
+          <td>{this.props.widget.get('cost')}</td>
         </tr>
     );
   }
@@ -91,7 +93,7 @@ const WidgetsTable = React.createClass({
           </thead>
           <tbody>
       {this.props.widgets.map(function (widget) {
-        return (<WidgetsTableRow key={widget.get("id")} widget={widget}/>);
+        return (<WidgetsTableRow key={widget.get('id')} widget={widget}/>);
       }).toJS()}
           </tbody>
         </table>
@@ -106,8 +108,8 @@ const Term = React.createClass({
     term: React.PropTypes.object.isRequired
   },
   render: function () {
-    const v = this.props.term.get("value");
-    const c = this.props.term.get("count");
+    const v = this.props.term.get('value');
+    const c = this.props.term.get('count');
 
     return (<li key={v}>{v} - {c}</li>);
   }
@@ -120,11 +122,11 @@ const Facet = React.createClass({
     facet: React.PropTypes.object.isRequired
   },
   render: function () {
-    const xs = this.props.facet.get("values");
+    const xs = this.props.facet.get('values');
     return (
         <ul>
       {xs.map(function (term) {
-        return (<Term key={term.get("value")} term={term} />);
+        return (<Term key={term.get('value')} term={term} />);
       })}
         </ul>
     );
@@ -140,13 +142,11 @@ const WidgetsFacets = React.createClass({
   render: function () {
     return (
         <ul>
-          <Facet facet={this.props.facets.get("cost")}/>
+          <Facet facet={this.props.facets.get('cost')}/>
         </ul>
     );
   }
 });
-
-import AuthenticatedRoute from './../../components/AuthenticatedRoute.jsx'
 
 var WS = React.createClass({
   mixins: [PureRenderMixin],
@@ -154,8 +154,8 @@ var WS = React.createClass({
   _setSelectedWidgets: function (widgets) {
     const ids = CartStore.getCart();
     return widgets.map(function (w) {
-      if (ids.has(w.get("id"))) {
-        w = w.set("selected", true);
+      if (ids.has(w.get('id'))) {
+        w = w.set('selected', true);
       }
       return w;
     });
@@ -197,4 +197,4 @@ var WS = React.createClass({
   }
 });
 
-export default AuthenticatedRoute(WS)
+export default AuthenticatedRoute(WS);

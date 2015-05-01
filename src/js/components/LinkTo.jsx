@@ -1,6 +1,6 @@
-import React from 'react/addons'
+import React from 'react/addons';
 
-import {Link} from 'react-router'
+import {Link} from 'react-router';
 
 var LinkTo = React.createClass({
   propTypes: {
@@ -15,7 +15,7 @@ var LinkTo = React.createClass({
     var target = this.props.target;
     return (
       <Link
-        className={cx("ns-LinkTo", "ns-LinkTo--" + this.props.target)}
+        className={cx('ns-LinkTo', 'ns-LinkTo--' + this.props.target)}
         to={target}>
         {this.props.children}
       </Link>
@@ -25,29 +25,29 @@ var LinkTo = React.createClass({
 
 var Home = React.createClass({
   render: function() {
-    var linkName = this.props.children || "Home";
-    return <LinkTo target="home">{linkName}</LinkTo>;
+    var linkName = this.props.children || 'Home';
+    return <LinkTo target='home'>{linkName}</LinkTo>;
   }
 });
 
 var Login = React.createClass({
   render: function() {
-    var linkName = this.props.children || "Login";
-    return <LinkTo target="login">{linkName}</LinkTo>;
+    var linkName = this.props.children || 'Login';
+    return <LinkTo target='login'>{linkName}</LinkTo>;
   }
 });
 
 var Logout = React.createClass({
   render: function() {
-    var linkName = this.props.children || "Logout";
-    return <LinkTo target="logout">{linkName}</LinkTo>;
+    var linkName = this.props.children || 'Logout';
+    return <LinkTo target='logout'>{linkName}</LinkTo>;
   }
 });
 
 var Widgets = React.createClass({
   render: function() {
-    var linkName = this.props.children || "Widgets";
-    return <LinkTo target="widgets">{linkName}</LinkTo>;
+    var linkName = this.props.children || 'Widgets';
+    return <LinkTo target='widgets'>{linkName}</LinkTo>;
   }
 });
 
@@ -57,14 +57,14 @@ var Widget = React.createClass({
   },
   render: function() {
     var linkName = this.props.children || this.props.widgetId;
-    return <Link to="widget" params={{widgetId:this.props.widgetId}}>{linkName}</Link>;
+    return <Link to='widget' params={{widgetId:this.props.widgetId}}>{linkName}</Link>;
   }
 });
 
 var Cart = React.createClass({
   render: function() {
-    var linkName = this.props.children || "View Cart";
-    return <LinkTo target="cart">{linkName}</LinkTo>;
+    var linkName = this.props.children || 'View Cart';
+    return <LinkTo target='cart'>{linkName}</LinkTo>;
   }
 });
 

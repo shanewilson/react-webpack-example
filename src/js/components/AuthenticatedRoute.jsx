@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthStore from '../stores/AuthStore';
 
-import AuthenticatedComponent from './AuthenticatedComponent.jsx'
+import AuthenticatedComponent from './AuthenticatedComponent.jsx';
 
 export default (ComposedComponent) => {
   return class AuthenticatedRoute extends React.Component {
@@ -13,7 +13,7 @@ export default (ComposedComponent) => {
     }
 
     render() {
-      return <ComposedComponent {...this.props} />
+      return <ComposedComponent {...this.props} />;
     }
-  }
+  };
 };

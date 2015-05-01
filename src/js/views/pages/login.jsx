@@ -1,7 +1,7 @@
-import React from 'react/addons'
+import React from 'react/addons';
 
-import AuthActions from '../../actions/AuthActions'
-import AuthStore from '../../stores/AuthStore'
+import AuthActions from '../../actions/AuthActions';
+import AuthStore from '../../stores/AuthStore';
 
 class Login extends React.Component {
   static willTransitionTo(transition) {
@@ -13,7 +13,7 @@ class Login extends React.Component {
   constructor() {
     super();
     this.login = this.login.bind(this);
-    this.forward = this.forward.bind(this)
+    this.forward = this.forward.bind(this);
   }
 
   componentDidMount() {
@@ -46,7 +46,7 @@ class Login extends React.Component {
             </section>
           </article>
         </div>
-    )
+    );
   }
 }
 
@@ -54,4 +54,4 @@ Login.contextTypes = {
   router: React.PropTypes.func
 };
 
-export default Login
+export default Login;

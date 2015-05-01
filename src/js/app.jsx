@@ -1,9 +1,9 @@
-import React from 'react/addons'
-import { RouteHandler } from 'react-router'
+import React from 'react/addons';
+import { RouteHandler } from 'react-router';
 import cookie from 'react-cookie';
 
-import SiteNav from './views/common/SiteNav.jsx'
-import AuthActions from './actions/AuthActions'
+import SiteNav from './views/common/SiteNav.jsx';
+import AuthActions from './actions/AuthActions';
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -21,6 +21,6 @@ export default class App extends React.Component {
         <SiteNav />
         <RouteHandler {...this.state} />
       </div>
-    )
+    );
   }
 }

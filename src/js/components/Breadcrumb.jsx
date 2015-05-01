@@ -1,4 +1,4 @@
-import React from 'react/addons'
+import React from 'react/addons';
 
 export default React.createClass({
   propTypes: {
@@ -10,4 +10,4 @@ export default React.createClass({
   render: function() {
     return <ul className="ns-Breadcrumb">{this.props.children}</ul>;
   }
-})
+});

@@ -1,8 +1,8 @@
-import EventEmitter from 'events'
-import Immutable from 'immutable'
+import EventEmitter from 'events';
+import Immutable from 'immutable';
 
-import AppDispatcher from '../dispatcher/AppDispatcher'
-import CartConstants from '../constants/CartConstants'
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import CartConstants from '../constants/CartConstants';
 
 const CHANGE_EVENT = 'change';
 
@@ -29,8 +29,8 @@ function remove(id) {
  * @param {object} widget
  */
 function toggle(widget) {
-  if (widget.get("selected")) {
-    remove(widget.get("id"));
+  if (widget.get('selected')) {
+    remove(widget.get('id'));
   } else {
     add(widget);
   }

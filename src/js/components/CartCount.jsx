@@ -1,6 +1,6 @@
-import React from 'react/addons'
+import React from 'react/addons';
 
-import CartStore from "../stores/CartStore.js"
+import CartStore from '../stores/CartStore.js';
 
 function cartItems(){
   return {
@@ -26,10 +26,10 @@ export default React.createClass({
   },
   render: function() {
     return (
-      <span className="ns-CartCount">
-        <i className="fa fa-shopping-cart"></i>
+      <span className='ns-CartCount'>
+        <i className='fa fa-shopping-cart'></i>
         [{this.state.widgets.count()}]
       </span>
     );
   }
-})
+});

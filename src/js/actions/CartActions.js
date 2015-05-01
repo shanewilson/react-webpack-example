@@ -1,5 +1,5 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
-import CartConstants from '../constants/CartConstants'
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import CartConstants from '../constants/CartConstants';
 
 export default {
 
@@ -41,4 +41,4 @@ export default {
       actionType: CartConstants.CART_REMOVE_ALL
     });
   }
-}
+};

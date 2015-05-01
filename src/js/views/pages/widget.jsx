@@ -1,10 +1,10 @@
-import React from 'react'
-import Router from 'react-router'
+import React from 'react';
+import Router from 'react-router';
 
-import Breadcrumb from '../../components/Breadcrumb.jsx'
-import LinkTo from '../../components/LinkTo.jsx'
+import Breadcrumb from '../../components/Breadcrumb.jsx';
+import LinkTo from '../../components/LinkTo.jsx';
 
-import AuthenticatedRoute from './../../components/AuthenticatedRoute.jsx'
+import AuthenticatedRoute from './../../components/AuthenticatedRoute.jsx';
 
 var W = React.createClass({
   mixins: [Router.State],
@@ -26,8 +26,8 @@ var W = React.createClass({
             </section>
           </article>
         </div>
-    )
+    );
   }
-})
+});
 
-export default AuthenticatedRoute(W)
+export default AuthenticatedRoute(W);

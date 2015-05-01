@@ -1,10 +1,10 @@
-import React from 'react/addons'
+import React from 'react/addons';
 
-import AdminDashboard from './admin/dashboard.jsx'
-import UserDashboard from './dashboard.jsx'
+import AdminDashboard from './admin/dashboard.jsx';
+import UserDashboard from './dashboard.jsx';
 
-import AuthenticatedComponent from '../../components/AuthenticatedComponent.jsx'
-import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx'
+import AuthenticatedComponent from '../../components/AuthenticatedComponent.jsx';
+import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx';
 
 class Home extends React.Component {
   render() {
@@ -19,8 +19,8 @@ class Home extends React.Component {
             </section>
           </article>
         </div>
-    )
+    );
   }
 }
 
-export default AuthenticatedRoute(AuthenticatedComponent(Home))
+export default AuthenticatedRoute(AuthenticatedComponent(Home));

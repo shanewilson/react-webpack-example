@@ -1,7 +1,7 @@
-import React from 'react/addons'
+import React from 'react/addons';
 
-import {Home} from '../../components/LinkTo.jsx'
-import AuthActions from '../../actions/AuthActions'
+import {Home} from '../../components/LinkTo.jsx';
+import AuthActions from '../../actions/AuthActions';
 
 export default class Logout extends React.Component {
   componentDidMount() {

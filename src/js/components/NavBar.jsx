@@ -1,6 +1,6 @@
-require("./NavBar.css");
+require('./NavBar.css');
 
-import React from 'react/addons'
+import React from 'react/addons';
 
 export default React.createClass({
   propTypes: {
@@ -11,7 +11,7 @@ export default React.createClass({
   },
   render: function() {
     return (
-      <nav className="Navbar">{this.props.children}</nav>
+      <nav className='Navbar'>{this.props.children}</nav>
     );
   }
-})
+});

@@ -1,6 +1,6 @@
-import React from 'react/addons'
+import React from 'react/addons';
 
-import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx'
+import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx';
 
 class UserDashboard extends React.Component {
 
@@ -10,8 +10,9 @@ class UserDashboard extends React.Component {
           <h2>User Dashboard</h2>
           <p>blab balhlahlhblahlbh</p>
         </section>
-    )
+    );
   }
 }
 
-export default UserDashboard
+export default UserDashboard;
+

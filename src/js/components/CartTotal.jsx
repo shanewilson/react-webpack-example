@@ -1,5 +1,5 @@
-import React from 'react/addons'
-import Immutable from 'immutable'
+import React from 'react/addons';
+import Immutable from 'immutable';
 
 export default React.createClass({
   getInitialState: function () {
@@ -7,15 +7,15 @@ export default React.createClass({
   },
   render: function () {
     var total = this.props.widgets.reduce(function (sum, w) {
-      return w.get("cost") + sum;
+      return w.get('cost') + sum;
     }, 0);
 
     var selected = this.props.widgets.filter(function (x) {
-      return x.get("selected");
+      return x.get('selected');
     });
 
     var selTotal = selected.reduce(function (sum, w) {
-      return w.get("cost") + sum;
+      return w.get('cost') + sum;
     }, 0);
 
     return (
@@ -31,4 +31,4 @@ export default React.createClass({
         </div>
     );
   }
-})
+});

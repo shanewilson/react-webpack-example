@@ -1,6 +1,6 @@
-import React from 'react/addons'
+import React from 'react/addons';
 
-import AuthenticatedComponent from '../../../components/AuthenticatedComponent.jsx'
+import AuthenticatedComponent from '../../../components/AuthenticatedComponent.jsx';
 
 class AdminDashboard extends React.Component {
 
@@ -10,8 +10,8 @@ class AdminDashboard extends React.Component {
           <h2>Admin Dashboard</h2>
           <p>blab balhlahlhblahlbh</p>
         </section>
-    )
+    );
   }
 }
 
-export default AdminDashboard
+export default AdminDashboard;
