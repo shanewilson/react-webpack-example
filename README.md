@@ -13,7 +13,7 @@ Technologies
 - [Webpack](http://webpack.github.io/) - Module Bundler
 - [Jest](http://facebook.github.io/jest/) - Painless Javascript Unit Testing
 - [Nightwatch](http://nightwatchjs.org/) - is an easy to use Node.js based End-to-End (E2E) testing solution for browser based apps and websites.
-- [PostCSS] - is a tool for transforming CSS with JS plugins
+- [PostCSS](https://github.com/postcss/postcss) - is a tool for transforming CSS with JS plugins
 - [Babel](https://babeljs.io/) - Babel will turn your ES6+ code into ES5 friendly code, so you can start using it right now without waiting for browser support
 
 Development
