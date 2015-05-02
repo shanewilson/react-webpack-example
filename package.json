@@ -90,9 +90,9 @@
     "test": "jest",
     "browser": "nightwatch -e firefox,chrome",
     "prestart": "npm install",
-    "start": "webpack-dev-server --content-base src --hot --inline --https --colors -d --history-api-fallback",
+    "start": "webpack-dev-server --config webpack.dev.config.js --hot --inline -d",
     "prebuild": "npm install",
-    "build": "rm -rf dist/ && BUILD_ENV=build webpack",
+    "build": "rm -rf dist/ && webpack",
     "dist": "npm test && npm run build && npm run browser"
   }
 }
