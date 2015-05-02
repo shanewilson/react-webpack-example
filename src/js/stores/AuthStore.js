@@ -1,5 +1,4 @@
 import EventEmitter from 'events';
-import Immutable from 'immutable';
 import cookie from 'react-cookie';
 
 import AppDispatcher from '../dispatcher/AppDispatcher';

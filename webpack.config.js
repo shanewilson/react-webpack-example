@@ -5,7 +5,11 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var production = process.env.NODE_ENV === 'production';
 var config = production ? require('./webpack.prod.config.js') : require('./webpack.base.config.js');
 
-config.module.loaders.push({test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=1!postcss')});
+config.module.loaders = config.module.loaders.concat([
+  {test: /\.jsx?$/, loader: 'babel?optional=runtime', exclude: /node_modules/},
+  {test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=1!postcss')}
+]);
+
 config.plugins = config.plugins.concat(
     [
       new ExtractTextPlugin(config.output.css),

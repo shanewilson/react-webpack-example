@@ -28,9 +28,11 @@ export default (ComposedComponent) => {
     }
 
     render() {
-      return <ComposedComponent
+      return (
+          <ComposedComponent
               {...this.props}
-              user={this.state.user} />;
+              user={this.state.user}/>
+      );
     }
   };
 };

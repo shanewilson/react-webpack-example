@@ -10,6 +10,15 @@ config.devServer = {
   },
   historyApiFallback: true
 };
-config.module.loaders.push({test: /\.css$/, loader: 'style!css?importLoaders=1!postcss'});
+
+config.module.loaders = config.module.loaders.concat([
+  {test: /\.jsx?$/, loaders: [
+    'react-hot',
+    'babel',
+    'flowcheck',
+    'babel?blacklist=flow&optional=runtime'],
+    exclude: /node_modules/},
+  {test: /\.css$/, loader: 'style!css?importLoaders=1!postcss'}
+]);
 
 module.exports = config;

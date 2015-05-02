@@ -20,7 +20,6 @@ module.exports = {
       {test: /\.jsx?$/, loader: 'eslint-loader', exclude: /node_modules/}
     ],
     loaders: [
-      {test: /\.jsx?$/, loaders: ['react-hot', 'babel?optional=runtime'], exclude: /node_modules/},
       {test: /\.png$/, loader: 'url?mimetype=image/png'},
       {test: /\.gif$/, loader: 'url?mimetype=image/gif'},
       {test: /\.jpe?g$/, loader: 'url?mimetype=image/jpeg'},
