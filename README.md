@@ -1,3 +1,5 @@
+Originally cloned from https://github.com/shanewilson/react-webpack-example
+
 `Buzzwords: #reactjs #immutablejs #webpack #jest #selenium #hot-module-replacement #es6 #babeljs #authentication #postcss #eslint`
 
 - [Version with Stylus](https://github.com/shanewilson/react-webpack-example/tree/64e435063f6e9f8aa880965f7ea5099d28e7bf50)
