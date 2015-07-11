@@ -1,7 +1,7 @@
 import React from 'react';
-import AuthStore from '../stores/AuthStore';
+import AuthStore from 'stores/AuthStore';
 
-import AuthenticatedComponent from './AuthenticatedComponent.jsx';
+import AuthenticatedComponent from './AuthenticatedComponent';
 
 export default (ComposedComponent) => {
   return class AuthenticatedRoute extends React.Component {

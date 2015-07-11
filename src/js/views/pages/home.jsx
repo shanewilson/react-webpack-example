@@ -1,10 +1,10 @@
 import React from 'react/addons';
 
-import AdminDashboard from './admin/dashboard.jsx';
-import UserDashboard from './dashboard.jsx';
+import AdminDashboard from './admin/dashboard';
+import UserDashboard from './dashboard';
 
-import AuthenticatedComponent from 'components/AuthenticatedComponent.jsx';
-import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx';
+import AuthenticatedComponent from 'components/AuthenticatedComponent';
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
 
 class Home extends React.Component {
   render() {

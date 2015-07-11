@@ -1,7 +1,7 @@
 import React from 'react/addons';
 
-import AuthActions from '../../actions/AuthActions';
-import AuthStore from '../../stores/AuthStore';
+import AuthActions from 'actions/AuthActions';
+import AuthStore from 'stores/AuthStore';
 
 class Login extends React.Component {
   static willTransitionTo(transition) {

@@ -3,10 +3,10 @@ const { PureRenderMixin } = React.addons;
 
 import Immutable from 'immutable';
 
-import CartStore from '../../stores/CartStore.js';
-import LinkTo from '../../components/LinkTo.jsx';
-import SelectInCart from '../../components/SelectInCart.jsx';
-import CartTotal from '../../components/CartTotal.jsx';
+import CartStore from 'stores/CartStore';
+import LinkTo from 'components/LinkTo';
+import SelectInCart from 'components/SelectInCart';
+import CartTotal from 'components/CartTotal';
 
 const SelectAll = React.createClass({
   mixins: [PureRenderMixin],
@@ -161,5 +161,5 @@ const Cart = React.createClass({
   }
 });
 
-import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx';
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
 export default AuthenticatedRoute(Cart);

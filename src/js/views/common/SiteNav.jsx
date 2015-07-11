@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {Home, Widgets, Cart, Logout} from '../../components/LinkTo.jsx';
-import NavBar from '../../components/NavBar.jsx';
-import CartCount from '../../components/CartCount.jsx';
+import {Home, Widgets, Cart, Logout} from 'components/LinkTo';
+import NavBar from 'components/NavBar';
+import CartCount from 'components/CartCount';
 
-import AuthenticatedComponent from 'components/AuthenticatedComponent.jsx';
+import AuthenticatedComponent from 'components/AuthenticatedComponent';
 
 class SiteNav extends React.Component {
   render() {

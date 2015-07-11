@@ -1,7 +1,7 @@
 import React from 'react/addons';
 
-import CartActions from '../actions/CartActions.js';
-import CBToggle from '../components/CBToggle.jsx';
+import CartActions from 'actions/CartActions';
+import CBToggle from 'components/CBToggle';
 
 export default React.createClass({
   propTypes: {

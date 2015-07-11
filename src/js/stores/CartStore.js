@@ -1,8 +1,8 @@
 import EventEmitter from 'events';
 import Immutable from 'immutable';
 
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import CartConstants from '../constants/CartConstants';
+import AppDispatcher from 'dispatcher/AppDispatcher';
+import CartConstants from 'constants/CartConstants';
 
 const CHANGE_EVENT = 'change';
 
