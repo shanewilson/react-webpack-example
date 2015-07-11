@@ -43,7 +43,9 @@ class Login extends React.Component {
               <h2>You must login!</h2>
               <button onClick={() => this.login(1)}>I am admin!</button>
               <button onClick={() => this.login(2)}>I am user!</button>
-              <button onClick={() => this.login('type_error')}>Type Error</button>
+              <button onClick={() => this.login('type_error')}>
+                Type Error
+              </button>
             </section>
           </article>
         </div>

@@ -70,7 +70,9 @@ const WidgetsTable = React.createClass({
           <thead>
           <tr>
             <th>
-              <SelectAll handleChange={this.props.handleSelectAll} widgets={this.props.widgets}/>
+              <SelectAll
+                handleChange={this.props.handleSelectAll}
+                widgets={this.props.widgets}/>
             </th>
             <th>ID</th>
             <th>Name</th>
@@ -139,7 +141,10 @@ const Cart = React.createClass({
             <button className='btn'>Remove Selected</button>
             <button className='btn'>Download Selected</button>
             <button className='btn'>Download All</button>
-            <WidgetsTable handleSelectAll={this._updateAll} handleChange={this._updateState} widgets={widgets}/>
+            <WidgetsTable
+              handleSelectAll={this._updateAll}
+              handleChange={this._updateState}
+              widgets={widgets}/>
           </div>
       );
     }

@@ -3,7 +3,7 @@ import React from 'react/addons';
 import AdminDashboard from './admin/dashboard.jsx';
 import UserDashboard from './dashboard.jsx';
 
-import AuthenticatedComponent from '../../components/AuthenticatedComponent.jsx';
+import AuthenticatedComponent from 'components/AuthenticatedComponent.jsx';
 import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx';
 
 class Home extends React.Component {

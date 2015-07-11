@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import AuthenticatedComponent from '../../../components/AuthenticatedComponent.jsx';
+import AuthenticatedComponent from 'components/AuthenticatedComponent.jsx';
 
 class AdminDashboard extends React.Component {
 

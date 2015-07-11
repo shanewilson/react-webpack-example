@@ -11,6 +11,8 @@ export default React.createClass({
     CartActions.toggle(this.props.widget);
   },
   render: function() {
-    return <CBToggle widget={this.props.widget} handleChange={this.handleChange}/>;
+    return (
+      <CBToggle widget={this.props.widget} handleChange={this.handleChange}/>
+    );
   }
 });
