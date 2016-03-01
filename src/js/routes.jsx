@@ -1,6 +1,7 @@
+/* @flow */
 import React from 'react/addons';
 import Router from 'react-router';
-const { DefaultRoute, Route, NotFoundRoute } = Router;
+var { DefaultRoute, Route, NotFoundRoute } = Router;
 
 import App from './app.jsx';
 import Home from './views/pages/home.jsx';

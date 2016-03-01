@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react/addons';
 
 import AuthActions from '../../actions/AuthActions';

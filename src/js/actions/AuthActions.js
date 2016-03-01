@@ -3,7 +3,7 @@ import AuthConstants from '../constants/AuthConstants';
 
 export default {
 
-  login: function(token) {
+  login: function(token: string): void {
     console.log('AuthActions login');
     AppDispatcher.dispatch({
       actionType: AuthConstants.LOGIN,

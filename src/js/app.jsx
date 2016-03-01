@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react/addons';
 import { RouteHandler } from 'react-router';
 import cookie from 'react-cookie';
