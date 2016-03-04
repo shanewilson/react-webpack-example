@@ -1,7 +1,7 @@
 .idea
 node_modules/
+coverage/
 npm-debug.log
 selenium-debug.log
 dist/
-bower_components/
-tests/browser/reports
+.DS_Store

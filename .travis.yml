@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - 'stable'
+sudo: false
+notifications:
+  email: false
+cache:
+  directories:
+    - node_modules
+before_install:
+  - npm config set spin false
+after_script:
+  - npm install codecov
+  - ./node_modules/.bin/codecov < coverage/lcov.info
