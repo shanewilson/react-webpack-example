@@ -1,14 +1,14 @@
 import React from'react/addons';
 const {PureRenderMixin } = React.addons;
 
-import WidgetStore from'../../stores/WidgetStore.js';
-import CartStore from'../../stores/CartStore.js';
-import CartActions from'../../actions/CartActions.js';
+import WidgetStore from 'stores/WidgetStore';
+import CartStore from 'stores/CartStore';
+import CartActions from 'actions/CartActions';
 
-import LinkTo from'../../components/LinkTo.jsx';
-import AddToCart from'../../components/AddToCart.jsx';
+import LinkTo from 'components/LinkTo';
+import AddToCart from 'components/AddToCart';
 
-import AuthenticatedRoute from './../../components/AuthenticatedRoute.jsx';
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
 
 const SelectAll = React.createClass({
   mixins: [PureRenderMixin],

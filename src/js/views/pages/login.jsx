@@ -2,8 +2,8 @@
 
 import React from 'react/addons';
 
-import AuthActions from '../../actions/AuthActions';
-import AuthStore from '../../stores/AuthStore';
+import AuthActions from 'actions/AuthActions';
+import AuthStore from 'stores/AuthStore';
 
 class Login extends React.Component {
   static willTransitionTo(transition) {
@@ -45,7 +45,9 @@ class Login extends React.Component {
               <h2>You must login!</h2>
               <button onClick={() => this.login(1)}>I am admin!</button>
               <button onClick={() => this.login(2)}>I am user!</button>
-              <button onClick={() => this.login('type_error')}>Type Error</button>
+              <button onClick={() => this.login('type_error')}>
+                Type Error
+              </button>
             </section>
           </article>
         </div>

@@ -3,10 +3,10 @@ const { PureRenderMixin } = React.addons;
 
 import Immutable from 'immutable';
 
-import CartStore from '../../stores/CartStore.js';
-import LinkTo from '../../components/LinkTo.jsx';
-import SelectInCart from '../../components/SelectInCart.jsx';
-import CartTotal from '../../components/CartTotal.jsx';
+import CartStore from 'stores/CartStore';
+import LinkTo from 'components/LinkTo';
+import SelectInCart from 'components/SelectInCart';
+import CartTotal from 'components/CartTotal';
 
 const SelectAll = React.createClass({
   mixins: [PureRenderMixin],
@@ -70,7 +70,9 @@ const WidgetsTable = React.createClass({
           <thead>
           <tr>
             <th>
-              <SelectAll handleChange={this.props.handleSelectAll} widgets={this.props.widgets}/>
+              <SelectAll
+                handleChange={this.props.handleSelectAll}
+                widgets={this.props.widgets}/>
             </th>
             <th>ID</th>
             <th>Name</th>
@@ -139,7 +141,10 @@ const Cart = React.createClass({
             <button className='btn'>Remove Selected</button>
             <button className='btn'>Download Selected</button>
             <button className='btn'>Download All</button>
-            <WidgetsTable handleSelectAll={this._updateAll} handleChange={this._updateState} widgets={widgets}/>
+            <WidgetsTable
+              handleSelectAll={this._updateAll}
+              handleChange={this._updateState}
+              widgets={widgets}/>
           </div>
       );
     }
@@ -156,5 +161,5 @@ const Cart = React.createClass({
   }
 });
 
-import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx';
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
 export default AuthenticatedRoute(Cart);

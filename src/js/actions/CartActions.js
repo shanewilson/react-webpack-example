@@ -1,5 +1,5 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import CartConstants from '../constants/CartConstants';
+import AppDispatcher from 'dispatcher/AppDispatcher';
+import CartConstants from 'constants/CartConstants';
 
 export default {
 

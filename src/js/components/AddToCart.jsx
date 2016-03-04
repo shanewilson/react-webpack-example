@@ -1,7 +1,7 @@
 import React from 'react/addons';
 
-import CartActions from '../actions/CartActions.js';
-import CBToggle from '../components/CBToggle.jsx';
+import CartActions from 'actions/CartActions';
+import CBToggle from 'components/CBToggle';
 
 export default React.createClass({
   propTypes: {
@@ -11,6 +11,8 @@ export default React.createClass({
     CartActions.toggle(this.props.widget);
   },
   render: function() {
-    return <CBToggle widget={this.props.widget} handleChange={this.handleChange}/>;
+    return (
+      <CBToggle widget={this.props.widget} handleChange={this.handleChange}/>
+    );
   }
 });

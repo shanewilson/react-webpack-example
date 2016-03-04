@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import AuthenticatedRoute from '../../components/AuthenticatedRoute.jsx';
+import AuthenticatedRoute from 'components/AuthenticatedRoute.jsx';
 
 class UserDashboard extends React.Component {
 

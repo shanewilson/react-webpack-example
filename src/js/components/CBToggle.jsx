@@ -7,6 +7,8 @@ export default React.createClass({
   },
   render: function() {
     var text = this.props.widget.get('selected') ? '-' : '+';
-    return <button type='button' onClick={this.props.handleChange}>{text}</button>;
+    return (
+      <button type='button' onClick={this.props.handleChange}>{text}</button>
+    );
   }
 });

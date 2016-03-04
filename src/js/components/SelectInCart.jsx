@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import CBToggle from '../components/CBToggle.jsx';
+import CBToggle from 'components/CBToggle';
 
 export default React.createClass({
   propTypes: {

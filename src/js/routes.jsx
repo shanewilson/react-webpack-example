@@ -3,16 +3,16 @@ import React from 'react/addons';
 import Router from 'react-router';
 var { DefaultRoute, Route, NotFoundRoute } = Router;
 
-import App from './app.jsx';
-import Home from './views/pages/home.jsx';
-import UserDashboard from './views/pages/dashboard.jsx';
-import AdminDashboard from './views/pages/admin/dashboard.jsx';
-import Widgets from './views/pages/widgets.jsx';
-import Widget from './views/pages/widget.jsx';
-import Cart from './views/pages/cart.jsx';
-import Login from './views/pages/login.jsx';
-import Logout from './views/pages/logout.jsx';
-import e404 from './views/pages/404.jsx';
+import App from 'app';
+import Home from 'views/pages/home';
+import UserDashboard from 'views/pages/dashboard';
+import AdminDashboard from 'views/pages/admin/dashboard';
+import Widgets from 'views/pages/widgets';
+import Widget from 'views/pages/widget';
+import Cart from 'views/pages/cart';
+import Login from 'views/pages/login';
+import Logout from 'views/pages/logout';
+import e404 from 'views/pages/404';
 
 export default (
     <Route path="/" handler={App}>

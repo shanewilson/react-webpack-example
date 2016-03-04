@@ -1,9 +1,9 @@
 import EventEmitter from 'events';
 import cookie from 'react-cookie';
 
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import AuthConstants from '../constants/AuthConstants';
-import AuthActions from '../actions/AuthActions';
+import AppDispatcher from 'dispatcher/AppDispatcher';
+import AuthConstants from 'constants/AuthConstants';
+import AuthActions from 'actions/AuthActions';
 
 const CHANGE_EVENT = 'change';
 

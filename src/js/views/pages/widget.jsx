@@ -1,10 +1,10 @@
 import React from 'react';
 import Router from 'react-router';
 
-import Breadcrumb from '../../components/Breadcrumb.jsx';
-import LinkTo from '../../components/LinkTo.jsx';
+import Breadcrumb from 'components/Breadcrumb';
+import LinkTo from 'components/LinkTo';
 
-import AuthenticatedRoute from './../../components/AuthenticatedRoute.jsx';
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
 
 var W = React.createClass({
   mixins: [Router.State],

@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import CartStore from '../stores/CartStore.js';
+import CartStore from 'stores/CartStore';
 
 function cartItems(){
   return {
