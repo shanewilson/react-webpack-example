@@ -13,8 +13,8 @@
     "url": "https://github.com/shanewilson/"
   },
   "dependencies": {
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0"
   },
   "devDependencies": {
     "babel": "^6.3.26",
@@ -59,7 +59,7 @@
     "karma-cli": "^0.1.2",
     "karma-coverage": "^0.5.5",
     "karma-mocha": "^0.2.2",
-    "karma-mocha-reporter": "^1.2.3",
+    "karma-mocha-reporter": "^2.0.0",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sauce-launcher": "^0.3.0",
     "karma-sourcemap-loader": "^0.3.7",
@@ -67,7 +67,7 @@
     "mocha": "^2.4.5",
     "phantomjs-polyfill": "^0.0.2",
     "phantomjs-prebuilt": "^2.1.4",
-    "react-addons-test-utils": "^0.14.7",
+    "react-addons-test-utils": "^15.0.0",
     "react-hot-loader": "^1.3.0",
     "react-hyperscript-helpers": "^1.0.1",
     "react-redux": "^4.4.1",
